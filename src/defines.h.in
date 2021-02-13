@@ -1,0 +1,11 @@
+#ifndef GLOBAL_DEFINES_H
+#define GLOBAL_DEFINES_H
+
+namespace
+{
+const char* HZEE_ORGNAME_FULL = "@HZEE_ORGNAME_FULL@";
+const char* HZEE_APPNAME_FULL = "@HZEE_APPNAME_FULL@";
+const char* HZEE_VERSION_FULL = "@HZEE_VERSION_FULL@";
+}
+
+#endif // GLOBAL_DEFINES_H

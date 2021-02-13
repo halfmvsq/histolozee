@@ -1,0 +1,164 @@
+R"(
+
+{
+  "layouts": [
+    {
+      "description": "Views aligned with the reference frame image",
+      "layoutNode": {
+        "orientation": "vertical",
+        "stretch": 1,
+        "subLayouts": [
+          {
+            "orientation": "horizontal",
+            "stretch": 1,
+            "subLayouts": [
+              {
+                "orientation": "horizontal",
+                "stretch": 1,
+                "subLayouts": [],
+                "view": {
+                  "viewType": "Image_Coronal"
+                }
+              },
+              {
+                "orientation": "horizontal",
+                "stretch": 1,
+                "subLayouts": [],
+                "view": {
+                  "viewType": "Image_Sagittal"
+                }
+              }
+            ],
+            "view": null
+          },
+          {
+            "orientation": "horizontal",
+            "stretch": 1,
+            "subLayouts": [
+              {
+                "orientation": "horizontal",
+                "stretch": 1,
+                "subLayouts": [],
+                "view": {
+                  "viewType": "Image_Axial"
+                }
+              },
+              {
+                "orientation": "horizontal",
+                "stretch": 1,
+                "subLayouts": [],
+                "view": {
+                  "viewType": "Image_3D"
+                }
+              }
+            ],
+            "view": null
+          }
+        ],
+        "view": null
+      },
+      "name": "Reference Frame",
+      "centersCrosshairs": false
+    },
+    {
+      "description": "Large 3D view of reference images",
+      "layoutNode": {
+        "orientation": "vertical",
+        "stretch": 1,
+        "subLayouts": [
+          {
+            "orientation": "horizontal",
+            "stretch": 1,
+            "subLayouts": [],
+            "view": {
+              "viewType": "Image_Big3D"
+            }
+          }
+        ],
+        "view": null
+      },
+      "name": "3D",
+      "centersCrosshairs": false
+    },
+    {
+      "description": "Views aligned parallel and orthogonal to the slide stack",
+      "layoutNode": {
+        "orientation": "horizontal",
+        "stretch": 1,
+        "subLayouts": [
+          {
+            "orientation": "vertical",
+            "stretch": 2,
+            "subLayouts": [
+              {
+                "orientation": "horizontal",
+                "stretch": 1,
+                "subLayouts": [],
+                "view": {
+                  "viewType": "Stack_ActiveSlide"
+                }
+              }
+            ],
+            "view": null
+          },
+          {
+            "orientation": "vertical",
+            "stretch": 1,
+            "subLayouts": [
+              {
+                "orientation": "horizontal",
+                "stretch": 1,
+                "subLayouts": [],
+                "view": {
+                  "viewType": "Stack_StackSide1"
+                }
+              },
+              {
+                "orientation": "horizontal",
+                "stretch": 1,
+                "subLayouts": [],
+                "view": {
+                  "viewType": "Stack_StackSide2"
+                }
+              }
+            ],
+            "view": null
+          }
+        ],
+        "view": null
+      },
+      "name": "Slide Stack",
+      "centersCrosshairs": true
+    },
+    {
+      "description": "Views aligned parallel to slides for slide-to-image registration",
+      "layoutNode": {
+        "orientation": "horizontal",
+        "stretch": 1,
+        "subLayouts": [
+          {
+            "orientation": "horizontal",
+            "stretch": 1,
+            "subLayouts": [],
+            "view": {
+              "viewType": "Reg_ActiveSlide"
+            }
+          },
+          {
+            "orientation": "horizontal",
+            "stretch": 1,
+            "subLayouts": [],
+            "view": {
+              "viewType": "Reg_RefImageAtSlide"
+            }
+          }
+        ],
+        "view": null
+      },
+      "name": "Registration",
+      "centersCrosshairs": true
+    }
+  ]
+}
+
+)";

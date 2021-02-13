@@ -1,0 +1,12 @@
+[submodule "externals/vcglib"]
+	path = externals/vcglib
+	url = https://github.com/cnr-isti-vclab/vcglib.git
+[submodule "externals/nlohmann"]
+	path = externals/nlohmann
+	url = https://github.com/nlohmann/json.git
+[submodule "externals/glm"]
+	path = externals/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "externals/earcut"]
+	path = externals/earcut
+	url = https://github.com/mapbox/earcut.hpp.git
