@@ -9,10 +9,9 @@
 
 #include "common/PublicTypes.h"
 
-#include <boost/optional.hpp>
-
 #include <functional>
 #include <memory>
+#include <optional>
 
 
 class ActionManager;
@@ -58,15 +57,15 @@ public:
     gui::ParcellationSelections_msgToUi getParcellationSelections_msgToUi() const;
 
     /// Respond to UI request for all properties of given parcellation
-    boost::optional< gui::ParcellationPropertiesComplete_msgToUi >
+    std::optional< gui::ParcellationPropertiesComplete_msgToUi >
     getParcellationPropertiesComplete_msgToUi( const UID& parcelUid ) const;
 
     /// Respond to UI request for all labels of given parcellation
-    boost::optional< gui::ParcellationLabelsComplete_msgToUi >
+    std::optional< gui::ParcellationLabelsComplete_msgToUi >
     getParcellationLabelsComplete_msgToUi( const UID& parcelUid ) const;
 
     /// Respond to UI request for header of given parcellation
-    boost::optional< gui::ImageHeader_msgToUi >
+    std::optional< gui::ImageHeader_msgToUi >
     getParcellationHeader_msgToUi( const UID& parcelUid ) const;
 
 

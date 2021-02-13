@@ -6,10 +6,9 @@
 
 #include <glm/fwd.hpp>
 
-#include <boost/optional.hpp>
-
 #include <array>
 #include <memory>
+#include <optional>
 
 
 class CoordinateFrame;
@@ -233,9 +232,9 @@ glm::mat4 get_ndc_O_view( const Viewport& );
  * @param ndcRayPos Origin point of ray in NDC
  * @param worldPlanePos World-space position of point on plane
  * @return World-space intersection of ray with plane if it is defined;
- * boost::none otherwise
+ * std::nullopt otherwise
  */
-boost::optional< glm::vec3 > worldCameraPlaneIntersection(
+std::optional< glm::vec3 > worldCameraPlaneIntersection(
         const Camera&, const glm::vec2& ndcRayPos,
         const glm::vec3& worldPlanePos );
 

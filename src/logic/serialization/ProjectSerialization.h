@@ -8,8 +8,7 @@
 #include <glm/vec3.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include <boost/optional.hpp>
-
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -41,7 +40,7 @@ struct ImageSettings
     imageio::ImageSettings::InterpolationMode m_interpolationMode;
 
     /// Short name of color map
-    boost::optional< std::string > m_colorMapName;
+    std::optional< std::string > m_colorMapName;
 };
 
 
@@ -54,10 +53,12 @@ struct Image
     /// Display name in application
     std::string m_displayName;
 
-    /// Image subject origin defined in World space
+    /// Image subject origin defined in World space.
+    /// Assumed to be (0, 0, 0) if not defined.
     glm::vec3 m_worldSubjectOrigin;
 
-    /// Rotation from Image Subject to World space
+    /// Rotation from Image Subject to World space.
+    /// Assumed to be identity if not defined.
     glm::quat m_subjectToWorldRotation;
 
     /// Image settings
@@ -86,10 +87,10 @@ struct HZeeProject
     std::vector<Slide> m_slides;
 
     /// Index to the active reference image, if there is at least one
-    boost::optional<uint32_t> m_activeImage;
+    std::optional<uint32_t> m_activeImage;
 
     /// Index to the active parcellation, if there is at least one
-    boost::optional<uint32_t> m_activeParcellation;
+    std::optional<uint32_t> m_activeParcellation;
 };
 
 

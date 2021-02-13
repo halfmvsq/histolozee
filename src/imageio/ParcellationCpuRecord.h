@@ -3,9 +3,9 @@
 
 #include "ImageCpuRecord.h"
 
-#include <boost/optional.hpp>
 #include <boost/range/any_range.hpp>
 
+#include <optional>
 #include <utility>
 #include <vector>
 
@@ -50,8 +50,8 @@ public:
     /// maps to label value 0.
     label_value_range_t labelValues() const;
 
-    /// Get the label value at a given index. \c boost::none is returned if the index is invalid.
-    boost::optional<int64_t> labelValue( size_t index ) const;
+    /// Get the label value at a given index. \c std::nullopt is returned if the index is invalid.
+    std::optional<int64_t> labelValue( size_t index ) const;
 
     /// Get the total number of labels in the parcellation
     size_t numLabels() const;

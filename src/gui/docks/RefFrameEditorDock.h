@@ -15,9 +15,8 @@
 
 #include <QDockWidget>
 
-#include <boost/optional.hpp>
-
 #include <list>
+#include <optional>
 #include <vector>
 
 
@@ -173,13 +172,13 @@ public slots:
 private:
 
     /// Get all properties for current image from UI
-    boost::optional< ImagePropertiesComplete_msgFromUi > getImagePropertiesComplete() const;
+    std::optional< ImagePropertiesComplete_msgFromUi > getImagePropertiesComplete() const;
 
     /// Get all properties for current parcellation from UI
-    boost::optional< ParcellationPropertiesComplete_msgFromUi > getParcellationPropertiesComplete() const;
+    std::optional< ParcellationPropertiesComplete_msgFromUi > getParcellationPropertiesComplete() const;
 
     /// Get all labels for current parcellation from UI
-    boost::optional< ParcellationLabelsComplete_msgToUi > getParcellationLabelsComplete() const;
+    std::optional< ParcellationLabelsComplete_msgToUi > getParcellationLabelsComplete() const;
 
 
     /// Connect image widget signals and slots
@@ -467,9 +466,9 @@ private:
     /// Current image color map items
     std::vector< ImageColorMapItem > m_imageColorMaps;
 
-    boost::optional<UID> m_currentImageUid; //!< UID of currently selected image
-    boost::optional<UID> m_currentParcelUid; //!< UID of currently selected parcellation
-    boost::optional<UID> m_currentLabelsUid; //!< UID of current parcellation label table
+    std::optional<UID> m_currentImageUid; //!< UID of currently selected image
+    std::optional<UID> m_currentParcelUid; //!< UID of currently selected parcellation
+    std::optional<UID> m_currentLabelsUid; //!< UID of current parcellation label table
 
     LabelTableModel* m_labelTableModel = nullptr; //!< Label table model
 

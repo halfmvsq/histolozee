@@ -25,7 +25,7 @@ SliceIntersector::SliceIntersector()
 
 void SliceIntersector::setPositioningMethod(
         const PositioningMethod& method,
-        const boost::optional<glm::vec3>& p )
+        const std::optional<glm::vec3>& p )
 {
     m_positioningMethod = method;
 
@@ -52,7 +52,7 @@ void SliceIntersector::setPositioningMethod(
 
 void SliceIntersector::setAlignmentMethod(
         const AlignmentMethod& method,
-        const boost::optional<glm::vec3>& worldNormal )
+        const std::optional<glm::vec3>& worldNormal )
 {
     m_alignmentMethod = method;
 
@@ -69,7 +69,7 @@ void SliceIntersector::setAlignmentMethod(
 }
 
 
-std::pair< boost::optional< SliceIntersector::IntersectionVertices >, glm::vec4 >
+std::pair< std::optional< SliceIntersector::IntersectionVertices >, glm::vec4 >
 SliceIntersector::computePlaneIntersections(
         const glm::mat4& model_O_camera,
         const glm::mat4& model_O_frame,

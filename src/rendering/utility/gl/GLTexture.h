@@ -11,8 +11,7 @@
 
 #include <QOpenGLFunctions_3_3_Core>
 
-#include <boost/optional.hpp>
-
+#include <optional>
 #include <unordered_map>
 
 
@@ -100,8 +99,8 @@ public:
 
     GLTexture( tex::Target target,
                MultisampleSettings multisampleSettings = MultisampleSettings(),
-               boost::optional<PixelStoreSettings> pixelPackSettings = boost::none,
-               boost::optional<PixelStoreSettings> pixelUnpackSettings = boost::none );
+               std::optional<PixelStoreSettings> pixelPackSettings = std::nullopt,
+               std::optional<PixelStoreSettings> pixelUnpackSettings = std::nullopt );
 
     GLTexture( const GLTexture& ) = delete;
     GLTexture( GLTexture&& );
@@ -112,9 +111,9 @@ public:
     ~GLTexture();
 
     void generate();
-    void release( boost::optional<uint32_t> textureUnit = boost::none );
-    void bind( boost::optional<uint32_t> textureUnit = boost::none );
-    bool isBound( boost::optional<uint32_t> textureUnit = boost::none );
+    void release( std::optional<uint32_t> textureUnit = std::nullopt );
+    void bind( std::optional<uint32_t> textureUnit = std::nullopt );
+    bool isBound( std::optional<uint32_t> textureUnit = std::nullopt );
     void unbind();
 
     // Bind/bind sampler object to/from a texture unit
@@ -261,8 +260,8 @@ private:
     GLuint m_samplerID;
 
     MultisampleSettings m_multisampleSettings;
-    boost::optional<PixelStoreSettings> m_pixelPackSettings;
-    boost::optional<PixelStoreSettings> m_pixelUnpackSettings;
+    std::optional<PixelStoreSettings> m_pixelPackSettings;
+    std::optional<PixelStoreSettings> m_pixelUnpackSettings;
 
 
     class Binder

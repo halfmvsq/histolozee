@@ -26,10 +26,9 @@
 
 #include <glm/fwd.hpp>
 
-#include <boost/optional.hpp>
-
 #include <functional>
 #include <memory>
+#include <optional>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -75,7 +74,7 @@ private:
         std::function< std::weak_ptr<IDrawable> ( const gui::ViewType& ) >;
 
     /// Function returning the SceneType corresponding to a ViewType. If the view type does not exist,
-    /// boost::none is returned.
+    /// std::nullopt is returned.
     using SceneTypeProviderType =
         std::function< SceneType ( const gui::ViewType& ) >;
 
@@ -88,7 +87,7 @@ private:
     using ImageLoaderType =
         std::function< void (
             const std::string& filename,
-            const boost::optional< std::string >& dicomSeriesUid ) >;
+            const std::optional< std::string >& dicomSeriesUid ) >;
 
     /// Function for loading a slide image.
     using SlideLoaderType = std::function< void ( const std::string& filename ) >;

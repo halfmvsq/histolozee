@@ -3,11 +3,10 @@
 
 #include "logic/interaction/InteractionHandlerType.h"
 
-#include <boost/optional.hpp>
-
 #include <QMainWindow>
 
 #include <functional>
+#include <optional>
 #include <string>
 
 
@@ -33,7 +32,7 @@ private:
     using ImageLoaderType =
         std::function< void (
             const std::string& filename,
-            const boost::optional< std::string >& dicomSeriesUID ) >;
+            const std::optional< std::string >& dicomSeriesUID ) >;
 
     /// Functional for loading images and parcellations
     using SlideLoaderType = std::function< void ( const std::string& filename ) >;

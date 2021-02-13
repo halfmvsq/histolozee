@@ -108,7 +108,7 @@ struct DepthPeelRenderer::Impl : protected QOpenGLFunctions_3_3_Core
     struct BlendingStatus
     {
         bool m_blendingDone;
-        boost::optional< uint32_t > m_numSamplesPassed;
+        std::optional< uint32_t > m_numSamplesPassed;
     };
 
     void renderObjectIdsAndDepths(); // step 0
@@ -470,7 +470,7 @@ DepthPeelRenderer::Impl::ddp_blendTargets( bool currentId )
     m_blendQuad.render( RenderStage::QuadResolve, ObjectsToRender::All );
 
     bool isBlendingDone = false;
-    boost::optional<uint32_t> numSamplesPassed = boost::none;
+    std::optional<uint32_t> numSamplesPassed = std::nullopt;
 
     if ( m_useOccQueries )
     {

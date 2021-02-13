@@ -20,11 +20,11 @@ extern "C"
 #include <glm/gtx/string_cast.hpp>
 
 #include <boost/filesystem.hpp>
-#include <boost/optional.hpp>
 
 #include <algorithm>
 #include <cstdlib> // strtoul
 #include <iostream>
+#include <optional>
 #include <sstream>
 #include <utility>
 #include <vector>

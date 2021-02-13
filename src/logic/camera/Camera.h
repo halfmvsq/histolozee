@@ -8,10 +8,9 @@
 
 #include <glm/fwd.hpp>
 
-#include <boost/optional.hpp>
-
 #include <functional>
 #include <memory>
+#include <optional>
 
 
 namespace camera
@@ -67,9 +66,9 @@ public:
     /// Set the functional that defines the starting frame of reference to which the camera is linked.
     void set_frameB_O_frameA_provider( GetterType<CoordinateFrame> );
 
-    /// Get the camera's starting frame, if it is linked to one. Returns boost::none iff the
+    /// Get the camera's starting frame, if it is linked to one. Returns std::nullopt iff the
     /// camera is not linked to a starting frame.
-    boost::optional<CoordinateFrame> startFrame() const;
+    std::optional<CoordinateFrame> startFrame() const;
 
     /// Get whether the camera is linked to a starting frame of reference. Returns true iff
     /// the camera is linked to a starting frame. If not linked to a starting frame,

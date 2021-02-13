@@ -11,9 +11,8 @@
 
 #include "logic/records/SlideAnnotationRecord.h"
 
-#include <boost/optional.hpp>
-
 #include <memory>
+#include <optional>
 
 
 class BasicMesh;
@@ -32,7 +31,7 @@ public:
             std::string name,
             ShaderProgramActivatorType shaderActivator,
             UniformsProviderType uniformsProvider,
-            GetterType< boost::optional<glm::mat4> > annotToWorldTxProvider,
+            GetterType< std::optional<glm::mat4> > annotToWorldTxProvider,
             std::weak_ptr<SlideAnnotationRecord> slideAnnotationRecord );
 
     ~AnnotationSlice() override = default;
@@ -56,7 +55,7 @@ private:
     UniformsProviderType m_uniformsProvider;
 
     /// Function providing transformation from this annotation's Slide space to World space
-    GetterType< boost::optional<glm::mat4> > m_annotToWorldTxProvider;
+    GetterType< std::optional<glm::mat4> > m_annotToWorldTxProvider;
 
     /// Slide annotation record that is rendered as a slice by this drawable
     std::weak_ptr<SlideAnnotationRecord> m_slideAnnotationRecord;
@@ -68,7 +67,7 @@ private:
     std::shared_ptr<BasicMesh> m_mesh;
 
     /// UID of the current annotation. If no current annotation, then it is set to none.
-    boost::optional<UID> m_currentAnnotationUid;
+    std::optional<UID> m_currentAnnotationUid;
 };
 
 #endif // ANNOTATION_SLICE_H

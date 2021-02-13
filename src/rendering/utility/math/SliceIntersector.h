@@ -7,9 +7,8 @@
 #include <glm/mat4x4.hpp>
 #include <glm/vec4.hpp>
 
-#include <boost/optional.hpp>
-
 #include <array>
+#include <optional>
 #include <utility>
 
 
@@ -69,18 +68,18 @@ public:
 
     void setPositioningMethod(
             const PositioningMethod& method,
-            const boost::optional<glm::vec3>& p = boost::none );
+            const std::optional<glm::vec3>& p = std::nullopt );
 
     const PositioningMethod& positioningMethod() const;
 
     void setAlignmentMethod(
             const AlignmentMethod& method,
-            const boost::optional<glm::vec3>& worldNormal = boost::none );
+            const std::optional<glm::vec3>& worldNormal = std::nullopt );
 
     const AlignmentMethod& alignmentMethod() const;
 
     /// Compute and return the intersection vertices (if they exist) and the plane equation
-    std::pair< boost::optional< IntersectionVertices >, glm::vec4 >
+    std::pair< std::optional< IntersectionVertices >, glm::vec4 >
     computePlaneIntersections(
             const glm::mat4& model_O_camera,
             const glm::mat4& model_O_frame,

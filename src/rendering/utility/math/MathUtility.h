@@ -14,7 +14,6 @@
 #include <glm/gtx/component_wise.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-#include <boost/optional.hpp>
 #include <boost/range/any_range.hpp>
 
 #include <array>
@@ -22,6 +21,7 @@
 #include <iostream>
 #include <limits>
 #include <numeric>
+#include <optional>
 #include <stdexcept>
 #include <tuple>
 #include <type_traits>
@@ -364,7 +364,7 @@ bool lineSegmentPlaneIntersection(
 
 // Last intersection is average
 template< typename T >
-boost::optional< std::array< gvec3<T>, 7 > >
+std::optional< std::array< gvec3<T>, 7 > >
 computeSliceIntersections(
         const std::array< gvec3<T>, 8 >& sortedCorners,
         const gvec4<T>& plane )
@@ -388,7 +388,7 @@ computeSliceIntersections(
         intersections[0] = sortedCorners[4] + t * (sortedCorners[7] - sortedCorners[4]);
     }
     else {
-        return boost::none;
+        return std::nullopt;
     }
 
     if ( lineSegmentPlaneIntersection( sortedCorners[0], sortedCorners[2], plane, t ) ) {
@@ -401,7 +401,7 @@ computeSliceIntersections(
         intersections[2] = sortedCorners[5] + t * (sortedCorners[7] - sortedCorners[5]);
     }
     else {
-        return boost::none;
+        return std::nullopt;
     }
 
     if ( lineSegmentPlaneIntersection( sortedCorners[0], sortedCorners[3], plane, t ) ) {
@@ -414,7 +414,7 @@ computeSliceIntersections(
         intersections[4] = sortedCorners[6] + t * (sortedCorners[7] - sortedCorners[6]);
     }
     else {
-        return boost::none;
+        return std::nullopt;
     }
 
     intersectionAverage += intersections[0];
@@ -466,7 +466,7 @@ computeSliceIntersections(
 
 
 template< typename T >
-boost::optional< std::array< gvec3<T>, 7 > >
+std::optional< std::array< gvec3<T>, 7 > >
 computeAABBoxPlaneIntersections( const std::array< gvec3<T>, 8 >& boxCorners, const gvec4<T>& plane )
 {
     gvec3<T> boxCenter( 0, 0, 0 );
@@ -482,14 +482,14 @@ computeAABBoxPlaneIntersections( const std::array< gvec3<T>, 8 >& boxCorners, co
 
     if ( ! testAABBoxPlaneIntersection( boxCenter, boxMaxCorner, plane ) )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     std::array< gvec3<T>, 8 > sortedCorners;
 
     if ( ! computeSortedAABBoxCorners( boxCorners, plane, sortedCorners ) )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     return computeSliceIntersections( sortedCorners, plane );
@@ -524,7 +524,7 @@ float computeOverallOpacity( const std::array< float, N >& layerOpacities )
 
 
 template< typename T >
-boost::optional< gvec3<T> >
+std::optional< gvec3<T> >
 intersectRayWithAABBox( const gvec3<T>& rayOrig, const gvec3<T>& rayDir,
                         const gvec3<T>& boxMin, const gvec3<T>& boxMax )
 {
@@ -539,7 +539,7 @@ intersectRayWithAABBox( const gvec3<T>& rayOrig, const gvec3<T>& rayDir,
        return rayOrig + maxmin * rayDir;
    }
 
-   return boost::none;
+   return std::nullopt;
 }
 
 

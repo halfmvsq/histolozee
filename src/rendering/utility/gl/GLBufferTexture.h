@@ -7,7 +7,7 @@
 
 #include <QOpenGLFunctions_3_3_Core>
 
-#include <boost/optional.hpp>
+#include <optional>
 
 
 /**
@@ -32,9 +32,9 @@ public:
     ~GLBufferTexture();
 
     void generate();
-    void release( boost::optional<uint32_t> textureUnit = boost::none );
-    void bind( boost::optional<uint32_t> textureUnit = boost::none );
-    bool isBound( boost::optional<uint32_t> textureUnit = boost::none );
+    void release( std::optional<uint32_t> textureUnit = std::nullopt );
+    void bind( std::optional<uint32_t> textureUnit = std::nullopt );
+    bool isBound( std::optional<uint32_t> textureUnit = std::nullopt );
     void unbind();
 
     /**
@@ -65,7 +65,7 @@ public:
     /**
      * @brief Attach buffer object's data store to a buffer texture object.
      */
-    void attachBufferToTexture( boost::optional<uint32_t> textureUnit = boost::none );
+    void attachBufferToTexture( std::optional<uint32_t> textureUnit = std::nullopt );
 
     void detatchBufferFromTexture();
 

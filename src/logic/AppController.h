@@ -3,11 +3,10 @@
 
 #include "common/UID.h"
 
-#include <boost/optional.hpp>
-
 #include <QOffscreenSurface>
 
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -51,10 +50,10 @@ public:
     void showMainWindow();
 
     void loadImage( const std::string& filename,
-                    const boost::optional< std::string >& dicomSeriesUID );
+                    const std::optional< std::string >& dicomSeriesUID );
 
     void loadParcellation( const std::string& filename,
-                           const boost::optional< std::string >& dicomSeriesUID );
+                           const std::optional< std::string >& dicomSeriesUID );
 
     void loadSlide( const std::string& filename );
 

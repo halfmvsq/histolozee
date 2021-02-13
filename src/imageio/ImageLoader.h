@@ -3,9 +3,8 @@
 
 #include "HZeeTypes.hpp"
 
-#include <boost/optional.hpp>
-
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -50,7 +49,7 @@ public:
      */
     std::unique_ptr<ImageCpuRecord> load(
             const std::string& inputFileName,
-            const boost::optional<std::string>& inputDicomSeriesUID,
+            const std::optional<std::string>& inputDicomSeriesUID,
             const ComponentNormalizationPolicy& normalizationPolicy ) const;
 
 

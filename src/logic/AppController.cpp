@@ -331,7 +331,7 @@ void AppController::showMainWindow()
 
 void AppController::loadImage(
         const std::string& filename,
-        const boost::optional< std::string >& dicomSeriesUID )
+        const std::optional< std::string >& dicomSeriesUID )
 {
     if ( ! m_actionManager )
     {
@@ -344,7 +344,7 @@ void AppController::loadImage(
 
 void AppController::loadParcellation(
         const std::string& filename,
-        const boost::optional< std::string >& dicomSeriesUID )
+        const std::optional< std::string >& dicomSeriesUID )
 {
     if ( ! m_actionManager )
     {
@@ -651,7 +651,7 @@ void AppController::testSerialization( const std::string& fileName )
     parcellation.m_subjectToWorldRotation = glm::quat{ 1, 2, 3, 4 };
     parcellation.m_settings = serialize::ImageSettings();
     parcellation.m_settings.m_interpolationMode = imageio::ImageSettings::InterpolationMode::NearestNeighbor;
-    parcellation.m_settings.m_colorMapName = boost::none;
+    parcellation.m_settings.m_colorMapName = std::nullopt;
 
     serialize::HZeeProject project;
     project.m_refImages.emplace_back( refImage1 );

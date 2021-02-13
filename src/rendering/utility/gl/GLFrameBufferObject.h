@@ -8,8 +8,7 @@
 
 #include <QOpenGLFunctions_3_3_Core>
 
-#include <boost/optional.hpp>
-
+#include <optional>
 #include <string>
 
 
@@ -52,7 +51,7 @@ public:
             const fbo::TargetType& target,
             const fbo::AttachmentType& attachment,
             const GLTexture& tex,
-            boost::optional<int> colorAttachmentIndex = boost::none );
+            std::optional<int> colorAttachmentIndex = std::nullopt );
 
     void attachCubeMapTexture(
             const fbo::TargetType& target,
@@ -60,7 +59,7 @@ public:
             const GLTexture& tex,
             const tex::CubeMapFace& cubeMapFace,
             GLint level,
-            boost::optional<int> colorAttachmentIndex = boost::none );
+            std::optional<int> colorAttachmentIndex = std::nullopt );
 
     GLuint id() const;
 

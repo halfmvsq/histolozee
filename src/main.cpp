@@ -157,12 +157,12 @@ int main( int argc, char *argv[] )
 
     for ( const auto& image : project.m_refImages )
     {
-        appController->loadImage( image.m_fileName, boost::none );
+        appController->loadImage( image.m_fileName, std::nullopt );
     }
 
     for ( const auto& parcel : project.m_parcellations )
     {
-        appController->loadParcellation( parcel.m_fileName, boost::none );
+        appController->loadParcellation( parcel.m_fileName, std::nullopt );
     }
 
     for ( const auto& slide : project.m_slides )

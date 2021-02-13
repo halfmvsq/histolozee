@@ -67,8 +67,8 @@ struct AssemblyManager::Impl
           AllViewsUpdaterType allViewsUpdater,
           GetterType<float> slideStackHeightProvider,
           GetterType<glm::mat4> slideStackToWorldTxProvider,
-          QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > refImageLandmarkGroupToWorldTxQuerier,
-          QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > slideLandmarkGroupToWorldTxQuerier,
+          QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > refImageLandmarkGroupToWorldTxQuerier,
+          QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > slideLandmarkGroupToWorldTxQuerier,
           QuerierType< DrawableScaling, UID > refImageLandmarkGroupScalingQuerier,
           QuerierType< DrawableScaling, UID > slideLandmarkGroupScalingQuerier,
           QuerierType< float, UID > slideAnnotationThicknessQuerier,
@@ -170,7 +170,7 @@ void AssemblyManager::setSlideStackHeightProvider( GetterType<float> provider )
 }
 
 void AssemblyManager::setRefImageLandmarkGroupToWorldTxQuerier(
-        QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > querier )
+        QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > querier )
 {
     m_impl->m_refImageLandmarkAssembly.setLandmarkGroupToWorldTxQuerier( querier );
 }
@@ -181,13 +181,13 @@ void AssemblyManager::setSlideStackToWorldTxProvider( GetterType<glm::mat4> prov
 }
 
 void AssemblyManager::setSlideLandmarkGroupToWorldTxQuerier(
-        QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > querier )
+        QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > querier )
 {
     m_impl->m_slideLandmarkAssembly.setLandmarkGroupToWorldTxQuerier( querier );
 }
 
 void AssemblyManager::setSlideAnnotationToWorldTxQuerier(
-        QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > querier )
+        QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > querier )
 {
     m_impl->m_slideAnnotationAssembly.setAnnotationToWorldTxQuerier( querier );
 }
@@ -205,7 +205,7 @@ void AssemblyManager::setSlideLandmarkGroupScalingQuerier(
 }
 
 void AssemblyManager::setSlideAnnotationThicknessQuerier(
-        QuerierType< boost::optional<float>, UID > querier )
+        QuerierType< std::optional<float>, UID > querier )
 {
     m_impl->m_slideAnnotationAssembly.setAnnotationThicknessQuerier( querier );
 }
@@ -216,19 +216,19 @@ void AssemblyManager::setActiveSlideQuerier( QuerierType<bool, UID> querier )
 }
 
 void AssemblyManager::setActiveSubjectToWorldProvider(
-        GetterType< boost::optional<glm::mat4> > provider )
+        GetterType< std::optional<glm::mat4> > provider )
 {
     m_impl->m_cameraLabelAssembly.setActiveSubjectToWorldProvider( provider );
 }
 
 void AssemblyManager::setLabelMeshSubjectToWorldTxQuerier(
-        QuerierType< boost::optional<glm::mat4>, UID > querier )
+        QuerierType< std::optional<glm::mat4>, UID > querier )
 {
     m_impl->m_labelMeshAssembly.setMeshSubjectToWorldTxQuerier( querier );
 }
 
 void AssemblyManager::setIsoSurfaceMeshSubjectToWorldTxQuerier(
-        QuerierType< boost::optional<glm::mat4>, UID > querier )
+        QuerierType< std::optional<glm::mat4>, UID > querier )
 {
     m_impl->m_isoSurfaceMeshAssembly.setMeshSubjectToWorldTxQuerier( querier );
 }
@@ -742,8 +742,8 @@ AssemblyManager::Impl::Impl(
         AllViewsUpdaterType allViewsUpdater,
         GetterType<float> slideStackHeightProvider,
         GetterType<glm::mat4> slideStackToWorldTxProvider,
-        QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > refImageLandmarkGroupToWorldTxQuerier,
-        QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > slideLandmarkGroupToSlideStackTxQuerier,
+        QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > refImageLandmarkGroupToWorldTxQuerier,
+        QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > slideLandmarkGroupToSlideStackTxQuerier,
         QuerierType< DrawableScaling, UID > refImageLandmarkGroupScalingQuerier,
         QuerierType< DrawableScaling, UID > slideLandmarkGroupScalingQuerier,
         QuerierType< float, UID > slideAnnotationThicknessQuerier,

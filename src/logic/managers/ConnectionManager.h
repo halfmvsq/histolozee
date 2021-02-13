@@ -46,7 +46,7 @@ private:
     using ViewWidgetProviderType = std::function< gui::ViewWidget* ( const UID& viewUid ) >;
 
     /// Functional returning the scene type corresponding to a view type.
-    /// If the view type does not exist, boost::none is returned.
+    /// If the view type does not exist, std::nullopt is returned.
     using SceneTypeProviderType = std::function< SceneType ( const gui::ViewType& ) >;
 
     /// Functional returning list of UIDs of views with a given view type.

@@ -4,10 +4,9 @@
 #include "common/RangeTypes.h"
 #include "logic/annotation/PointRecord.h"
 
-#include <boost/optional.hpp>
-
 #include <algorithm>
 #include <list>
+#include <optional>
 
 
 /**
@@ -143,12 +142,12 @@ public:
 
 
     /// Get the index of the point with the given UID.
-    boost::optional<size_t> getPointIndex( const UID& pointUid ) const
+    std::optional<size_t> getPointIndex( const UID& pointUid ) const
     {
         const auto it = findPoint( pointUid );
         if ( std::end( m_points ) == it )
         {
-            return boost::none;
+            return std::nullopt;
         }
 
         return std::distance( std::begin( m_points ), it );
@@ -156,11 +155,11 @@ public:
 
 
     /// Get the value of the point at the given index.
-    boost::optional<PointType> getPoint( size_t index ) const
+    std::optional<PointType> getPoint( size_t index ) const
     {
         if ( m_points.size() <= index )
         {
-            return boost::none;
+            return std::nullopt;
         }
 
         auto it = std::next( std::begin( m_points ), index );
@@ -169,12 +168,12 @@ public:
 
 
     /// Get the value of the point with the given UID.
-    boost::optional<PointType> getPoint( const UID& pointUid ) const
+    std::optional<PointType> getPoint( const UID& pointUid ) const
     {
         const auto it = findPoint( pointUid );
         if ( std::end( m_points ) == it )
         {
-            return boost::none;
+            return std::nullopt;
         }
         return *it;
     }

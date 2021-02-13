@@ -8,11 +8,11 @@
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
 
-#include <boost/optional.hpp>
 #include <boost/range/any_range.hpp>
 
 #include <array>
 #include <memory>
+#include <optional>
 #include <utility>
 
 
@@ -90,9 +90,9 @@ std::array< glm::vec3, 8 > slideCornersInStack( const SlideCpuRecord& );
  * @param[in] world_O_slideStack Transformation from Slide Stack to World space.
  *
  * @return Optional AABB of the Stack in World space. If there are no slides in the stack,
- * then boost::none is returned.
+ * then std::nullopt is returned.
  */
-boost::optional< AABB<float> > slideStackAABBoxInWorld(
+std::optional< AABB<float> > slideStackAABBoxInWorld(
         weak_record_range_t<SlideRecord> slideRecords,
         const glm::mat4& world_O_slideStack );
 

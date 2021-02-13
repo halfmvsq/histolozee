@@ -10,7 +10,7 @@ Polygon::Polygon()
       m_vertices(),
       m_triangulation(),
       m_currentUid(),
-      m_aabb( boost::none )
+      m_aabb( std::nullopt )
 {}
 
 
@@ -155,7 +155,7 @@ Polygon::getTriangle( size_t i ) const
 }
 
 
-boost::optional< Polygon::AABBoxType > Polygon::getAABBox() const
+std::optional< Polygon::AABBoxType > Polygon::getAABBox() const
 {
     return m_aabb;
 }
@@ -185,7 +185,7 @@ void Polygon::computeAABBox()
     if ( m_vertices.empty() || m_vertices[0].empty() )
     {
         // There is no outer boundary or there are no vertices in the outer boundary.
-        m_aabb = boost::none;
+        m_aabb = std::nullopt;
         return;
     }
 

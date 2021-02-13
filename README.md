@@ -6,7 +6,7 @@ Copyright 2021 Penn Image Computing and Science Lab, University of Pennsylvania
 
 ### How do I get set up? ###
 
-C++14, CMake, and these libraries are required:
+C++17, CMake, and the following libraries are required:
 
 * Boost 1.66.0
 * ITK 5.1.0

@@ -36,8 +36,8 @@ AnnotationExtrusion::AnnotationExtrusion(
         std::string name,
         ShaderProgramActivatorType shaderActivator,
         UniformsProviderType uniformsProvider,
-        GetterType< boost::optional<glm::mat4> > annotToWorldTxProvider,
-        GetterType< boost::optional<float> > thicknessProvider,
+        GetterType< std::optional<glm::mat4> > annotToWorldTxProvider,
+        GetterType< std::optional<float> > thicknessProvider,
         std::weak_ptr<SlideAnnotationRecord> slideAnnotationRecord )
     :
       DrawableBase( std::move( name ), DrawableType::AnnotationSlice ),
@@ -170,19 +170,19 @@ void AnnotationExtrusion::doUpdate(
                     [ &camera, &world_O_annot ] ( const glm::vec3& annotCorner )
     {
         return camera::computeSmallestWorldDepthOffset(
-                    camera, applyMatrix( world_O_annot.get(), glm::vec4{ annotCorner, 1.0f } ) );
+                    camera, applyMatrix( *world_O_annot, glm::vec4{ annotCorner, 1.0f } ) );
     } );
 
     // Use the maximum offset for layering:
     const float maxWorldOffset = *std::max_element( std::begin( worldOffsets ), std::end( worldOffsets ) );
 
     // Divide by slide thickness to get offset in Annotation mesh coordinates:
-    const float annotOffset = maxWorldOffset / worldThickness.get();
+    const float annotOffset = maxWorldOffset / *worldThickness;
 
     // Desired displacement of bottom and top face is proprotional to the annotation layer
     // and the offset. Increase all layers by an additional 2 offset, to make sure that there is no
     // z-fighting with slides.
-    const float displacement = ( annot->getLayer() + 2 ) * annotOffset;
+    const float displacement = static_cast<float>( annot->getLayer() + 2 ) * annotOffset;
 
     // Scale the mesh along its z axis by an additional factor of 2x, because the scaling is
     // applied about the center of the mesh. So, the top and bottom faces only move by half this amount.

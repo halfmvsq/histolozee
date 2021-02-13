@@ -8,11 +8,11 @@
 #include "gui/layout/ViewType.h"
 #include "gui/layout/ViewTypeRange.h"
 
-#include <boost/optional.hpp>
 #include <boost/range/any_range.hpp>
 
 #include <list>
 #include <memory>
+#include <optional>
 #include <string>
 
 
@@ -61,8 +61,8 @@ public:
     /// Get the view UIDs and their corresponding view types
     view_type_range_t getViewTypes() const;
 
-    /// Get the type of a view. If the view UID does not exist, \c boost::none is returned
-    boost::optional<gui::ViewType> getViewType( const UID& viewUid ) const;
+    /// Get the type of a view. If the view UID does not exist, \c std::nullopt is returned
+    std::optional<gui::ViewType> getViewType( const UID& viewUid ) const;
 
     /// Get a list of UIDs of all views with a given view type
     std::list<UID> getViewUidsOfType( const gui::ViewType& ) const;

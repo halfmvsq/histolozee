@@ -3,23 +3,23 @@
 #include <glm/vec3.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include <boost/optional.hpp>
+#include <optional>
 
 
 namespace nlohmann
 {
 
 /**
- * Add JSON serializer for \c boost::optional to the \c nlohmann (JSON parser) namespace.
+ * Add JSON serializer for \c std::optional to the \c nlohmann (JSON parser) namespace.
  * The default serializer for \c nlohmann::json is \c nlohmann::adl_serializer
  * (ADL means Argument-Dependent Lookup).
  */
 template< typename T >
-struct adl_serializer< boost::optional<T> >
+struct adl_serializer< std::optional<T> >
 {
-    static void to_json( json& j, const boost::optional<T>& opt )
+    static void to_json( json& j, const std::optional<T>& opt )
     {
-        if ( opt == boost::none )
+        if ( opt == std::nullopt )
         {
             j = nullptr;
         }
@@ -31,11 +31,11 @@ struct adl_serializer< boost::optional<T> >
         }
     }
 
-    static void from_json( const json& j, boost::optional<T>& opt )
+    static void from_json( const json& j, std::optional<T>& opt )
     {
         if ( j.is_null() )
         {
-            opt = boost::none;
+            opt = std::nullopt;
         }
         else
         {

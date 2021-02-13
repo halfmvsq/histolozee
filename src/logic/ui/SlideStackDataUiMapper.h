@@ -9,10 +9,9 @@
 
 #include "common/PublicTypes.h"
 
-#include <boost/optional.hpp>
-
 #include <functional>
 #include <memory>
+#include <optional>
 
 
 class ActionManager;
@@ -121,15 +120,15 @@ public:
     gui::SlideCommonPropertiesComplete_msgToUi getSlideCommonPropertiesComplete_msgToUi() const;
 
     /// Respond to UI request for all slide header data
-    boost::optional< gui::SlideHeaderComplete_msgToUi >
+    std::optional< gui::SlideHeaderComplete_msgToUi >
     getSlideHeaderComplete_msgToUi( const UID& slideUid ) const;
 
     /// Respond to UI request for all slide view data
-    boost::optional< gui::SlideViewDataComplete_msgToUi >
+    std::optional< gui::SlideViewDataComplete_msgToUi >
     getSlideViewDataComplete_msgToUi( const UID& slideUid ) const;
 
     /// Respond to UI request for all slide transformation data
-    boost::optional< gui::SlideTxDataComplete_msgToUi >
+    std::optional< gui::SlideTxDataComplete_msgToUi >
     getSlideTxDataComplete_msgToUi( const UID& slideUid ) const;
 
 

@@ -6,11 +6,10 @@
 #include "gui/docks/PublicSlideTypes.h"
 #include "gui/messages/slide/SlideData.h"
 
-#include <boost/optional.hpp>
-
 #include <QDockWidget>
 
 #include <list>
+#include <optional>
 
 
 class ctkDoubleSlider;
@@ -152,8 +151,8 @@ private:
     void clearAllWidgetValues();
 
 
-    boost::optional<int> getActiveSlideIndex() const;
-    boost::optional<UID> getActiveSlideUid() const;
+    std::optional<int> getActiveSlideIndex() const;
+    std::optional<UID> getActiveSlideUid() const;
 
 
     /**
@@ -356,7 +355,7 @@ private:
     std::list< QWidget* > m_widgetsList;
 
     /// UID of currently selected/active slide
-    boost::optional<UID> m_activeSlideUid;
+    std::optional<UID> m_activeSlideUid;
 };
 
 } // namespace gui

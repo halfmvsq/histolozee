@@ -54,7 +54,7 @@ CameraLabel::CameraLabel(
         std::string name,
         ShaderProgramActivatorType shaderProgramActivator,
         UniformsProviderType uniformsProvider,
-        GetterType< boost::optional<glm::mat4> > subjectToWorldProvider,
+        GetterType< std::optional<glm::mat4> > subjectToWorldProvider,
         std::array< std::weak_ptr<GLTexture>, 6 > letterTextures )
     :
       DrawableBase( std::move( name ), DrawableType::CameraLabel ),
@@ -107,7 +107,7 @@ DrawableOpacity CameraLabel::opacityFlag() const
 
 
 void CameraLabel::setSubjectToWorldProvider(
-        GetterType< boost::optional<glm::mat4> > provider )
+        GetterType< std::optional<glm::mat4> > provider )
 {
     m_subjectToWorldProvider = provider;
 }
@@ -206,7 +206,7 @@ void CameraLabel::initVao()
         m_vao.enableVertexAttribute( sk_positionsIndex );
 
         texCoordsObject->bind();
-        m_vao.setAttributeBuffer( sk_texCoordsIndex, texCoordsInfo.get() );
+        m_vao.setAttributeBuffer( sk_texCoordsIndex, *texCoordsInfo );
         m_vao.enableVertexAttribute( sk_texCoordsIndex );
     }
     m_vao.release();

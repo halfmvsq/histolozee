@@ -4,8 +4,7 @@
 #include "common/Identity.h"
 #include "common/UID.h"
 
-#include <boost/optional.hpp>
-
+#include <optional>
 #include <string>
 #include <utility>
 
@@ -15,7 +14,7 @@ namespace gui
 
 /**
  * @brief Properties of the widgets that control the parcellation in the UI.
- * Template type V can be either boost::optional (to denote all optional fields) or
+ * Template type V can be either std::optional (to denote all optional fields) or
  * Required (to denote all required fields).
  */
 template< template<typename> class V >
@@ -71,8 +70,8 @@ struct LabelMeshCommonProperties
 struct ParcellationPropertiesPartial_msgToUi
 {
     UID m_parcelUid; //!< Parcellation UID
-    ParcellationProperties<boost::optional> m_properties; //!< Parcellation properties
-    LabelMeshCommonProperties<boost::optional> m_meshProperties; //!< Label mesh common properties
+    ParcellationProperties<std::optional> m_properties; //!< Parcellation properties
+    LabelMeshCommonProperties<std::optional> m_meshProperties; //!< Label mesh common properties
 };
 
 
@@ -85,8 +84,8 @@ struct ParcellationPropertiesPartial_msgToUi
 struct ParcellationPropertiesPartial_msgFromUi
 {
     UID m_parcelUid; //!< Parcellation UID
-    ParcellationProperties<boost::optional> m_properties; //!< Parcellation properties
-    LabelMeshCommonProperties<boost::optional> m_meshProperties; //!< Label mesh common properties
+    ParcellationProperties<std::optional> m_properties; //!< Parcellation properties
+    LabelMeshCommonProperties<std::optional> m_meshProperties; //!< Label mesh common properties
 };
 
 

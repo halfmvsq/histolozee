@@ -59,7 +59,7 @@ void RefImageInteractionHandler::setCrosshairsOriginProvider( GetterType< glm::v
 }
 
 void RefImageInteractionHandler::setImageFrameProvider(
-        GetterType< boost::optional<CoordinateFrame> > provider )
+        GetterType< std::optional<CoordinateFrame> > provider )
 {
     m_imageFrameProvider = provider;
 }

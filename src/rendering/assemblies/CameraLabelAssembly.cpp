@@ -99,7 +99,7 @@ void CameraLabelAssembly::initialize()
 
 
 void CameraLabelAssembly::setActiveSubjectToWorldProvider(
-        GetterType< boost::optional<glm::mat4> > provider )
+        GetterType< std::optional<glm::mat4> > provider )
 {
     if ( m_root )
     {

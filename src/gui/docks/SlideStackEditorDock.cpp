@@ -320,7 +320,7 @@ void SlideStackEditorDock::setSlideStackComplete( const SlideStackComplete_msgTo
         }
         else
         {
-            m_activeSlideUid = boost::none;
+            m_activeSlideUid = std::nullopt;
             m_slideSorterTableView->clearSelection();
 
             /// @todo Clear all widgets
@@ -378,7 +378,7 @@ void SlideStackEditorDock::setActiveSlide( const ActiveSlide_msgToUi& msg )
     }
     else if ( m_slideSorterTableView )
     {
-        m_activeSlideUid = boost::none;
+        m_activeSlideUid = std::nullopt;
         m_slideSorterTableView->clearSelection();
     }
 
@@ -2413,25 +2413,25 @@ QScrollArea* SlideStackEditorDock::createAnnotationScrollArea()
 }
 
 
-boost::optional<int> SlideStackEditorDock::getActiveSlideIndex() const
+std::optional<int> SlideStackEditorDock::getActiveSlideIndex() const
 {
     if ( ! m_slideSorterTableModel || 0 == m_slideSorterTableModel->rowCount() ||
          ! m_slideSorterTableView || ! m_slideSorterTableView->selectionModel() )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     const auto selectedRows = m_slideSorterTableView->selectionModel()->selectedRows();
     if ( selectedRows.empty() )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     return selectedRows[0].row();
 }
 
 
-boost::optional<UID> SlideStackEditorDock::getActiveSlideUid() const
+std::optional<UID> SlideStackEditorDock::getActiveSlideUid() const
 {
     if ( const auto row = getActiveSlideIndex() )
     {
@@ -2439,7 +2439,7 @@ boost::optional<UID> SlideStackEditorDock::getActiveSlideUid() const
     }
     else
     {
-        return boost::none;
+        return std::nullopt;
     }
 }
 

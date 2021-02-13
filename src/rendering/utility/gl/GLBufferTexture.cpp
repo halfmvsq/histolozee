@@ -140,17 +140,17 @@ void GLBufferTexture::generate()
     m_texture.generate();
 }
 
-void GLBufferTexture::release( boost::optional<uint32_t> textureUnit )
+void GLBufferTexture::release( std::optional<uint32_t> textureUnit )
 {
     m_texture.release( textureUnit );
 }
 
-void GLBufferTexture::bind( boost::optional<uint32_t> textureUnit )
+void GLBufferTexture::bind( std::optional<uint32_t> textureUnit )
 {
     m_texture.bind( textureUnit );
 }
 
-bool GLBufferTexture::isBound( boost::optional<uint32_t> textureUnit )
+bool GLBufferTexture::isBound( std::optional<uint32_t> textureUnit )
 {
     return m_texture.isBound( textureUnit );
 }
@@ -210,7 +210,7 @@ GLuint GLBufferTexture::id() const
     return m_texture.id();
 }
 
-void GLBufferTexture::attachBufferToTexture( boost::optional<uint32_t> textureUnit )
+void GLBufferTexture::attachBufferToTexture( std::optional<uint32_t> textureUnit )
 {
     m_texture.bind( textureUnit );
 

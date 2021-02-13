@@ -707,7 +707,7 @@ void TexturedMesh::doRender( const RenderStage& stage )
         }
 
 
-        boost::optional<glm::mat4> imageSubject_O_world;
+        std::optional<glm::mat4> imageSubject_O_world;
 
         if ( auto imageRecord = m_image3dRecord.lock() )
         {

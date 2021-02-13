@@ -168,7 +168,7 @@ void SlideSlice::setUseIntensityThresolding( bool set )
 
 void SlideSlice::setPositioningMethod(
         const SliceIntersector::PositioningMethod& method,
-        const boost::optional<glm::vec3>& p )
+        const std::optional<glm::vec3>& p )
 {
     m_sliceIntersector.setPositioningMethod( method, p );
 }
@@ -176,7 +176,7 @@ void SlideSlice::setPositioningMethod(
 
 void SlideSlice::setAlignmentMethod(
         const SliceIntersector::AlignmentMethod& method,
-        const boost::optional<glm::vec3>& worldNormal )
+        const std::optional<glm::vec3>& worldNormal )
 {
     m_sliceIntersector.setAlignmentMethod( method, worldNormal );
 }
@@ -316,7 +316,7 @@ void SlideSlice::doUpdate(
     const glm::mat4 slide_O_camera = slide_O_world * camera.world_O_camera();
     const glm::mat4 slide_O_crosshairsFrame = slide_O_world * crosshairs.world_O_frame();
 
-    boost::optional< SliceIntersector::IntersectionVertices > slideIntersectionPositions;
+    std::optional< SliceIntersector::IntersectionVertices > slideIntersectionPositions;
 
     std::tie( slideIntersectionPositions, m_modelPlaneNormal ) =
             m_sliceIntersector.computePlaneIntersections(

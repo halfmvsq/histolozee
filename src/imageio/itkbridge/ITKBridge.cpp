@@ -140,7 +140,7 @@ const std::unordered_map< ComponentType, std::string > k_componentStringMap =
 };
 
 
-boost::optional<::imageio::ComponentType>
+std::optional<::imageio::ComponentType>
 fromITKComponentType( const ::itk::ImageIOBase::IOComponentType& componentType )
 {
     using IOB = ::itk::ImageIOBase;
@@ -159,12 +159,12 @@ fromITKComponentType( const ::itk::ImageIOBase::IOComponentType& componentType )
     case IOB::DOUBLE: return ::imageio::ComponentType::Double64;
     case IOB::UNKNOWNCOMPONENTTYPE:
     default:
-        return boost::none;
+        return std::nullopt;
     }
 }
 
 
-boost::optional<ComponentType> sniffComponentType( const char* fileName )
+std::optional<ComponentType> sniffComponentType( const char* fileName )
 {
     ::itk::ImageIOBase::Pointer imageIO =
             ::itkdetails::utility::createStandardImageIO( fileName );
@@ -175,7 +175,7 @@ boost::optional<ComponentType> sniffComponentType( const char* fileName )
 
         if ( imageIO.IsNull() )
         {
-            return boost::none;
+            return std::nullopt;
         }
     }
 

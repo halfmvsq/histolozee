@@ -42,7 +42,7 @@ static constexpr size_t sk_defaultNumLabels = 512;
 
 std::unique_ptr< imageio::ImageCpuRecord > generateImageCpuRecord(
         const std::string& filename,
-        const boost::optional< std::string >& dicomSeriesUid,
+        const std::optional< std::string >& dicomSeriesUid,
         const imageio::ComponentNormalizationPolicy& normPolicy )
 {
     // Cast image components to an OpenGL-compatible format. This means that
@@ -394,7 +394,7 @@ std::unique_ptr<MeshCpuRecord> generateLabelMeshCpuRecord(
 }
 
 
-boost::optional<UID> generateLabelMeshRecord(
+std::optional<UID> generateLabelMeshRecord(
         DataManager& dataManager,
         const UID& parcelUid,
         const uint32_t labelIndex )
@@ -407,7 +407,7 @@ boost::optional<UID> generateLabelMeshRecord(
         ss << "Unable to generate mesh CPU record at label index " << labelIndex
            << " for parcellation " << parcelUid << std::ends;
         std::cerr << ss.str() << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     auto meshGpuRecord = gpuhelper::createMeshGpuRecordFromVtkPolyData(
@@ -421,7 +421,7 @@ boost::optional<UID> generateLabelMeshRecord(
         ss << "Unable to generate mesh GPU record at label index " << labelIndex
            << " for parcellation " << parcelUid << std::ends;
         std::cerr << ss.str() << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     return dataManager.insertLabelMeshRecord(
@@ -452,7 +452,7 @@ generateDefaultParcellationCpuRecord( DataManager& dataManager, const UID& image
 }
 
 
-boost::optional<UID> createBlankParcellation( DataManager& dataManager, const UID& imageUid )
+std::optional<UID> createBlankParcellation( DataManager& dataManager, const UID& imageUid )
 {
     auto parcelCpuRecord = generateDefaultParcellationCpuRecord( dataManager, imageUid );
 
@@ -461,7 +461,7 @@ boost::optional<UID> createBlankParcellation( DataManager& dataManager, const UI
         std::ostringstream ss;
         ss << "Unable to generate blank parcellation for image " << imageUid << std::ends;
         std::cerr << ss.str() << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     static constexpr bool sk_useNormalizedIntegers = false;
@@ -477,7 +477,7 @@ boost::optional<UID> createBlankParcellation( DataManager& dataManager, const UI
         std::ostringstream ss;
         ss << "Unable to generate GPU record for blank parcellation of image " << imageUid << std::ends;
         std::cerr << ss.str() << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     const auto defaultParcelUid = dataManager.insertParcellationRecord(
@@ -487,7 +487,7 @@ boost::optional<UID> createBlankParcellation( DataManager& dataManager, const UI
     if ( ! defaultParcelUid )
     {
         std::cerr << "Error loading blank parcellation for image " << imageUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     // Create mapping between the image and its blank (default) parcellation
@@ -504,7 +504,7 @@ boost::optional<UID> createBlankParcellation( DataManager& dataManager, const UI
                 ss << "Error associating blank label table " << *labelTableUid
                    << " with parcellation " << *labelTableUid << std::ends;
                 std::cerr << ss.str() << std::ends;
-                return boost::none;
+                return std::nullopt;
             }
         }
         else
@@ -512,7 +512,7 @@ boost::optional<UID> createBlankParcellation( DataManager& dataManager, const UI
             std::ostringstream ss;
             ss << "Error inserting default label table record into DataManager" << std::ends;
             std::cerr << ss.str() << std::ends;
-            return boost::none;
+            return std::nullopt;
         }
     }
     else
@@ -520,7 +520,7 @@ boost::optional<UID> createBlankParcellation( DataManager& dataManager, const UI
         std::ostringstream ss;
         ss << "Error creating label table for parcellation " << *defaultParcelUid << std::ends;
         std::cerr << ss.str() << std::ends;
-        return boost::none;
+        return std::nullopt;
     }
 
     std::cout << "Generated blank parcellation " << *defaultParcelUid

@@ -40,11 +40,11 @@
 #include <glm/gtx/string_cast.hpp>
 
 #include <boost/format.hpp>
-#include <boost/optional.hpp>
 
 #include <QOpenGLContext>
 #include <QOpenGLWidget>
 
+#include <optional>
 #include <sstream>
 
 
@@ -144,10 +144,10 @@ void ActionManager::updateWorldPositionStatus()
 
     // Get the pixel value at the given position in an image. The value is returned as a
     // double precision floating point. If the world position is not inside the image domain,
-    // then boost::none is returned.
+    // then std::nullopt is returned.
 
     auto getImagePixelValue = [ &worldPos ] ( const imageio::ImageCpuRecord& record )
-            -> boost::optional<double>
+            -> std::optional<double>
     {
         const glm::vec4 pixelPos4 = record.transformations().pixel_O_world() * worldPos;
         const glm::vec3 pixelPos{ pixelPos4 / pixelPos4.w };
@@ -165,7 +165,7 @@ void ActionManager::updateWorldPositionStatus()
             }
         }
 
-        return boost::none;
+        return std::nullopt;
     };
 
 
@@ -244,10 +244,10 @@ void ActionManager::updateWorldPositionStatus()
 
         ssLabelValue.str( std::string() );
 
-        const boost::optional<int64_t> labelValue = parcelCpuRecord->labelValue( labelIndex );
+        const std::optional<int64_t> labelValue = parcelCpuRecord->labelValue( labelIndex );
         if ( labelValue )
         {
-            ssLabelValue << boost::format( "Label: %d ('%s')" ) % labelValue.get() % labelName;
+            ssLabelValue << boost::format( "Label: %d ('%s')" ) % ( *labelValue )  % labelName;
         }
 
         break;
@@ -479,7 +479,7 @@ void ActionManager::setupCamerasAndCrosshairsForImage()
 
 void ActionManager::loadImage(
         const std::string& filename,
-        const boost::optional< std::string >& dicomSeriesUid )
+        const std::optional< std::string >& dicomSeriesUid )
 {
     if ( m_globalContext->makeCurrent( &m_surface ) )
     {
@@ -508,7 +508,7 @@ void ActionManager::loadImage(
 
 void ActionManager::loadParcellation(
         const std::string& filename,
-        const boost::optional< std::string >& dicomSeriesUid )
+        const std::optional< std::string >& dicomSeriesUid )
 {
     if ( m_globalContext->makeCurrent( &m_surface ) )
     {

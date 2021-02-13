@@ -3,9 +3,8 @@
 
 #include "common/UID.h"
 
-#include <boost/optional.hpp>
-
 #include <memory>
+#include <optional>
 #include <set>
 #include <string>
 #include <vector>
@@ -26,12 +25,12 @@ namespace data
  * @param[in] filename Image file name
  * @param[in] dicomSeriesUid Optional DICOM series UID
  *
- * @return If generation successful, return the image UID. Otherwise, return boost::none.
+ * @return If generation successful, return the image UID. Otherwise, return std::nullopt.
  */
-boost::optional<UID> loadImage(
+std::optional<UID> loadImage(
         DataManager& dataManager,
         const std::string& filename,
-        const boost::optional< std::string >& dicomSeriesUid );
+        const std::optional< std::string >& dicomSeriesUid );
 
 
 /**
@@ -45,12 +44,12 @@ boost::optional<UID> loadImage(
  * @param[in] dicomSeriesUid Optional DICOM series UID
  *
  * @return If generation/loading successful, return the parcellation UID.
- * Otherwise, return boost::none.
+ * Otherwise, return std::nullopt.
  */
-boost::optional<UID> loadParcellation(
+std::optional<UID> loadParcellation(
         DataManager& dataManager,
         const std::string& filename,
-        const boost::optional< std::string >& dicomSeriesUid );
+        const std::optional< std::string >& dicomSeriesUid );
 
 
 /**
@@ -60,9 +59,9 @@ boost::optional<UID> loadParcellation(
  * @param filename Slide file name
  *
  * @return If generation successful, return the slide UID.
- * Otherwise, return boost::none.
+ * Otherwise, return std::nullopt.
  */
-boost::optional<UID> loadSlide( DataManager& dataManager, const std::string& filename );
+std::optional<UID> loadSlide( DataManager& dataManager, const std::string& filename );
 
 
 /**
@@ -74,9 +73,9 @@ boost::optional<UID> loadSlide( DataManager& dataManager, const std::string& fil
  * @param[in] dataManager DataManager instance
  * @param[in] imageUid UID of the image to match in size
  *
- * @return If generation successful, return the parcellation UID. Otherwise, return boost::none.
+ * @return If generation successful, return the parcellation UID. Otherwise, return std::nullopt.
  */
-boost::optional<UID> getActiveParcellation( DataManager& dataManager, const UID& imageUid );
+std::optional<UID> getActiveParcellation( DataManager& dataManager, const UID& imageUid );
 
 
 /**
@@ -87,9 +86,9 @@ boost::optional<UID> getActiveParcellation( DataManager& dataManager, const UID&
  * @param[in] imageUid UID of the input image
  * @param[in] isoValue Iso-value at which to generate the surface
  *
- * @return If generation successful, return the mesh UID. Otherwise, return boost::none.
+ * @return If generation successful, return the mesh UID. Otherwise, return std::nullopt.
  */
-boost::optional<UID> generateIsoSurfaceMesh(
+std::optional<UID> generateIsoSurfaceMesh(
         DataManager& dataManager, const UID& imageUid, double isoValue );
 
 
@@ -138,9 +137,9 @@ std::vector<UID> loadImageColorMaps( DataManager& dataManager, const std::string
  * @param[in] dataManager DataManager instance
  * @param[in] filePath Path to the color map file
  *
- * @return UID of the loaded color map record; boost::none if loading was not successful
+ * @return UID of the loaded color map record; std::nullopt if loading was not successful
  */
-boost::optional<UID> loadImageColorMap( DataManager& dataManager, const std::string& filePath );
+std::optional<UID> loadImageColorMap( DataManager& dataManager, const std::string& filePath );
 
 
 /**
@@ -150,7 +149,7 @@ boost::optional<UID> loadImageColorMap( DataManager& dataManager, const std::str
  *
  * @return UID of the greyscale color map (if it exists)
  */
-boost::optional<UID> loadDefaultGreyscaleColorMap( DataManager& dataManager );
+std::optional<UID> loadDefaultGreyscaleColorMap( DataManager& dataManager );
 
 } // namespace data
 

@@ -10,10 +10,9 @@
 
 #include "common/PublicTypes.h"
 
-#include <boost/optional.hpp>
-
 #include <functional>
 #include <memory>
+#include <optional>
 
 
 class ActionManager;
@@ -65,15 +64,15 @@ public:
     gui::ImageColorMaps_msgToUi getImageColorMaps_msgToUi() const;
 
     /// Respond to UI request for all properties of given image
-    boost::optional< gui::ImagePropertiesComplete_msgToUi >
+    std::optional< gui::ImagePropertiesComplete_msgToUi >
     getImagePropertiesComplete_msgToUi( const UID& imageUid ) const;
 
     /// Respond to UI request for header of given image
-    boost::optional< gui::ImageHeader_msgToUi >
+    std::optional< gui::ImageHeader_msgToUi >
     getImageHeader_msgToUi( const UID& imageUid ) const;
 
     /// Respond to UI request for transformation of given image
-    boost::optional< gui::ImageTransformation_msgToUi >
+    std::optional< gui::ImageTransformation_msgToUi >
     getImageTransformation_msgToUi( const UID& imageUid ) const;
 
 

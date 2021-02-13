@@ -31,8 +31,8 @@ public:
             std::string name,
             ShaderProgramActivatorType shaderActivator,
             UniformsProviderType uniformsProvider,
-            GetterType< boost::optional<glm::mat4> > annotToWorldTxProvider,
-            GetterType< boost::optional<float> > thicknessProvider,
+            GetterType< std::optional<glm::mat4> > annotToWorldTxProvider,
+            GetterType< std::optional<float> > thicknessProvider,
             std::weak_ptr<SlideAnnotationRecord> slideAnnotationRecord );
 
     ~AnnotationExtrusion() override = default;
@@ -52,10 +52,10 @@ private:
     UniformsProviderType m_uniformsProvider;
 
     /// Function providing transformation from this annotation's Slide space to World space
-    GetterType< boost::optional<glm::mat4> > m_annotToWorldTxProvider;
+    GetterType< std::optional<glm::mat4> > m_annotToWorldTxProvider;
 
     /// Function providing the thickness of this annotation's slide in World space
-    GetterType< boost::optional<float> > m_thicknessProvider;
+    GetterType< std::optional<float> > m_thicknessProvider;
 
     /// Slide annotation record that is rendered as a mesh
     std::weak_ptr<SlideAnnotationRecord> m_slideAnnotationRecord;

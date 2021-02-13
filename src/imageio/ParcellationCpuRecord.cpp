@@ -27,13 +27,13 @@ ParcellationCpuRecord::labelValues() const
     return m_labelValues;
 }
 
-boost::optional<int64_t> ParcellationCpuRecord::labelValue( size_t index ) const
+std::optional<int64_t> ParcellationCpuRecord::labelValue( size_t index ) const
 {
     if ( index < m_labelValues.size() )
     {
         return m_labelValues.at( index );
     }
-    return boost::none;
+    return std::nullopt;
 }
 
 size_t ParcellationCpuRecord::numLabels() const

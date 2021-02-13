@@ -12,9 +12,9 @@
 #include <vtkImageData.h>
 #include <vtkSmartPointer.h>
 
-#include <boost/optional.hpp>
 #include <boost/range/any_range.hpp>
 
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -83,7 +83,7 @@ public:
 
     statistics_range_t pixelStatistics() const;
 
-    boost::optional< utility::PixelStatistics<double> >
+    std::optional< utility::PixelStatistics<double> >
     pixelStatistics( uint32_t componentIndex ) const;
 
     bool isVectorImage() const;

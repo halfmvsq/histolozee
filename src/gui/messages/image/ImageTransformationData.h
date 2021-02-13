@@ -4,10 +4,10 @@
 #include "common/Identity.h"
 #include "common/UID.h"
 
-#include <boost/optional.hpp>
-
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
+
+#include <optional>
 
 
 namespace gui
@@ -15,7 +15,7 @@ namespace gui
 
 /**
  * @brief Decomposed image affine transformation parameters.
- * Template type V can be either boost::optional (to denote all optional fields) or
+ * Template type V can be either std::optional (to denote all optional fields) or
  * Required (to denote all required fields).
  */
 template< template<typename> class V >
@@ -53,10 +53,10 @@ struct ImageTransformation_msgFromUi
     UID m_imageUid; //!< Image UID
 
     /// Decomposition of image Subject to World space matrix
-    AffineDecomposition< boost::optional > m_world_O_subject_decomp;
+    AffineDecomposition< std::optional > m_world_O_subject_decomp;
 
     /// Flag to set the world_O_subject transformation to identity.
-    boost::optional<bool> m_set_world_O_subject_identity;
+    std::optional<bool> m_set_world_O_subject_identity;
 };
 
 }

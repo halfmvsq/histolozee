@@ -8,11 +8,10 @@
 
 #include <glm/fwd.hpp>
 
-#include <boost/optional.hpp>
-
 #include <QOffscreenSurface>
 
 #include <functional>
+#include <optional>
 #include <string>
 
 
@@ -83,11 +82,11 @@ public:
 
     /// Load a 3D image from disk and set it as the active image
     void loadImage( const std::string& filename,
-                    const boost::optional< std::string >& dicomSeriesUid );
+                    const std::optional< std::string >& dicomSeriesUid );
 
     /// Load a 3D parcellation from disk and set it as the active parcellation
     void loadParcellation( const std::string& filename,
-                           const boost::optional< std::string >& dicomSeriesUid );
+                           const std::optional< std::string >& dicomSeriesUid );
 
     /// Load a slide image from disk and set it as the active slide
     void loadSlide( const std::string& filename );

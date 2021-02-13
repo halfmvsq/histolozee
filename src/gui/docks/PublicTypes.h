@@ -3,9 +3,8 @@
 
 #include "common/UID.h"
 
-#include <boost/optional.hpp>
-
 #include <functional>
+#include <optional>
 
 
 namespace gui
@@ -119,15 +118,15 @@ using ImageColorMaps_msgToUi_ResponderType =
 
 /// Functional for the app to respond to request from UI for all properties of a given image
 using ImagePropertiesComplete_msgToUi_ResponderType =
-    std::function< boost::optional< ImagePropertiesComplete_msgToUi > ( const UID& imageUid ) >;
+    std::function< std::optional< ImagePropertiesComplete_msgToUi > ( const UID& imageUid ) >;
 
 /// Functional for the app to respond to request from UI for the header of a given image
 using ImageHeader_msgToUi_ResponderType =
-    std::function< boost::optional< ImageHeader_msgToUi > ( const UID& imageUid ) >;
+    std::function< std::optional< ImageHeader_msgToUi > ( const UID& imageUid ) >;
 
 /// Functional for the app to respond to request from UI for the transformation of a given image
 using ImageTransformation_msgToUi_ResponderType =
-    std::function< boost::optional< ImageTransformation_msgToUi > ( const UID& imageUid ) >;
+    std::function< std::optional< ImageTransformation_msgToUi > ( const UID& imageUid ) >;
 
 
 /// Functional for the app to respond to parcellation selection request from UI
@@ -136,15 +135,15 @@ using ParcellationSelections_msgToUi_ResponderType =
 
 /// Functional for the app to respond to request from UI for all properties of a given parcellation
 using ParcellationPropertiesComplete_msgToUi_ResponderType =
-    std::function< boost::optional< ParcellationPropertiesComplete_msgToUi > ( const UID& parcelUid ) >;
+    std::function< std::optional< ParcellationPropertiesComplete_msgToUi > ( const UID& parcelUid ) >;
 
 /// Functional for the app to respond to request from UI for the header of a given parcellation
 using ParcellationHeader_msgToUi_ResponderType =
-    std::function< boost::optional< ImageHeader_msgToUi > ( const UID& parcelUid ) >;
+    std::function< std::optional< ImageHeader_msgToUi > ( const UID& parcelUid ) >;
 
 /// Functional for the app to respond to request from UI for all labels of a given parcellation
 using ParcellationLabelsComplete_msgToUi_ResponderType =
-    std::function< boost::optional< ParcellationLabelsComplete_msgToUi > ( const UID& parcelUid ) >;
+    std::function< std::optional< ParcellationLabelsComplete_msgToUi > ( const UID& parcelUid ) >;
 
 } // namespace gui
 

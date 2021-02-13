@@ -52,13 +52,13 @@ struct ParcellationDataUiMapper::Impl
     gui::ParcellationSelections_msgToUi getParcellationSelection() const;
 
     /// Get all current properties of the active parcellation (if there is one)
-    boost::optional< gui::ParcellationPropertiesComplete_msgToUi > getActiveParcellationProperties() const;
+    std::optional< gui::ParcellationPropertiesComplete_msgToUi > getActiveParcellationProperties() const;
 
     /// Get header of the active parcellation (if there is one)
-    boost::optional< gui::ImageHeader_msgToUi > getActiveParcellationHeader() const;
+    std::optional< gui::ImageHeader_msgToUi > getActiveParcellationHeader() const;
 
     /// Get current label table of the active parcellation (if there is one)
-    boost::optional< gui::ParcellationLabelsComplete_msgToUi > getActiveParcellationLabels() const;
+    std::optional< gui::ParcellationLabelsComplete_msgToUi > getActiveParcellationLabels() const;
 
 
     ActionManager& m_actionManager;
@@ -144,7 +144,7 @@ ParcellationDataUiMapper::getParcellationSelections_msgToUi() const
     return m_impl->getParcellationSelection();
 }
 
-boost::optional< gui::ParcellationPropertiesComplete_msgToUi >
+std::optional< gui::ParcellationPropertiesComplete_msgToUi >
 ParcellationDataUiMapper::getParcellationPropertiesComplete_msgToUi( const UID& parcelUid ) const
 {
     const auto activeParcelUid = m_impl->m_dataManager.activeParcellationUid();
@@ -153,14 +153,14 @@ ParcellationDataUiMapper::getParcellationPropertiesComplete_msgToUi( const UID& 
     {
         // Requested of properties of a parcellation that is not active
         std::cerr << "Requested properties of non-active parcellation " << parcelUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     return m_impl->getActiveParcellationProperties();
 }
 
 
-boost::optional< gui::ImageHeader_msgToUi >
+std::optional< gui::ImageHeader_msgToUi >
 ParcellationDataUiMapper::getParcellationHeader_msgToUi( const UID& parcelUid ) const
 {
     const auto activeParcelUid = m_impl->m_dataManager.activeParcellationUid();
@@ -168,13 +168,13 @@ ParcellationDataUiMapper::getParcellationHeader_msgToUi( const UID& parcelUid ) 
     if ( ! activeParcelUid || *activeParcelUid != parcelUid )
     {
         std::cerr << "Requested header of non-active parcellation " << parcelUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     return m_impl->getActiveParcellationHeader();
 }
 
-boost::optional< gui::ParcellationLabelsComplete_msgToUi >
+std::optional< gui::ParcellationLabelsComplete_msgToUi >
 ParcellationDataUiMapper::getParcellationLabelsComplete_msgToUi( const UID& parcelUid ) const
 {
     const auto activeParcelUid = m_impl->m_dataManager.activeParcellationUid();
@@ -182,7 +182,7 @@ ParcellationDataUiMapper::getParcellationLabelsComplete_msgToUi( const UID& parc
     if ( ! activeParcelUid || *activeParcelUid != parcelUid )
     {
         std::cerr << "Requested labels of non-active parcellation " << parcelUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     return m_impl->getActiveParcellationLabels();
@@ -587,20 +587,20 @@ ParcellationDataUiMapper::Impl::getParcellationSelection() const
 }
 
 
-boost::optional< gui::ParcellationPropertiesComplete_msgToUi >
+std::optional< gui::ParcellationPropertiesComplete_msgToUi >
 ParcellationDataUiMapper::Impl::getActiveParcellationProperties() const
 {
     const auto activeParcelUid = m_dataManager.activeParcellationUid();
     if ( ! activeParcelUid )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto activeParcelRecord = m_dataManager.parcellationRecord( *activeParcelUid ).lock();
     if ( ! activeParcelRecord || ! activeParcelRecord->cpuData() ||
          ! activeParcelRecord->cpuData()->imageBaseData() )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto cpuRecord = activeParcelRecord->cpuData();
@@ -660,20 +660,20 @@ ParcellationDataUiMapper::Impl::getActiveParcellationProperties() const
 }
 
 
-boost::optional< gui::ImageHeader_msgToUi >
+std::optional< gui::ImageHeader_msgToUi >
 ParcellationDataUiMapper::Impl::getActiveParcellationHeader() const
 {
     const auto activeParcelUid = m_dataManager.activeParcellationUid();
     if ( ! activeParcelUid )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto activeParcelRecord = m_dataManager.parcellationRecord( *activeParcelUid ).lock();
     if ( ! activeParcelRecord || ! activeParcelRecord->cpuData() ||
          ! activeParcelRecord->cpuData()->imageBaseData() )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     gui::ImageHeader_msgToUi msg;
@@ -689,7 +689,7 @@ ParcellationDataUiMapper::Impl::getActiveParcellationHeader() const
 }
 
 
-boost::optional< gui::ParcellationLabelsComplete_msgToUi >
+std::optional< gui::ParcellationLabelsComplete_msgToUi >
 ParcellationDataUiMapper::Impl::getActiveParcellationLabels() const
 {
     // Active parcellation labels are the labels of the active parcellation
@@ -698,42 +698,42 @@ ParcellationDataUiMapper::Impl::getActiveParcellationLabels() const
     if ( ! activeParcelUid )
     {
         std::cerr << "No active parcellation" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     auto activeParcelRecord = m_dataManager.parcellationRecord( *activeParcelUid ).lock();
     if ( ! activeParcelRecord )
     {
         std::cerr << "Null active parcellation " << *activeParcelUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     const auto activeParcelCpuRecord = activeParcelRecord->cpuData();
     if ( ! activeParcelCpuRecord )
     {
         std::cerr << "Null CPU record for active parcellation " << *activeParcelUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     const auto activeLabelsUid = m_dataManager.labelTableUid_of_parcellation( *activeParcelUid );
     if ( ! activeLabelsUid )
     {
         std::cerr << "Could not find label UID for active parcellation " << *activeParcelUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     auto activeLabelsRecord = m_dataManager.labelTableRecord( *activeLabelsUid ).lock();
     if ( ! activeLabelsRecord )
     {
         std::cerr << "Null label record for active parcellation " << *activeParcelUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     auto labelTable = activeLabelsRecord->cpuData();
     if ( ! labelTable )
     {
         std::cerr << "Null CPU record for active label table " << *activeParcelUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
 

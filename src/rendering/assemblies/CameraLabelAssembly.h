@@ -9,9 +9,8 @@
 
 #include <glm/fwd.hpp>
 
-#include <boost/optional.hpp>
-
 #include <memory>
+#include <optional>
 
 
 class CameraLabel;
@@ -35,7 +34,7 @@ public:
 
     std::weak_ptr<DrawableBase> getRoot( const SceneType& ) override;
 
-    void setActiveSubjectToWorldProvider( GetterType< boost::optional<glm::mat4> > );
+    void setActiveSubjectToWorldProvider( GetterType< std::optional<glm::mat4> > );
 
 
 private:
@@ -46,7 +45,7 @@ private:
     ShaderProgramActivatorType m_shaderActivator;
     UniformsProviderType m_uniformsProvider;
 
-    GetterType< boost::optional<glm::mat4> > m_activeSubjectToWorldProvider;
+    GetterType< std::optional<glm::mat4> > m_activeSubjectToWorldProvider;
 
     std::shared_ptr<CameraLabel> m_root;
 

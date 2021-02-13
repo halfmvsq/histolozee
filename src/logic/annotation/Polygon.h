@@ -6,8 +6,7 @@
 
 #include <glm/vec2.hpp>
 
-#include <boost/optional.hpp>
-
+#include <optional>
 #include <tuple>
 #include <vector>
 
@@ -82,8 +81,8 @@ public:
 
 
     /// Get the 2D axis-aligned bounding box of the polygon.
-    /// @returns boost::none if the polygon is empty
-    boost::optional< AABBoxType > getAABBox() const;
+    /// @returns std::nullopt if the polygon is empty
+    std::optional< AABBoxType > getAABBox() const;
 
 
     /// Set the triangulation from a vector of indices that refer to vertices of the whole polygon.
@@ -131,7 +130,7 @@ private:
     UID m_currentUid;
 
     /// 2D axis-aligned bounding box of the polygon; set to none if the polygon is empty.
-    boost::optional< AABBoxType > m_aabb;
+    std::optional< AABBoxType > m_aabb;
 };
 
 #endif // POLYGON_H

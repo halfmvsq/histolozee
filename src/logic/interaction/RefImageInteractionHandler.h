@@ -7,9 +7,8 @@
 
 #include <glm/vec2.hpp>
 
-#include <boost/optional.hpp>
-
 #include <functional>
+#include <optional>
 
 
 class CoordinateFrame;
@@ -30,8 +29,8 @@ public:
     void setCrosshairsOriginProvider( GetterType< glm::vec3 > );
 
     /// Set function returning the frame mapping the active image Subject to World space.
-    /// If there is no active image, boost::none is expected.
-    void setImageFrameProvider( GetterType< boost::optional<CoordinateFrame> > );
+    /// If there is no active image, std::nullopt is expected.
+    void setImageFrameProvider( GetterType< std::optional<CoordinateFrame> > );
 
     /// Set function for broadcasting a non-final change to the frame mapping active image
     /// Subject to World space
@@ -79,7 +78,7 @@ private:
     GetterType< glm::vec3 > m_crosshairsOriginProvider;
 
     /// Provides the coordinate frame of the image
-    GetterType< boost::optional<CoordinateFrame> > m_imageFrameProvider;
+    GetterType< std::optional<CoordinateFrame> > m_imageFrameProvider;
 
     /// Broadcasts that the image coordinate frame changed
     SetterType<const CoordinateFrame&> m_imageFrameChangedBroadcaster;

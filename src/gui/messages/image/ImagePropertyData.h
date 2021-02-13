@@ -4,8 +4,7 @@
 #include "common/Identity.h"
 #include "common/UID.h"
 
-#include <boost/optional.hpp>
-
+#include <optional>
 #include <string>
 #include <utility>
 
@@ -15,7 +14,7 @@ namespace gui
 
 /**
  * @brief Per-image property data for the UI.
- * Template type V can be either boost::optional (to denote all optional fields) or
+ * Template type V can be either std::optional (to denote all optional fields) or
  * Required (to denote all required fields).
  */
 template< template<typename> class V >
@@ -64,7 +63,7 @@ struct ImageSliceCommonProperties
 
 /**
  * @brief Message of some widget properties of currently active image: sent from app to UI.
- * All property fields are optional. When received by the UI, the defined (non-boost::none)
+ * All property fields are optional. When received by the UI, the defined (non-std::nullopt)
  * properties are overwritten in the UI.
  *
  * @note Identical message structure to \c ImagePropertiesPartial_msgFromUi
@@ -72,8 +71,8 @@ struct ImageSliceCommonProperties
 struct ImagePropertiesPartial_msgToUi
 {
     UID m_imageUid; //!< Image UID
-    ImageProperties<boost::optional> m_properties; //!< Image properties (all optional)
-    ImageSliceCommonProperties<boost::optional> m_commonProperties; //!< Common properties (all optional)
+    ImageProperties<std::optional> m_properties; //!< Image properties (all optional)
+    ImageSliceCommonProperties<std::optional> m_commonProperties; //!< Common properties (all optional)
 };
 
 
@@ -86,8 +85,8 @@ struct ImagePropertiesPartial_msgToUi
 struct ImagePropertiesPartial_msgFromUi
 {
     UID m_imageUid; //!< Image UID
-    ImageProperties<boost::optional> m_properties; //!< Image properties (all optional)
-    ImageSliceCommonProperties<boost::optional> m_commonProperties; //!< Common properties (all optional)
+    ImageProperties<std::optional> m_properties; //!< Image properties (all optional)
+    ImageSliceCommonProperties<std::optional> m_commonProperties; //!< Common properties (all optional)
 };
 
 

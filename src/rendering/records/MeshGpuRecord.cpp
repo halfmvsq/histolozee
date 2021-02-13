@@ -7,15 +7,15 @@ MeshGpuRecord::MeshGpuRecord(
         VertexIndicesInfo indicesInfo )
     :
       m_positionsObject( std::move( positionsObject ) ),
-      m_normalsObject( boost::none ),
-      m_texCoordsObject( boost::none ),
-      m_colorsObject( boost::none ),
+      m_normalsObject( std::nullopt ),
+      m_texCoordsObject( std::nullopt ),
+      m_colorsObject( std::nullopt ),
       m_indicesObject( std::move( indicesObject ) ),
 
       m_positionsInfo( std::move( positionsInfo ) ),
-      m_normalsInfo( boost::none ),
-      m_texCoordsInfo( boost::none ),
-      m_colorsInfo( boost::none ),
+      m_normalsInfo( std::nullopt ),
+      m_texCoordsInfo( std::nullopt ),
+      m_colorsInfo( std::nullopt ),
       m_indicesInfo( std::move( indicesInfo ) )
 {}
 
@@ -69,19 +69,19 @@ GLBufferObject& MeshGpuRecord::positionsObject()
     return m_positionsObject;
 }
 
-boost::optional<GLBufferObject>&
+std::optional<GLBufferObject>&
 MeshGpuRecord::normalsObject()
 {
     return m_normalsObject;
 }
 
-boost::optional<GLBufferObject>&
+std::optional<GLBufferObject>&
 MeshGpuRecord::texCoordsObject()
 {
     return m_texCoordsObject;
 }
 
-boost::optional<GLBufferObject>&
+std::optional<GLBufferObject>&
 MeshGpuRecord::colorsObject()
 {
     return m_colorsObject;
@@ -98,19 +98,19 @@ MeshGpuRecord::positionsInfo() const
     return m_positionsInfo;
 }
 
-const boost::optional< VertexAttributeInfo >&
+const std::optional< VertexAttributeInfo >&
 MeshGpuRecord::normalsInfo() const
 {
     return m_normalsInfo;
 }
 
-const boost::optional< VertexAttributeInfo >&
+const std::optional< VertexAttributeInfo >&
 MeshGpuRecord::texCoordsInfo() const
 {
     return m_texCoordsInfo;
 }
 
-const boost::optional< VertexAttributeInfo >&
+const std::optional< VertexAttributeInfo >&
 MeshGpuRecord::colorsInfo() const
 {
     return m_colorsInfo;

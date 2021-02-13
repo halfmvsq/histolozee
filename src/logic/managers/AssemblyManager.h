@@ -68,14 +68,14 @@ public:
     /// Set the function that queries the transformation from a given reference image landmark
     /// group to World space.
     void setRefImageLandmarkGroupToWorldTxQuerier(
-            QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > );
+            QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > );
 
     /// Set the function that queries the transformation from a given slide landmark group
     /// to World space.
-    void setSlideLandmarkGroupToWorldTxQuerier( QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > );
+    void setSlideLandmarkGroupToWorldTxQuerier( QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > );
 
     /// Set the function that queries the transformation from a given slide annotation to World space.
-    void setSlideAnnotationToWorldTxQuerier( QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > );
+    void setSlideAnnotationToWorldTxQuerier( QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > );
 
     /// Set the function that queries scaling information for a given reference image landmark group.
     void setRefImageLandmarkGroupScalingQuerier( QuerierType< DrawableScaling, UID > );
@@ -84,20 +84,20 @@ public:
     void setSlideLandmarkGroupScalingQuerier( QuerierType< DrawableScaling, UID > );
 
     /// Set the function that queries the thickness of the slide associated with an annotation.
-    void setSlideAnnotationThicknessQuerier( QuerierType< boost::optional<float>, UID > );
+    void setSlideAnnotationThicknessQuerier( QuerierType< std::optional<float>, UID > );
 
     /// Set the function that queries whether a slide is active or not.
     /// (Used because the active slide is rendered differently.)
     void setActiveSlideQuerier( QuerierType<bool, UID> );
 
     /// Set the function that provides the transformation from the active image's Subject to World space.
-    void setActiveSubjectToWorldProvider( GetterType< boost::optional<glm::mat4> > );
+    void setActiveSubjectToWorldProvider( GetterType< std::optional<glm::mat4> > );
 
     /// Set the function that provides the transformation from a label mesh's "Subject" to World space.
-    void setLabelMeshSubjectToWorldTxQuerier( QuerierType< boost::optional<glm::mat4>, UID > );
+    void setLabelMeshSubjectToWorldTxQuerier( QuerierType< std::optional<glm::mat4>, UID > );
 
     /// Set the function that provides the transformation from an isosurface mesh's "Subject" to World space.
-    void setIsoSurfaceMeshSubjectToWorldTxQuerier( QuerierType< boost::optional<glm::mat4>, UID > );
+    void setIsoSurfaceMeshSubjectToWorldTxQuerier( QuerierType< std::optional<glm::mat4>, UID > );
 
 
     /// Initialize the assemblies. This call requires an OpenGL context.

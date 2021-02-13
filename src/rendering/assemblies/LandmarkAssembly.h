@@ -32,11 +32,11 @@ class LandmarkAssembly final :
         public ObjectCounter<LandmarkAssembly>
 {
     /// Function that queries the transformation from a given Landmark Group (keyed by its UID)
-    /// to World space. If the Landmark Group does not exist, then boost::none returned.
+    /// to World space. If the Landmark Group does not exist, then std::nullopt returned.
     /// If it does exist, then two matrices are returned:
     /// 1) Full affine transformation from Landmark Group to World, which includes scale and shear.
     /// 2) Rigid-body transformation from Landmark Group to World, which ignores scale and shear.
-    using LmGroupToWorldTxQuerierType = QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID >;
+    using LmGroupToWorldTxQuerierType = QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID >;
 
 
 public:

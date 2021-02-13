@@ -7,9 +7,8 @@
 
 #include <glm/mat4x4.hpp>
 
-#include <boost/optional.hpp>
-
 #include <list>
+#include <optional>
 #include <unordered_set>
 
 
@@ -28,8 +27,8 @@ struct SlideStackComplete_msgToUi
 {
     std::list<SlidePreview> m_slides; //!< All ordered slides in stack
 
-    boost::optional<UID> m_activeSlideUid; //!< UID of active slide
-    boost::optional<int> m_activeSlideIndex; //!< Index of active (selected) slide
+    std::optional<UID> m_activeSlideUid; //!< UID of active slide
+    std::optional<int> m_activeSlideIndex; //!< Index of active (selected) slide
 
     /// Affine transformation matrix mapping Slide Stack to World space.
     glm::dmat4 m_world_O_stack;
@@ -46,7 +45,7 @@ struct SlideStackPartial_msgToUi
     SlidePreviewSet m_slides; //!< Set of slides that were changed in the app
 
     /// Affine transformation matrix mapping Slide Stack to World space.
-    boost::optional< glm::dmat4 > m_world_O_stack;
+    std::optional< glm::dmat4 > m_world_O_stack;
 };
 
 /**
@@ -62,7 +61,7 @@ struct SlideStackPartial_msgFromUi
 
     /// Flag to set the world_O_stack transformation to identity.
     /// (For use by the UI only.)
-    boost::optional<bool> m_set_world_O_stack_identity;
+    std::optional<bool> m_set_world_O_stack_identity;
 };
 
 
@@ -75,8 +74,8 @@ struct SlideStackPartial_msgFromUi
  */
 struct ActiveSlide_msgFromUi
 {
-    boost::optional<UID> m_activeSlideUid; //!< UID of active slide
-    boost::optional<int> m_activeSlideIndex = 0; //!< Index of active slide
+    std::optional<UID> m_activeSlideUid; //!< UID of active slide
+    std::optional<int> m_activeSlideIndex = 0; //!< Index of active slide
 };
 
 /**
@@ -88,8 +87,8 @@ struct ActiveSlide_msgFromUi
  */
 struct ActiveSlide_msgToUi
 {
-    boost::optional<UID> m_activeSlideUid; //!< UID of active slide
-    boost::optional<int> m_activeSlideIndex = 0; //!< Index of active slide
+    std::optional<UID> m_activeSlideUid; //!< UID of active slide
+    std::optional<int> m_activeSlideIndex = 0; //!< Index of active slide
 };
 
 

@@ -196,14 +196,14 @@ void ImageSlice::setLabelTableRecord( std::weak_ptr<LabelTableRecord> tableRecor
 
 void ImageSlice::setPositioningMethod(
         const SliceIntersector::PositioningMethod& method,
-        const boost::optional<glm::vec3>& p )
+        const std::optional<glm::vec3>& p )
 {
     m_sliceIntersector.setPositioningMethod( method, p );
 }
 
 void ImageSlice::setAlignmentMethod(
         const SliceIntersector::AlignmentMethod& method,
-        const boost::optional<glm::vec3>& worldNormal )
+        const std::optional<glm::vec3>& worldNormal )
 {
     m_sliceIntersector.setAlignmentMethod( method, worldNormal );
 }
@@ -305,7 +305,7 @@ void ImageSlice::doUpdate(
     /// If a non-identity Transformation is parent to this ImageSlice, then this tx
     /// should not be ignored
 
-    boost::optional< SliceIntersector::IntersectionVertices > subjectIntersectionPositions;
+    std::optional< SliceIntersector::IntersectionVertices > subjectIntersectionPositions;
     glm::vec3 subjectPlaneNormal;
 
     std::tie( subjectIntersectionPositions, subjectPlaneNormal ) =

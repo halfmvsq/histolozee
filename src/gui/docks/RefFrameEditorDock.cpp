@@ -180,9 +180,9 @@ RefFrameEditorDock::RefFrameEditorDock( QWidget* parent )
       m_parcelSelections(),
       m_imageColorMaps(),
 
-      m_currentImageUid( boost::none ),
-      m_currentParcelUid( boost::none ),
-      m_currentLabelsUid( boost::none )
+      m_currentImageUid( std::nullopt ),
+      m_currentParcelUid( std::nullopt ),
+      m_currentLabelsUid( std::nullopt )
 {
     // Note: In case no parent is provided on construction, this dock widget will get
     // parented when added as a dock to the QMainWindow object
@@ -2397,12 +2397,12 @@ void RefFrameEditorDock::setImageTransformation( const ImageTransformation_msgTo
 }
 
 
-boost::optional< ImagePropertiesComplete_msgFromUi >
+std::optional< ImagePropertiesComplete_msgFromUi >
 RefFrameEditorDock::getImagePropertiesComplete() const
 {
     if ( ! m_currentImageUid )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     ImagePropertiesComplete_msgFromUi msg;
@@ -2654,12 +2654,12 @@ void RefFrameEditorDock::setParcellationHeader( const ImageHeader_msgToUi& msg )
 }
 
 
-boost::optional< ParcellationPropertiesComplete_msgFromUi >
+std::optional< ParcellationPropertiesComplete_msgFromUi >
 RefFrameEditorDock::getParcellationPropertiesComplete() const
 {
     if ( ! m_currentParcelUid )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     ParcellationPropertiesComplete_msgFromUi msg;
@@ -2683,12 +2683,12 @@ RefFrameEditorDock::getParcellationPropertiesComplete() const
 }
 
 
-boost::optional< ParcellationLabelsComplete_msgToUi >
+std::optional< ParcellationLabelsComplete_msgToUi >
 RefFrameEditorDock::getParcellationLabelsComplete() const
 {
     if ( ! m_currentLabelsUid || ! m_labelTableModel )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     ParcellationLabelsComplete_msgToUi msg;

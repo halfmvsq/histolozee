@@ -187,7 +187,7 @@ GLint GLShaderProgram::getAttribLocation( const std::string& name )
 
 GLint GLShaderProgram::getUniformLocation( const std::string& name )
 {
-    if ( const boost::optional<GLint> locOpt = m_registeredUniforms.location( name ) )
+    if ( const std::optional<GLint> locOpt = m_registeredUniforms.location( name ) )
     {
         return *locOpt;
     }

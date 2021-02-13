@@ -9,9 +9,8 @@
 
 #include "common/ObjectCounter.hpp"
 
-#include <boost/optional.hpp>
-
 #include <memory>
+#include <optional>
 
 
 class BlankTextures;
@@ -59,11 +58,11 @@ public:
 
     void setPositioningMethod(
             const SliceIntersector::PositioningMethod& method,
-            const boost::optional<glm::vec3>& p = boost::none );
+            const std::optional<glm::vec3>& p = std::nullopt );
 
     void setAlignmentMethod(
             const SliceIntersector::AlignmentMethod& method,
-            const boost::optional<glm::vec3>& worldNormal = boost::none );
+            const std::optional<glm::vec3>& worldNormal = std::nullopt );
 
     void setShowOutline( bool show );
 

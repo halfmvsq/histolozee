@@ -19,10 +19,9 @@
 
 #include <glm/fwd.hpp>
 
-#include <boost/optional.hpp>
-
 #include <functional>
 #include <memory>
+#include <optional>
 #include <unordered_map>
 
 
@@ -67,7 +66,7 @@ public:
     void setRefSpaceAABBoxProvider( GetterType< AABB<float> > );
 
     /// Set functional that provides the slide stack AABB
-    void setSlideStackAABBoxProvider( GetterType< boost::optional< AABB<float> > > );
+    void setSlideStackAABBoxProvider( GetterType< std::optional< AABB<float> > > );
 
 
     /// Get non-owning pointer to the interaction pack for a given view
@@ -133,7 +132,7 @@ private:
     GetterType< AABB<float> > m_refSpaceAABBoxProvider;
 
     /// Function providing the slide stack AABB in World space
-    GetterType< boost::optional< AABB<float> > > m_slideStackAABBoxProvider;
+    GetterType< std::optional< AABB<float> > > m_slideStackAABBoxProvider;
 
     /// Function providing the crosshairs for Reference Image views
     GetterType<CoordinateFrame> m_crosshairsFrameProvider;

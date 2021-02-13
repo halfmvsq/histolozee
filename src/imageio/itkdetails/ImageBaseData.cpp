@@ -30,14 +30,14 @@ ImageBaseData::pixelStatistics() const
     return m_pixelStatistics;
 }
 
-boost::optional< utility::PixelStatistics<double> >
+std::optional< utility::PixelStatistics<double> >
 ImageBaseData::pixelStatistics( uint32_t componentIndex ) const
 {
     if ( componentIndex < m_pixelStatistics.size() )
     {
         return m_pixelStatistics.at( componentIndex );
     }
-    return boost::none;
+    return std::nullopt;
 }
 
 const io::ImageIoInfo& ImageBaseData::imageIOInfo() const

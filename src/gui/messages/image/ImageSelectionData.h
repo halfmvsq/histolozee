@@ -3,8 +3,7 @@
 
 #include "common/UID.h"
 
-#include <boost/optional.hpp>
-
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -29,7 +28,7 @@ struct ImageSelectionItem
 struct ImageSelections_msgToUi
 {
     std::vector<ImageSelectionItem> m_selectionItems; //!< List of selectable images
-    boost::optional<int> m_selectionIndex; //!< Index of currently selected (active) image
+    std::optional<int> m_selectionIndex; //!< Index of currently selected (active) image
 };
 
 
@@ -38,8 +37,8 @@ struct ImageSelections_msgToUi
  */
 struct ImageSelections_msgFromUi
 {
-    boost::optional<int> m_selectionIndex; //!< Index of currently selected (active) image in combo box
-    boost::optional<UID> m_imageUid; //!< UID of currently selected (active) image
+    std::optional<int> m_selectionIndex; //!< Index of currently selected (active) image in combo box
+    std::optional<UID> m_imageUid; //!< UID of currently selected (active) image
 };
 
 } // namespace gui

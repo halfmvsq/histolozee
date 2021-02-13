@@ -43,17 +43,17 @@ void BlankTextures::initializeGL()
     m_impl = std::make_unique<Impl>();
 }
 
-void BlankTextures::bindImageTexture2D( boost::optional<uint32_t> textureUnit )
+void BlankTextures::bindImageTexture2D( std::optional<uint32_t> textureUnit )
 {
     m_impl->m_blankImageTexture2D.bind( textureUnit );
 }
 
-void BlankTextures::bindImageTexture3D( boost::optional<uint32_t> textureUnit )
+void BlankTextures::bindImageTexture3D( std::optional<uint32_t> textureUnit )
 {
     m_impl->m_blankImageTexture3D.bind( textureUnit );
 }
 
-void BlankTextures::bindLabelTexture3D( boost::optional<uint32_t> textureUnit )
+void BlankTextures::bindLabelTexture3D( std::optional<uint32_t> textureUnit )
 {
     m_impl->m_blankLabelTexture3D.bind( textureUnit );
 }

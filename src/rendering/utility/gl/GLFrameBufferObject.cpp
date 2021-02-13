@@ -60,7 +60,7 @@ void GLFrameBufferObject::attach2DTexture(
         const fbo::TargetType& target,
         const fbo::AttachmentType& attachment,
         const GLTexture& texture,
-        boost::optional<int> colorAttachmentIndex )
+        std::optional<int> colorAttachmentIndex )
 {
     if ( fbo::TargetType::DrawAndRead == target )
     {
@@ -119,7 +119,7 @@ void GLFrameBufferObject::attachCubeMapTexture(
         const GLTexture& texture,
         const tex::CubeMapFace& cubeMapFace,
         GLint level,
-        boost::optional<int> colorAttachmentIndex )
+        std::optional<int> colorAttachmentIndex )
 {
     if ( tex::Target::TextureCubeMap != texture.target() )
     {

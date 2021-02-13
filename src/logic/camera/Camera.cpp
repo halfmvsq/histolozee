@@ -61,7 +61,7 @@ void Camera::set_frameB_O_frameA_provider( GetterType<CoordinateFrame> provider 
     m_frameB_O_frameA_provider = provider;
 }
 
-boost::optional<CoordinateFrame> Camera::startFrame() const
+std::optional<CoordinateFrame> Camera::startFrame() const
 {
     if ( m_frameB_O_frameA_provider )
     {
@@ -69,7 +69,7 @@ boost::optional<CoordinateFrame> Camera::startFrame() const
     }
     else
     {
-        return boost::none;
+        return std::nullopt;
     }
 }
 

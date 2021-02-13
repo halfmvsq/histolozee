@@ -47,7 +47,7 @@ static const glm::quat sk_ident{ 1.0f, 0.0f, 0.0f, 0.0f };
  */
 std::pair< std::vector< std::string >, bool >
 getImageFileNames( const std::string& inputFileName,
-                   const boost::optional< std::string >& inputDicomSeriesUID )
+                   const std::optional< std::string >& inputDicomSeriesUID )
 {
     static const std::pair< std::vector< std::string >, bool > EMPTY =
             std::make_pair( std::vector< std::string >{}, false );
@@ -166,7 +166,7 @@ ImageLoader::~ImageLoader() = default;
 
 std::unique_ptr<ImageCpuRecord> ImageLoader::load(
         const std::string& inputFileName,
-        const boost::optional<std::string>& inputDicomSeriesUID,
+        const std::optional<std::string>& inputDicomSeriesUID,
         const ComponentNormalizationPolicy& normalizationPolicy ) const
 {
     std::vector< std::string > inputFileNames;

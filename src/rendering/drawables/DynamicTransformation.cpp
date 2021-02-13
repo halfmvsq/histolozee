@@ -9,7 +9,7 @@ static const glm::mat4 sk_ident{ 1.0f };
 
 DynamicTransformation::DynamicTransformation(
         std::string name,
-        GetterType< boost::optional<glm::mat4> > thisToParentTxProvider )
+        GetterType< std::optional<glm::mat4> > thisToParentTxProvider )
     :
       Transformation( std::move( name ), sk_ident ),
       m_thisToParentTxProvider( thisToParentTxProvider )
@@ -18,7 +18,7 @@ DynamicTransformation::DynamicTransformation(
 
 
 void DynamicTransformation::setMatrixProvider(
-        GetterType< boost::optional<glm::mat4> > provider )
+        GetterType< std::optional<glm::mat4> > provider )
 {
     m_thisToParentTxProvider = provider;
 }

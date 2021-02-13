@@ -75,6 +75,7 @@ void to_json( json& j, const ImageSettings& settings )
 
 void from_json( const json& j, ImageSettings& settings )
 {
+//    if ( j.contains( "level") ) settings.m_level = j["level"];
     j.at( "level" ).get_to( settings.m_level );
     j.at( "window" ).get_to( settings.m_window );
     j.at( "slope" ).get_to( settings.m_slope );
@@ -94,15 +95,43 @@ void to_json( json& j, const Image& image )
     { "displayName", image.m_displayName },
     { "worldSubjectOrigin", image.m_worldSubjectOrigin },
     { "subjectToWorldRotation", image.m_subjectToWorldRotation },
-    { "settings", image.m_settings } };
+    { "settings", image.m_settings }
+    };
 }
 
 void from_json( const json& j, Image& image )
 {
+    static const glm::vec3 sk_origin{ 0.0f, 0.0f, 0.0f };
+    static const glm::quat sk_ident{ 1.0f, 0.0f, 0.0f, 0.0f };
+
     j.at( "fileName" ).get_to( image.m_fileName );
-    j.at( "displayName" ).get_to( image.m_displayName );
-    j.at( "worldSubjectOrigin" ).get_to( image.m_worldSubjectOrigin );
-    j.at( "subjectToWorldRotation" ).get_to( image.m_subjectToWorldRotation );
+
+    if ( j.contains( "displayName" ) )
+    {
+        image.m_displayName = j["displayName"];
+    }
+    else
+    {
+        image.m_displayName = image.m_fileName;
+    }
+
+    if ( j.contains( "worldSubjectOrigin" ) )
+    {
+        image.m_worldSubjectOrigin = j["worldSubjectOrigin"];
+    }
+    else
+    {
+        image.m_worldSubjectOrigin = sk_origin;
+    }
+
+    if ( j.contains( "subjectToWorldRotation" ) )
+    {
+        image.m_subjectToWorldRotation = j["subjectToWorldRotation"];
+    }
+    else
+    {
+        image.m_subjectToWorldRotation = sk_ident;
+    }
 }
 
 
@@ -162,7 +191,7 @@ void open( HZeeProject& project, const std::string& fileName )
     {
         std::ostringstream ss;
         ss << "Error parsing from JSON:\n" << e.what() << std::ends;
-        throw_debug( ss.str() );
+        throw_debug( ss.str() )
     }
 }
 
@@ -183,7 +212,7 @@ void save( const HZeeProject& project, const std::string& fileName )
     {
         std::ostringstream ss;
         ss << "Error saving to JSON:\n" << e.what() << std::ends;
-        throw_debug( ss.str() );
+        throw_debug( ss.str() )
     }
 }
 

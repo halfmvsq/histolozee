@@ -116,7 +116,7 @@ void LandmarkAssembly::addLandmarkGroup( std::weak_ptr<LandmarkGroupRecord> lmGr
 
     // Function that provides the tranformation from modeling space of the landmark group to World space
     auto lmToWorldTxProvider = [this, lmGroupRecord] ()
-            -> boost::optional< std::pair<glm::mat4, glm::mat4> >
+            -> std::optional< std::pair<glm::mat4, glm::mat4> >
     {
         if ( auto lmg = lmGroupRecord.lock() )
         {
@@ -125,13 +125,13 @@ void LandmarkAssembly::addLandmarkGroup( std::weak_ptr<LandmarkGroupRecord> lmGr
                 return m_landmarkGroupToWorldTxQuerier( lmg->uid() );
             }
         }
-        return boost::none;
+        return std::nullopt;
     };
 
 
     // Function that provides the scaling information for the landmark drawables in a landmark group
     auto lmScalingProvider = [this, lmGroupRecord] ()
-            -> boost::optional<DrawableScaling>
+            -> std::optional<DrawableScaling>
     {
         if ( auto lmg = lmGroupRecord.lock() )
         {
@@ -140,7 +140,7 @@ void LandmarkAssembly::addLandmarkGroup( std::weak_ptr<LandmarkGroupRecord> lmGr
                 return m_landmarkScalingQuerier( lmg->uid() );
             }
         }
-        return boost::none;
+        return std::nullopt;
     };
 
 

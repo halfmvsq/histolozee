@@ -4,9 +4,8 @@
 #include "ImageHeader.h"
 #include "itkdetails/ImageIOInfo.hpp"
 
-#include <boost/optional.hpp>
-
 #include <functional>
+#include <optional>
 #include <string>
 #include <typeindex>
 #include <typeinfo>
@@ -40,7 +39,7 @@ extern const std::unordered_map< ComponentType, uint32_t > k_bytesPerComponentMa
 
 extern const std::unordered_map< ComponentType, std::string > k_componentStringMap;
 
-boost::optional< ::imageio::ComponentType >
+std::optional< ::imageio::ComponentType >
 fromITKComponentType( const ::itk::ImageIOBase::IOComponentType& componentType );
 
 bool createImageHeader(
@@ -54,7 +53,7 @@ bool createImageHeader(
         const ComponentType& bufferComponentType,
         ImageHeader& header );
 
-boost::optional<ComponentType> sniffComponentType( const char* fileName );
+std::optional<ComponentType> sniffComponentType( const char* fileName );
 
 } // namespace itkbridge
 

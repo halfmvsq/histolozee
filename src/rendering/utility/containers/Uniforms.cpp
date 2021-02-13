@@ -115,7 +115,7 @@ void Uniforms::setLocation( const std::string& name, GLint loc )
     u.m_isDirty = true;
 }
 
-boost::optional<GLint> Uniforms::location( const std::string& name ) const
+std::optional<GLint> Uniforms::location( const std::string& name ) const
 {
     const auto itr = m_uniformsMap.find( name );
     if ( std::end( m_uniformsMap ) != itr )
@@ -124,7 +124,7 @@ boost::optional<GLint> Uniforms::location( const std::string& name ) const
     }
     else
     {
-        return boost::none;
+        return std::nullopt;
     }
 }
 

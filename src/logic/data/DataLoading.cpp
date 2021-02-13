@@ -33,10 +33,10 @@ static constexpr double sk_parcel3dOpacity = 0.5;
 namespace data
 {
 
-boost::optional<UID> loadImage(
+std::optional<UID> loadImage(
         DataManager& dataManager,
         const std::string& filename,
-        const boost::optional< std::string >& dicomSeriesUid )
+        const std::optional< std::string >& dicomSeriesUid )
 {
     auto cpuRecord = details::generateImageCpuRecord(
                 filename, dicomSeriesUid, imageio::ComponentNormalizationPolicy::None );
@@ -44,7 +44,7 @@ boost::optional<UID> loadImage(
     if ( ! cpuRecord )
     {
         std::cerr << "Error loading image from file '" << filename << "'" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     // Use linear interpolation for images with floating point data type. Linear interpolation
@@ -72,7 +72,7 @@ boost::optional<UID> loadImage(
     if ( ! gpuRecord )
     {
         std::cerr << "Error creating image GPU record for file '" << filename << "'" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     std::ostringstream ss;
@@ -101,7 +101,7 @@ boost::optional<UID> loadImage(
     {
         std::cerr << "Error loading image from file '" << filename << "' "
                   << "into DataManager." << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     std::cout << "Image UID is " << *imageUid << std::endl;
@@ -116,7 +116,7 @@ boost::optional<UID> loadImage(
         std::ostringstream ss;
         ss << "Default image color map does not exist" << std::ends;
         std::cerr << ss.str() << std::ends;
-        return boost::none;
+        return std::nullopt;
     }
 
     if ( ! dataManager.associateColorMapWithImage( *imageUid, *defaultMapUid ) )
@@ -124,17 +124,17 @@ boost::optional<UID> loadImage(
         std::ostringstream ss;
         ss << "Error associating default color map with image " << *imageUid << std::ends;
         std::cerr << ss.str() << std::ends;
-        return boost::none;
+        return std::nullopt;
     }
 
     return imageUid;
 }
 
 
-boost::optional<UID> loadParcellation(
+std::optional<UID> loadParcellation(
         DataManager& dataManager,
         const std::string& filename,
-        const boost::optional< std::string >& dicomSeriesUid )
+        const std::optional< std::string >& dicomSeriesUid )
 {
     // Step 1) Load parcellation image
     auto imageCpuRecord = details::generateImageCpuRecord(
@@ -143,7 +143,7 @@ boost::optional<UID> loadParcellation(
     if ( ! imageCpuRecord || ! imageCpuRecord->imageBaseData() )
     {
         std::cerr << "Error loading parcellation image from file '" << filename << "'" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     std::ostringstream ss;
@@ -156,7 +156,7 @@ boost::optional<UID> loadParcellation(
     {
         std::cerr << "Cannot load parcellation image: only integer "
                   << "pixel component types are valid." << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     // Step 2) Convert image record to parcellation record. This function "squashes"
@@ -165,7 +165,7 @@ boost::optional<UID> loadParcellation(
     if ( ! parcelCpuRecord || ! parcelCpuRecord->imageBaseData() )
     {
         std::cerr << "Error creating parcellation CPU record for '" << filename << "'" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     ss.str( std::string() );
@@ -200,7 +200,7 @@ boost::optional<UID> loadParcellation(
     {
         std::cerr << "Error loading parcellation from file '" << filename << "' "
                   << "into DataManager." << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     std::cout << "Parcellation UID is " << *parcelUid << std::endl;
@@ -215,7 +215,7 @@ boost::optional<UID> loadParcellation(
 
     if ( minMaxLabelValues.second < minMaxLabelValues.first )
     {
-        return boost::none; // Something has gone wrong
+        return std::nullopt; // Something has gone wrong
     }
 
     const size_t tableSize = static_cast<size_t>(
@@ -229,7 +229,7 @@ boost::optional<UID> loadParcellation(
         std::cerr << ss.str() << std::endl;
 
         dataManager.unloadParcellation( *parcelUid );
-        return boost::none;
+        return std::nullopt;
     }
 
     auto labelTableUid = dataManager.insertLabelTableRecord( labelTableRecord );
@@ -240,7 +240,7 @@ boost::optional<UID> loadParcellation(
         std::cerr << ss.str() << std::endl;
 
         dataManager.unloadParcellation( *parcelUid );
-        return boost::none;
+        return std::nullopt;
     }
 
     if ( ! dataManager.associateLabelTableWithParcellation( *parcelUid, *labelTableUid ) )
@@ -251,14 +251,14 @@ boost::optional<UID> loadParcellation(
         std::cerr << ss.str() << std::endl;
 
         dataManager.unloadParcellation( *parcelUid );
-        return boost::none;
+        return std::nullopt;
     }
 
     return *parcelUid;
 }
 
 
-boost::optional<UID> loadSlide( DataManager& dataManager, const std::string& filename )
+std::optional<UID> loadSlide( DataManager& dataManager, const std::string& filename )
 {
     auto cpuRecord = details::generateSlideCpuRecord( filename );
     if ( ! cpuRecord )
@@ -266,7 +266,7 @@ boost::optional<UID> loadSlide( DataManager& dataManager, const std::string& fil
         std::ostringstream ss;
         ss << "Unable to load slide from file '" << filename << "'" << std::ends;
         std::cerr << ss.str() << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     const float translation = slideio::slideStackHeight( dataManager.slideRecords() ) +
@@ -280,7 +280,7 @@ boost::optional<UID> loadSlide( DataManager& dataManager, const std::string& fil
         std::ostringstream ss;
         ss << "Unable to generate texture for slide file '" << filename << "'" << std::ends;
         std::cerr << ss.str() << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     auto record = std::make_shared<SlideRecord>( std::move( cpuRecord ), std::move( gpuRecord ) );
@@ -291,7 +291,7 @@ boost::optional<UID> loadSlide( DataManager& dataManager, const std::string& fil
         std::ostringstream ss;
         ss << "Unable to load slide from file '" << filename << "'" << std::ends;
         std::cerr << ss.str() << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     // If no slide is active, make this the active one
@@ -304,7 +304,7 @@ boost::optional<UID> loadSlide( DataManager& dataManager, const std::string& fil
 }
 
 
-boost::optional<UID> getActiveParcellation( DataManager& dataManager, const UID& imageUid )
+std::optional<UID> getActiveParcellation( DataManager& dataManager, const UID& imageUid )
 {
     // Return the active parcellation, if one exists
     if ( auto parcelUid = dataManager.activeParcellationUid() )
@@ -330,11 +330,11 @@ boost::optional<UID> getActiveParcellation( DataManager& dataManager, const UID&
         return *blankParcelUid;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
-boost::optional<UID> generateIsoSurfaceMesh(
+std::optional<UID> generateIsoSurfaceMesh(
         DataManager& dataManager, const UID& imageUid, double isoValue )
 {
     auto meshCpuRecord = details::generateIsoSurfaceMeshCpuRecord(
@@ -346,7 +346,7 @@ boost::optional<UID> generateIsoSurfaceMesh(
         ss << "Error generating iso-surface mesh for image " << imageUid
            << " at value " << isoValue << std::ends;
         std::cerr << ss.str() << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     auto meshGpuRecord = gpuhelper::createMeshGpuRecordFromVtkPolyData(
@@ -361,7 +361,7 @@ boost::optional<UID> generateIsoSurfaceMesh(
            << "Could not generate mesh record for image " << imageUid
            << " at isosurface value " << isoValue << std::ends;
         std::cerr << ss.str() << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     return dataManager.insertIsoMeshRecord(
@@ -560,13 +560,13 @@ std::vector<UID> loadImageColorMaps( DataManager& dataManager, const std::string
 }
 
 
-boost::optional<UID> loadImageColorMap( DataManager& dataManager, const std::string& filePath )
+std::optional<UID> loadImageColorMap( DataManager& dataManager, const std::string& filePath )
 {
     auto mapCpuRecord = details::loadImageColorMapWithQt( filePath );
     if ( ! mapCpuRecord )
     {
         std::cerr << "Error loading image color map from file '" << filePath << "'" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     auto mapGpuRecord = gpuhelper::createImageColorMapTexture( mapCpuRecord.get() );
@@ -574,7 +574,7 @@ boost::optional<UID> loadImageColorMap( DataManager& dataManager, const std::str
     {
         std::cerr << "Error creating image color map GPU record from file '"
                   << filePath << "'" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     auto record = std::make_shared<ImageColorMapRecord>(
@@ -584,7 +584,7 @@ boost::optional<UID> loadImageColorMap( DataManager& dataManager, const std::str
 }
 
 
-boost::optional<UID> loadDefaultGreyscaleColorMap( DataManager& dataManager )
+std::optional<UID> loadDefaultGreyscaleColorMap( DataManager& dataManager )
 {
     if ( auto cmapUid = dataManager.insertImageColorMapRecord(
              details::createDefaultGreyscaleImageColorMapRecord() ) )
@@ -595,7 +595,7 @@ boost::optional<UID> loadDefaultGreyscaleColorMap( DataManager& dataManager )
         }
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 } // namespace data

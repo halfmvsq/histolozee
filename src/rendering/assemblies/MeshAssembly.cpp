@@ -103,13 +103,13 @@ void MeshAssembly::addMesh( const UID& meshUid, std::weak_ptr<MeshRecord> meshRe
 
     M.m_meshRecord = meshRecord;
 
-    auto subjectToWorldTxProvider = [this, meshUid] () -> boost::optional<glm::mat4>
+    auto subjectToWorldTxProvider = [this, meshUid] () -> std::optional<glm::mat4>
     {
         if ( m_meshSubjectToWorldQuerier )
         {
             return m_meshSubjectToWorldQuerier( meshUid );
         }
-        return boost::none;
+        return std::nullopt;
     };
 
     auto meshGpuRecordProvider = [meshRecord] () -> MeshGpuRecord*
@@ -329,18 +329,18 @@ void MeshAssembly::setLabelTableRecord( std::weak_ptr<LabelTableRecord> record )
 
 
 void MeshAssembly::setMeshSubjectToWorldTxQuerier(
-        QuerierType< boost::optional<glm::mat4>, UID > querier )
+        QuerierType< std::optional<glm::mat4>, UID > querier )
 {
     m_meshSubjectToWorldQuerier = querier;
 
     auto subjectToWorldTxProvider = [this] ( const UID& meshUid )
-            -> boost::optional<glm::mat4>
+            -> std::optional<glm::mat4>
     {
         if ( m_meshSubjectToWorldQuerier )
         {
             return m_meshSubjectToWorldQuerier( meshUid );
         }
-        return boost::none;
+        return std::nullopt;
     };
 
     // Propagate new querier to all stored meshes:

@@ -116,7 +116,7 @@ void FullScreenQuad::initVao()
         m_vao.enableVertexAttribute( sk_positionsIndex );
 
         texCoordsObject->bind();
-        m_vao.setAttributeBuffer( sk_texCoordsIndex, texCoordsInfo.get() );
+        m_vao.setAttributeBuffer( sk_texCoordsIndex, *texCoordsInfo );
         m_vao.enableVertexAttribute( sk_texCoordsIndex );
     }
     m_vao.release();

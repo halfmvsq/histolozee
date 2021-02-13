@@ -111,7 +111,7 @@ bool GLShader::isValid()
 
 
 #if 0
-void GLShader::compileFromFile( const char* fileName, const boost::optional<ShaderType>& type )
+void GLShader::compileFromFile( const char* fileName, const std::optional<ShaderType>& type )
 {
     if ( ! boost::filesystem::exists( fileName ) )
     {

@@ -187,7 +187,7 @@ AnnotationSlice::AnnotationSlice(
         std::string name,
         ShaderProgramActivatorType shaderProgramActivator,
         UniformsProviderType uniformsProvider,
-        GetterType< boost::optional<glm::mat4> > annotToWorldTxProvider,
+        GetterType< std::optional<glm::mat4> > annotToWorldTxProvider,
         std::weak_ptr<SlideAnnotationRecord> slideAnnotationRecord )
     :
       DrawableBase( std::move( name ), DrawableType::AnnotationSlice ),
@@ -200,7 +200,7 @@ AnnotationSlice::AnnotationSlice(
 
       m_meshGpuRecord( nullptr ),
       m_mesh( nullptr ),
-      m_currentAnnotationUid( boost::none )
+      m_currentAnnotationUid( std::nullopt )
 {
     m_renderId = static_cast<uint32_t>( underlyingType(m_type) << 12 ) | ( numCreated() % 0x1000 );
 

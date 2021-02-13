@@ -126,7 +126,7 @@ uid_range_t LayoutManager::getViewUids() const
 }
 
 
-boost::optional<gui::ViewType> LayoutManager::getViewType( const UID& viewUid ) const
+std::optional<gui::ViewType> LayoutManager::getViewType( const UID& viewUid ) const
 {
     if ( ! m_impl ) { throw_debug( "Null implementation" ); }
 
@@ -136,7 +136,7 @@ boost::optional<gui::ViewType> LayoutManager::getViewType( const UID& viewUid ) 
         std::ostringstream ss;
         ss << "View UID " << viewUid << " not found" << std::ends;
         std::cerr << ss.str() << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     return it->second;

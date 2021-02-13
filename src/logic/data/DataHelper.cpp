@@ -75,7 +75,7 @@ AABB<float> refSpaceAABBox( DataManager& dataManager, const glm::mat4& world_O_s
 }
 
 
-boost::optional< AABB<float> > activeRefImageAABBox( DataManager& dataManager )
+std::optional< AABB<float> > activeRefImageAABBox( DataManager& dataManager )
 {
     auto record = dataManager.activeImageRecord().lock();
     if ( record && record->cpuData() )
@@ -84,11 +84,11 @@ boost::optional< AABB<float> > activeRefImageAABBox( DataManager& dataManager )
         return std::make_pair( glm::vec3{ aabb.first }, glm::vec3{ aabb.second } );
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
-boost::optional<CoordinateFrame>
+std::optional<CoordinateFrame>
 getActiveImageSubjectToWorldFrame( DataManager& dataManager )
 {
     auto record = dataManager.activeImageRecord().lock();
@@ -100,7 +100,7 @@ getActiveImageSubjectToWorldFrame( DataManager& dataManager )
         return CoordinateFrame( std::move( origin ), std::move( rotation ) );
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 

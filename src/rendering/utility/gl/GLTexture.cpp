@@ -170,8 +170,8 @@ GLTexture::Binder::~Binder()
 GLTexture::GLTexture(
         Target target,
         MultisampleSettings multisampleSettings,
-        boost::optional<PixelStoreSettings> pixelPackSettings,
-        boost::optional<PixelStoreSettings> pixelUnpackSettings )
+        std::optional<PixelStoreSettings> pixelPackSettings,
+        std::optional<PixelStoreSettings> pixelUnpackSettings )
     :
       m_target( std::move( target ) ),
       m_targetEnum( underlyingType( m_target ) ),
@@ -237,7 +237,7 @@ void GLTexture::generate()
     glGenSamplers( 1, &m_samplerID );
 }
 
-void GLTexture::release( boost::optional<uint32_t> textureUnit )
+void GLTexture::release( std::optional<uint32_t> textureUnit )
 {
     //    GLint oldTextureUnit = 0;
     //    if (reset == QOpenGLTexture::ResetTextureUnit)
@@ -264,11 +264,11 @@ void GLTexture::release( boost::optional<uint32_t> textureUnit )
     m_samplerID = 0;
 
     m_multisampleSettings = MultisampleSettings();
-    m_pixelPackSettings = boost::none;
-    m_pixelUnpackSettings = boost::none;
+    m_pixelPackSettings = std::nullopt;
+    m_pixelUnpackSettings = std::nullopt;
 }
 
-void GLTexture::bind( boost::optional<uint32_t> textureUnit )
+void GLTexture::bind( std::optional<uint32_t> textureUnit )
 {
     static constexpr bool rebind = false;
 
@@ -288,7 +288,7 @@ void GLTexture::bind( boost::optional<uint32_t> textureUnit )
     }
 }
 
-bool GLTexture::isBound( boost::optional<uint32_t> textureUnit )
+bool GLTexture::isBound( std::optional<uint32_t> textureUnit )
 {
     GLint prevUnit = 0;
 
@@ -377,7 +377,7 @@ void GLTexture::setData(
 
     Binder binder( *this );
 
-    boost::optional<PixelStoreSettings> oldUnpackSettings = boost::none;
+    std::optional<PixelStoreSettings> oldUnpackSettings = std::nullopt;
 
     if ( m_pixelUnpackSettings )
     {
@@ -500,7 +500,7 @@ void GLTexture::setSubData(
 
     Binder binder( *this );
 
-    boost::optional<PixelStoreSettings> oldUnpackSettings = boost::none;
+    std::optional<PixelStoreSettings> oldUnpackSettings = std::nullopt;
 
     if ( m_pixelUnpackSettings )
     {
@@ -564,7 +564,7 @@ void GLTexture::setCubeMapFaceData(
 
     Binder binder( *this );
 
-    boost::optional<PixelStoreSettings> oldUnpackSettings = boost::none;
+    std::optional<PixelStoreSettings> oldUnpackSettings = std::nullopt;
 
     if ( m_pixelUnpackSettings )
     {
@@ -605,7 +605,7 @@ void GLTexture::readData(
     // How slow is this?
     Binder binder( *this );
 
-    boost::optional<PixelStoreSettings> oldPackSettings = boost::none;
+    std::optional<PixelStoreSettings> oldPackSettings = std::nullopt;
 
     if ( m_pixelPackSettings )
     {
@@ -631,7 +631,7 @@ void GLTexture::readCubeMapFaceData(
 {
     Binder binder( *this );
 
-    boost::optional<PixelStoreSettings> oldPackSettings = boost::none;
+    std::optional<PixelStoreSettings> oldPackSettings = std::nullopt;
 
     if ( m_pixelPackSettings )
     {

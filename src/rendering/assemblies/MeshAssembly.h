@@ -11,8 +11,7 @@
 #include "common/UID.h"
 #include "common/ObjectCounter.hpp"
 
-#include <boost/optional.hpp>
-
+#include <optional>
 #include <unordered_map>
 
 
@@ -61,7 +60,7 @@ public:
      * @param querier Function with single input being the mesh UID and output the
      * transformation world_O_mesh that transforms the mesh vertices to World space.
      */
-    void setMeshSubjectToWorldTxQuerier( QuerierType< boost::optional<glm::mat4>, UID > );
+    void setMeshSubjectToWorldTxQuerier( QuerierType< std::optional<glm::mat4>, UID > );
 
     void addMesh( const UID& meshUid, std::weak_ptr<MeshRecord> meshRecord );
     void removeMesh( const UID& meshUid );
@@ -92,7 +91,7 @@ private:
     UniformsProviderType m_uniformsProvider;
     std::weak_ptr<BlankTextures> m_blankTextures;
 
-    QuerierType< boost::optional<glm::mat4>, UID > m_meshSubjectToWorldQuerier;
+    QuerierType< std::optional<glm::mat4>, UID > m_meshSubjectToWorldQuerier;
 
     std::weak_ptr<ImageRecord> m_image3dRecord;
     std::weak_ptr<ParcellationRecord> m_parcelRecord;

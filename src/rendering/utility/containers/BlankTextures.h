@@ -1,9 +1,10 @@
 #ifndef BLANK_TEXTURES_H
 #define BLANK_TEXTURES_H
 
-#include <boost/optional.hpp>
 #include <QOpenGLFunctions_3_3_Core>
+
 #include <memory>
+#include <optional>
 
 
 class BlankTextures final :
@@ -23,9 +24,9 @@ public:
 
     void initializeGL();
 
-    void bindImageTexture2D( boost::optional<uint32_t> textureUnit );
-    void bindImageTexture3D( boost::optional<uint32_t> textureUnit );
-    void bindLabelTexture3D( boost::optional<uint32_t> textureUnit );
+    void bindImageTexture2D( std::optional<uint32_t> textureUnit );
+    void bindImageTexture3D( std::optional<uint32_t> textureUnit );
+    void bindLabelTexture3D( std::optional<uint32_t> textureUnit );
 
 
 private:

@@ -38,8 +38,8 @@ public:
     explicit AnnotationAssembly(
             ShaderProgramActivatorType,
             UniformsProviderType,
-            QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > annotationToWorldTxQuerier,
-            QuerierType< boost::optional<float>, UID > annotationThicknessQuerier );
+            QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > annotationToWorldTxQuerier,
+            QuerierType< std::optional<float>, UID > annotationThicknessQuerier );
 
     ~AnnotationAssembly() override = default;
 
@@ -48,9 +48,9 @@ public:
 
     std::weak_ptr<DrawableBase> getRoot( const SceneType& ) override;
 
-    void setAnnotationToWorldTxQuerier( QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > );
+    void setAnnotationToWorldTxQuerier( QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > );
 
-    void setAnnotationThicknessQuerier( QuerierType< boost::optional<float>, UID > );
+    void setAnnotationThicknessQuerier( QuerierType< std::optional<float>, UID > );
 
     /// Set/replace an annotation. If it does not yet exist in this assembly, then it is added.
     void setAnnotation( std::weak_ptr<SlideAnnotationRecord> );
@@ -104,11 +104,11 @@ private:
 
     /// Function that queries the matrix transformation from an annotation to World space.
     /// Key: UID of annotation
-    QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > m_annotationToWorldTxQuerier;
+    QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > m_annotationToWorldTxQuerier;
 
     /// Function that queries the thickness of the slide associated with a slide annotation
     /// Key: UID of annotation
-    QuerierType< boost::optional<float>, UID > m_annotationThicknessQuerier;
+    QuerierType< std::optional<float>, UID > m_annotationThicknessQuerier;
 
     /// Roots for all annotations in 2D views
     std::shared_ptr<Transformation> m_rootFor2dViews;

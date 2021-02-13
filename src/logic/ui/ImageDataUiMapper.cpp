@@ -124,16 +124,16 @@ struct ImageDataUiMapper::Impl
     gui::ImageColorMaps_msgToUi getImageColorMaps() const;
 
     /// Get all current properties of the active image (if there is one)
-    boost::optional< gui::ImagePropertiesComplete_msgToUi > getActiveImageProperties() const;
+    std::optional< gui::ImagePropertiesComplete_msgToUi > getActiveImageProperties() const;
 
     /// Get current window/level properties of the active image (if there is one)
-    boost::optional< gui::ImagePropertiesPartial_msgToUi > getActiveImageWindowLevel() const;
+    std::optional< gui::ImagePropertiesPartial_msgToUi > getActiveImageWindowLevel() const;
 
     /// Get header of active image (if there is one)
-    boost::optional< gui::ImageHeader_msgToUi > getActiveImageHeader() const;
+    std::optional< gui::ImageHeader_msgToUi > getActiveImageHeader() const;
 
     /// Get transformation of active image (if there is one)
-    boost::optional< gui::ImageTransformation_msgToUi > getActiveImageTransformation() const;
+    std::optional< gui::ImageTransformation_msgToUi > getActiveImageTransformation() const;
 
 
     ActionManager& m_actionManager;
@@ -234,7 +234,7 @@ gui::ImageColorMaps_msgToUi ImageDataUiMapper::getImageColorMaps_msgToUi() const
 }
 
 
-boost::optional< gui::ImagePropertiesComplete_msgToUi >
+std::optional< gui::ImagePropertiesComplete_msgToUi >
 ImageDataUiMapper::getImagePropertiesComplete_msgToUi( const UID& imageUid ) const
 {
     const auto activeImageUid = m_impl->m_dataManager.activeImageUid();
@@ -242,14 +242,14 @@ ImageDataUiMapper::getImagePropertiesComplete_msgToUi( const UID& imageUid ) con
     {
         // Request of properties of image that is not active
         std::cerr << "Requested properties of non-active image " << imageUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     return m_impl->getActiveImageProperties();
 }
 
 
-boost::optional< gui::ImageHeader_msgToUi >
+std::optional< gui::ImageHeader_msgToUi >
 ImageDataUiMapper::getImageHeader_msgToUi( const UID& imageUid ) const
 {
     const auto activeImageUid = m_impl->m_dataManager.activeImageUid();
@@ -257,14 +257,14 @@ ImageDataUiMapper::getImageHeader_msgToUi( const UID& imageUid ) const
     {
         // Request of header of image that is not active
         std::cerr << "Requested header of non-active image " << imageUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     return m_impl->getActiveImageHeader();
 }
 
 
-boost::optional< gui::ImageTransformation_msgToUi >
+std::optional< gui::ImageTransformation_msgToUi >
 ImageDataUiMapper::getImageTransformation_msgToUi( const UID& imageUid ) const
 {
     const auto activeImageUid = m_impl->m_dataManager.activeImageUid();
@@ -272,7 +272,7 @@ ImageDataUiMapper::getImageTransformation_msgToUi( const UID& imageUid ) const
     {
         // Request of transformation of image that is not active
         std::cerr << "Requested transformation of non-active image " << imageUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     return m_impl->getActiveImageTransformation();
@@ -775,7 +775,7 @@ gui::ImageColorMaps_msgToUi ImageDataUiMapper::Impl::getImageColorMaps() const
 }
 
 
-boost::optional< gui::ImagePropertiesComplete_msgToUi >
+std::optional< gui::ImagePropertiesComplete_msgToUi >
 ImageDataUiMapper::Impl::getActiveImageProperties() const
 {
     static constexpr size_t sk_imageComp = 0;
@@ -783,14 +783,14 @@ ImageDataUiMapper::Impl::getActiveImageProperties() const
     const auto activeImageUid = m_dataManager.activeImageUid();
     if ( ! activeImageUid )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto imageRecord = m_dataManager.imageRecord( *activeImageUid ).lock();
     if ( ! imageRecord || ! imageRecord->cpuData() ||
          ! imageRecord->cpuData()->imageBaseData() )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto cpuRecord = imageRecord->cpuData();
@@ -820,7 +820,7 @@ ImageDataUiMapper::Impl::getActiveImageProperties() const
                 cpuRecord->imageBaseData()->imageIOInfo().m_fileInfo.m_fileName );
 
 
-    boost::optional<UID> colorMapUid = m_dataManager.imageColorMapUid_of_image( *activeImageUid );
+    std::optional<UID> colorMapUid = m_dataManager.imageColorMapUid_of_image( *activeImageUid );
 
     if ( ! colorMapUid )
     {
@@ -843,7 +843,7 @@ ImageDataUiMapper::Impl::getActiveImageProperties() const
     else
     {
         std::cerr << "Image " << *activeImageUid << " has no color map" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
 
@@ -898,20 +898,20 @@ ImageDataUiMapper::Impl::getActiveImageProperties() const
 }
 
 
-boost::optional< gui::ImagePropertiesPartial_msgToUi >
+std::optional< gui::ImagePropertiesPartial_msgToUi >
 ImageDataUiMapper::Impl::getActiveImageWindowLevel() const
 {
     const auto activeImageUid = m_dataManager.activeImageUid();
     if ( ! activeImageUid )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto activeImageRecord = m_dataManager.imageRecord( *activeImageUid ).lock();
     if ( ! activeImageRecord || ! activeImageRecord->cpuData() ||
          ! activeImageRecord->cpuData()->imageBaseData() )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto cpuRecord = activeImageRecord->cpuData();
@@ -928,20 +928,20 @@ ImageDataUiMapper::Impl::getActiveImageWindowLevel() const
 }
 
 
-boost::optional< gui::ImageHeader_msgToUi >
+std::optional< gui::ImageHeader_msgToUi >
 ImageDataUiMapper::Impl::getActiveImageHeader() const
 {
     const auto activeImageUid = m_dataManager.activeImageUid();
     if ( ! activeImageUid )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto activeImageRecord = m_dataManager.imageRecord( *activeImageUid ).lock();
     if ( ! activeImageRecord || ! activeImageRecord->cpuData() ||
          ! activeImageRecord->cpuData()->imageBaseData() )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     gui::ImageHeader_msgToUi msg;
@@ -957,20 +957,20 @@ ImageDataUiMapper::Impl::getActiveImageHeader() const
 }
 
 
-boost::optional< gui::ImageTransformation_msgToUi >
+std::optional< gui::ImageTransformation_msgToUi >
 ImageDataUiMapper::Impl::getActiveImageTransformation() const
 {
     const auto activeImageUid = m_dataManager.activeImageUid();
     if ( ! activeImageUid )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto activeImageRecord = m_dataManager.imageRecord( *activeImageUid ).lock();
     if ( ! activeImageRecord || ! activeImageRecord->cpuData() ||
          ! activeImageRecord->cpuData()->imageBaseData() )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     gui::ImageTransformation_msgToUi msg;

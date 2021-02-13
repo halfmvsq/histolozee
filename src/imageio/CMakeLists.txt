@@ -99,6 +99,6 @@ target_include_directories( HZeeImageIO PUBLIC SYSTEM
     ${ITK_INCLUDE_DIRS} )
 
 set_target_properties( HZeeImageIO PROPERTIES
-    CXX_STANDARD 14
+    CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS ON )

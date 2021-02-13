@@ -30,8 +30,8 @@ static const glm::mat4 sk_ident{ 1.0f };
 AnnotationAssembly::AnnotationAssembly(
         ShaderProgramActivatorType shaderProgramActivator,
         UniformsProviderType uniformsProvider,
-        QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > annotationToWorldTxQuerier,
-        QuerierType< boost::optional<float>, UID > annotationThicknessQuerier )
+        QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > annotationToWorldTxQuerier,
+        QuerierType< std::optional<float>, UID > annotationThicknessQuerier )
     :
       m_shaderActivator( shaderProgramActivator ),
       m_uniformsProvider( uniformsProvider ),
@@ -94,14 +94,14 @@ std::weak_ptr<DrawableBase> AnnotationAssembly::getRoot( const SceneType& type )
 
 
 void AnnotationAssembly::setAnnotationToWorldTxQuerier(
-        QuerierType< boost::optional< std::pair<glm::mat4, glm::mat4> >, UID > querier )
+        QuerierType< std::optional< std::pair<glm::mat4, glm::mat4> >, UID > querier )
 {
     m_annotationToWorldTxQuerier = querier;
 }
 
 
 void AnnotationAssembly::setAnnotationThicknessQuerier(
-        QuerierType< boost::optional<float>, UID > querier )
+        QuerierType< std::optional<float>, UID > querier )
 {
     m_annotationThicknessQuerier = querier;
 }
@@ -116,12 +116,12 @@ void AnnotationAssembly::setAnnotation( std::weak_ptr<SlideAnnotationRecord> ann
     }
 
     // Function that provides the tranformation from annotation to World space
-    auto annotToWorldTxProvider = [this, annotRecord] () -> boost::optional<glm::mat4>
+    auto annotToWorldTxProvider = [this, annotRecord] () -> std::optional<glm::mat4>
     {
         auto record = annotRecord.lock();
         if ( ! record )
         {
-            return boost::none;
+            return std::nullopt;
         }
 
         if ( m_annotationToWorldTxQuerier )
@@ -130,17 +130,17 @@ void AnnotationAssembly::setAnnotation( std::weak_ptr<SlideAnnotationRecord> ann
             return m_annotationToWorldTxQuerier( record->uid() )->first;
         }
 
-        return boost::none;
+        return std::nullopt;
     };
 
 
     // Function that provides the slide thickness of the annotation
-    auto annotThicknessProvider = [this, annotRecord] () -> boost::optional<float>
+    auto annotThicknessProvider = [this, annotRecord] () -> std::optional<float>
     {
         auto record = annotRecord.lock();
         if ( ! record )
         {
-            return boost::none;
+            return std::nullopt;
         }
 
         if ( m_annotationThicknessQuerier )
@@ -148,17 +148,17 @@ void AnnotationAssembly::setAnnotation( std::weak_ptr<SlideAnnotationRecord> ann
             return m_annotationThicknessQuerier( record->uid() );
         }
 
-        return boost::none;
+        return std::nullopt;
     };
 
     // Function that provides the scaling information for landmark drawables in landmark group
-//    auto annotScalingProvider = [this, &annotRecord] () -> boost::optional<DrawableScaling>
+//    auto annotScalingProvider = [this, &annotRecord] () -> std::optional<DrawableScaling>
 //    {
 //        if ( m_annotationScalingQuerier )
 //        {
 //            return m_annotationScalingQuerier( annotRecord.uid() );
 //        }
-//        return boost::none;
+//        return std::nullopt;
 //    };
 
 //    const auto itr = m_annotations.find( record->uid() );

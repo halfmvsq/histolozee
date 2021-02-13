@@ -8,9 +8,8 @@
 
 #include <glm/vec3.hpp>
 
-#include <boost/optional.hpp>
-
 #include <functional>
+#include <optional>
 #include <unordered_map>
 
 
@@ -43,7 +42,7 @@ private:
     /// interaction handler. The optional worldCenterPos argument is a World-space point to zoom towards
     /// in all synchronized views.
     using ZoomSynchronizer =
-        std::function< void ( float absoluteZoomValue, const boost::optional<glm::vec3>& worldCenterPos ) >;
+        std::function< void ( float absoluteZoomValue, const std::optional<glm::vec3>& worldCenterPos ) >;
 
 
 public:

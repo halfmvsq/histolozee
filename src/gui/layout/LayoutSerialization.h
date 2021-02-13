@@ -48,13 +48,13 @@ struct LayoutNode
     Orientation m_orientation;
 
     /// Optional stretch factor defining how to stretch this node relative to its siblings
-    boost::optional<int> m_stretch;
+    std::optional<int> m_stretch;
 
     /// Child layout nodes of this node
     std::vector<LayoutNode> m_childLayouts;
 
     /// Optional ViewNode contained within this layout node
-    boost::optional<ViewNode> m_view = boost::none;
+    std::optional<ViewNode> m_view = std::nullopt;
 };
 
 

@@ -9,9 +9,8 @@
 #include <glm/vec3.hpp>
 #include <glm/gtc/type_precision.hpp>
 
-#include <boost/optional.hpp>
-
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -46,7 +45,7 @@ struct SlideHeaderImmutable
 
 /**
  * @brief Read/write slide header data for the UI.
- * Template type V can be either boost::optional (to denote all optional fields) or
+ * Template type V can be either std::optional (to denote all optional fields) or
  * Required (to denote all required fields).
  */
 template< template<typename> class V >
@@ -62,7 +61,7 @@ struct SlideHeaderMutable
 
 /**
  * @brief Slide view data for display/editing in the UI.
- * Template type V can be either boost::optional (to denote all optional fields) or
+ * Template type V can be either std::optional (to denote all optional fields) or
  * Required (to denote all required fields).
  */
 template< template<typename> class V >
@@ -100,7 +99,7 @@ struct SlideViewData
 
 /**
  * @brief Slide transformation data for display/editing in the UI.
- * Template type V can be either boost::optional (to denote all optional fields) or
+ * Template type V can be either std::optional (to denote all optional fields) or
  * Required (to denote all required fields).
  */
 template< template<typename> class V >
@@ -174,7 +173,7 @@ struct SlideHeaderComplete_msgToUi
 struct SlideHeaderPartial_msgFromUi
 {
     UID m_uid; //!< Slide UID
-    SlideHeaderMutable<boost::optional> m_headerMutable; //!< Header data
+    SlideHeaderMutable<std::optional> m_headerMutable; //!< Header data
 };
 
 
@@ -194,7 +193,7 @@ struct SlideViewDataComplete_msgToUi
 struct SlideViewDataPartial_msgToUi
 {
     UID m_uid; //!< Slide UID
-    SlideViewData<boost::optional> m_viewData; //!< View data
+    SlideViewData<std::optional> m_viewData; //!< View data
 };
 
 
@@ -204,7 +203,7 @@ struct SlideViewDataPartial_msgToUi
 struct SlideViewDataPartial_msgFromUi
 {
     UID m_uid; //!< Slide UID
-    SlideViewData<boost::optional> m_viewData; //!< View data
+    SlideViewData<std::optional> m_viewData; //!< View data
 };
 
 
@@ -224,7 +223,7 @@ struct SlideTxDataComplete_msgToUi
 struct SlideTxDataPartial_msgToUi
 {
     UID m_uid; //!< Slide UID
-    SlideTransformationData<boost::optional> m_txData; //!< Transformation data
+    SlideTransformationData<std::optional> m_txData; //!< Transformation data
 };
 
 
@@ -234,10 +233,10 @@ struct SlideTxDataPartial_msgToUi
 struct SlideTxDataPartial_msgFromUi
 {
     UID m_uid; //!< Slide UID
-    SlideTransformationData<boost::optional> m_txData; //!< Transformation data
+    SlideTransformationData<std::optional> m_txData; //!< Transformation data
 
     /// Flag to set the world_O_stack transformation to identity.
-    boost::optional<bool> m_set_stack_O_slide_identity;
+    std::optional<bool> m_set_stack_O_slide_identity;
 };
 
 

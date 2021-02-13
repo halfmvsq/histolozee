@@ -73,8 +73,8 @@ LandmarkGroup3d::LandmarkGroup3d(
         UniformsProviderType uniformsProvider,
         std::weak_ptr<LandmarkGroupRecord> landmarkGroupRecord,
         std::weak_ptr<MeshGpuRecord> meshGpuRecord,
-        GetterType< boost::optional<DrawableScaling> > scalingProvider,
-        GetterType< boost::optional< std::pair<glm::mat4, glm::mat4> > > landmarkToWorldTxProvider )
+        GetterType< std::optional<DrawableScaling> > scalingProvider,
+        GetterType< std::optional< std::pair<glm::mat4, glm::mat4> > > landmarkToWorldTxProvider )
     :
       DrawableBase( std::move( name ), DrawableType::Landmark ),
 
@@ -93,14 +93,14 @@ LandmarkGroup3d::LandmarkGroup3d(
 }
 
 
-void LandmarkGroup3d::setScalingInfoProvider( GetterType< boost::optional<DrawableScaling> > provider )
+void LandmarkGroup3d::setScalingInfoProvider( GetterType< std::optional<DrawableScaling> > provider )
 {
     m_scalingProvider = provider;
 }
 
 
 void LandmarkGroup3d::setLandmarkToWorldTxProvider(
-        GetterType< boost::optional< std::pair<glm::mat4, glm::mat4> > > provider )
+        GetterType< std::optional< std::pair<glm::mat4, glm::mat4> > > provider )
 {
     m_landmarkToWorldTxProvider = provider;
 }

@@ -5,9 +5,8 @@
 #include "rendering/utility/containers/VertexIndicesInfo.h"
 #include "rendering/utility/gl/GLBufferObject.h"
 
-#include <boost/optional.hpp>
-
 #include <memory>
+#include <optional>
 
 
 class MeshGpuRecord
@@ -52,15 +51,15 @@ public:
     // Return as non-const reference, since users need access to
     // non-const member functions of GLTexture
     GLBufferObject& positionsObject();
-    boost::optional<GLBufferObject>& normalsObject();
-    boost::optional<GLBufferObject>& texCoordsObject();
-    boost::optional<GLBufferObject>& colorsObject();
+    std::optional<GLBufferObject>& normalsObject();
+    std::optional<GLBufferObject>& texCoordsObject();
+    std::optional<GLBufferObject>& colorsObject();
     GLBufferObject& indicesObject();
 
     const VertexAttributeInfo& positionsInfo() const;
-    const boost::optional<VertexAttributeInfo>& normalsInfo() const;
-    const boost::optional<VertexAttributeInfo>& texCoordsInfo() const;
-    const boost::optional<VertexAttributeInfo>& colorsInfo() const;
+    const std::optional<VertexAttributeInfo>& normalsInfo() const;
+    const std::optional<VertexAttributeInfo>& texCoordsInfo() const;
+    const std::optional<VertexAttributeInfo>& colorsInfo() const;
     const VertexIndicesInfo& indicesInfo() const;
 
     BufferComponentType componentType() const;
@@ -70,15 +69,15 @@ public:
 private:
 
     GLBufferObject m_positionsObject;
-    boost::optional<GLBufferObject> m_normalsObject;
-    boost::optional<GLBufferObject> m_texCoordsObject;
-    boost::optional<GLBufferObject> m_colorsObject;
+    std::optional<GLBufferObject> m_normalsObject;
+    std::optional<GLBufferObject> m_texCoordsObject;
+    std::optional<GLBufferObject> m_colorsObject;
     GLBufferObject m_indicesObject;
 
     VertexAttributeInfo m_positionsInfo;
-    boost::optional<VertexAttributeInfo> m_normalsInfo;
-    boost::optional<VertexAttributeInfo> m_texCoordsInfo;
-    boost::optional<VertexAttributeInfo> m_colorsInfo;
+    std::optional<VertexAttributeInfo> m_normalsInfo;
+    std::optional<VertexAttributeInfo> m_texCoordsInfo;
+    std::optional<VertexAttributeInfo> m_colorsInfo;
     VertexIndicesInfo m_indicesInfo;
 };
 

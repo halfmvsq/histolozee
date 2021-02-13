@@ -264,7 +264,7 @@ void InteractionManager::setRefSpaceAABBoxProvider( GetterType< AABB<float> > pr
 
 
 void InteractionManager::setSlideStackAABBoxProvider(
-        GetterType< boost::optional< AABB<float> > > provider )
+        GetterType< std::optional< AABB<float> > > provider )
 {
     m_slideStackAABBoxProvider = provider;
 }
@@ -559,7 +559,7 @@ void InteractionManager::alignCamerasToFrames()
         const auto linkedFrameType = getDefaultLinkedStartFrameType( cameraType );
 
         // AABB in World space that is used to position the camera
-        boost::optional< AABB<float> > worldAABBox;
+        std::optional< AABB<float> > worldAABBox;
 
         switch ( linkedFrameType )
         {

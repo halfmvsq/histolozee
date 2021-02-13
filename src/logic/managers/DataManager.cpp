@@ -100,11 +100,11 @@ struct DataManager::Impl
           m_orderedSlideLandmarkGroupUids(),
           m_orderedSlideAnnotationUids(),
 
-          m_activeImageUids( boost::none ),
-          m_activeParcelUids( boost::none ),
-          m_activeSlideUid( boost::none ),
+          m_activeImageUids( std::nullopt ),
+          m_activeParcelUids( std::nullopt ),
+          m_activeSlideUid( std::nullopt ),
 
-          m_defaultImageColorMapUid( boost::none ),
+          m_defaultImageColorMapUid( std::nullopt ),
 
           m_imageUid_to_defaultParcelUid(),
 
@@ -169,16 +169,16 @@ struct DataManager::Impl
 
     /// The image that determines the reference space.
     /// It is also the one being actively manipulated in the UI.
-    boost::optional<UID> m_activeImageUids;
+    std::optional<UID> m_activeImageUids;
 
     /// The visible parcellation. It is also the one being actively manipulated in the UI.
-    boost::optional<UID> m_activeParcelUids;
+    std::optional<UID> m_activeParcelUids;
 
     /// The slide being actively manipulated in the UI.
-    boost::optional<UID> m_activeSlideUid;
+    std::optional<UID> m_activeSlideUid;
 
     /// The default image color map
-    boost::optional<UID> m_defaultImageColorMapUid;
+    std::optional<UID> m_defaultImageColorMapUid;
 
 
     /// Map from image UID to its default parcellation UID
@@ -283,13 +283,13 @@ DataManager::DataManager()
 DataManager::~DataManager() = default;
 
 
-boost::optional<UID> DataManager::insertImageRecord( std::shared_ptr<ImageRecord> record )
+std::optional<UID> DataManager::insertImageRecord( std::shared_ptr<ImageRecord> record )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! record )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     // Add this image and make it the last one in the ordering
@@ -304,14 +304,14 @@ boost::optional<UID> DataManager::insertImageRecord( std::shared_ptr<ImageRecord
 }
 
 
-boost::optional<UID> DataManager::insertParcellationRecord(
+std::optional<UID> DataManager::insertParcellationRecord(
         std::shared_ptr<ParcellationRecord> record )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! record )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     const UID parcelUid;
@@ -325,13 +325,13 @@ boost::optional<UID> DataManager::insertParcellationRecord(
 }
 
 
-boost::optional<UID> DataManager::insertSlideRecord( std::shared_ptr<SlideRecord> record )
+std::optional<UID> DataManager::insertSlideRecord( std::shared_ptr<SlideRecord> record )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! record )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     const UID slideUid;
@@ -346,14 +346,14 @@ boost::optional<UID> DataManager::insertSlideRecord( std::shared_ptr<SlideRecord
 }
 
 
-boost::optional<UID> DataManager::insertImageColorMapRecord(
+std::optional<UID> DataManager::insertImageColorMapRecord(
         std::shared_ptr<ImageColorMapRecord> record )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! record )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     const UID mapUid;
@@ -367,13 +367,13 @@ boost::optional<UID> DataManager::insertImageColorMapRecord(
 }
 
 
-boost::optional<UID> DataManager::insertLabelTableRecord( std::shared_ptr<LabelTableRecord> record )
+std::optional<UID> DataManager::insertLabelTableRecord( std::shared_ptr<LabelTableRecord> record )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! record )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     const UID tableUid;
@@ -465,21 +465,21 @@ bool DataManager::associateDefaultParcellationWithImage( const UID& imageUid, co
 }
 
 
-boost::optional<UID> DataManager::insertIsoMeshRecord(
+std::optional<UID> DataManager::insertIsoMeshRecord(
         const UID& imageUid, std::shared_ptr<MeshRecord> meshRecord )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! meshRecord )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto imageIt = m_impl->m_imageRecords.find( imageUid );
     if ( std::end( m_impl->m_imageRecords ) == imageIt )
     {
         std::cerr << "Image record " << imageUid << " does not exist" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     const UID meshUid;
@@ -496,27 +496,27 @@ boost::optional<UID> DataManager::insertIsoMeshRecord(
 }
 
 
-boost::optional<UID> DataManager::insertLabelMeshRecord(
+std::optional<UID> DataManager::insertLabelMeshRecord(
         const UID& parcelUid, std::shared_ptr<MeshRecord> meshRecord )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! meshRecord )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto parcelIt = m_impl->m_parcelRecords.find( parcelUid );
     if ( std::end( m_impl->m_parcelRecords ) == parcelIt )
     {
         std::cerr << "Parcellation " << parcelUid << " does not exist" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     if ( ! meshRecord || ! meshRecord->cpuData() )
     {
         std::cerr << "Label mesh record is null" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     const UID meshUid;
@@ -536,21 +536,21 @@ boost::optional<UID> DataManager::insertLabelMeshRecord(
 }
 
 
-boost::optional<UID> DataManager::insertRefImageLandmarkGroupRecord(
+std::optional<UID> DataManager::insertRefImageLandmarkGroupRecord(
         const UID& imageUid, std::shared_ptr<LandmarkGroupRecord> lmGroupRecord )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! lmGroupRecord )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto imageIt = m_impl->m_imageRecords.find( imageUid );
     if ( std::end( m_impl->m_imageRecords ) == imageIt )
     {
         std::cerr << "Image record " << imageUid << " does not exist" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     const UID lmGroupUid;
@@ -569,21 +569,21 @@ boost::optional<UID> DataManager::insertRefImageLandmarkGroupRecord(
 }
 
 
-boost::optional<UID> DataManager::insertSlideLandmarkGroupRecord(
+std::optional<UID> DataManager::insertSlideLandmarkGroupRecord(
         const UID& slideUid, std::shared_ptr<LandmarkGroupRecord> lmGroupRecord )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! lmGroupRecord )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto slideIt = m_impl->m_slideRecords.find( slideUid );
     if ( std::end( m_impl->m_slideRecords ) == slideIt )
     {
         std::cerr << "Slide record " << slideUid << " does not exist" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     const UID lmGroupUid;
@@ -610,21 +610,21 @@ boost::optional<UID> DataManager::insertSlideLandmarkGroupRecord(
 }
 
 
-boost::optional<UID> DataManager::insertSlideAnnotationRecord(
+std::optional<UID> DataManager::insertSlideAnnotationRecord(
         const UID& slideUid, std::shared_ptr<SlideAnnotationRecord> annotRecord )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! annotRecord )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto slideIt = m_impl->m_slideRecords.find( slideUid );
     if ( std::end( m_impl->m_slideRecords ) == slideIt )
     {
         std::cerr << "Slide record " << slideUid << " does not exist" << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     const UID annotUid;
@@ -674,7 +674,7 @@ bool DataManager::unloadImage( const UID& imageUid )
             }
             else
             {
-                setActiveImageUid( boost::none );
+                setActiveImageUid( std::nullopt );
             }
         }
     }
@@ -706,7 +706,7 @@ bool DataManager::unloadParcellation( const UID& parcelUid )
     {
         if ( parcelUid == *activeUID )
         {
-            setActiveParcellationUid( boost::none );
+            setActiveParcellationUid( std::nullopt );
         }
     }
 
@@ -750,7 +750,7 @@ bool DataManager::unloadSlide( const UID& slideUid )
         // Clear the active slide if there are no slides left
         if ( m_impl->m_slideRecords.empty() )
         {
-            m_impl->m_activeSlideUid = boost::none;
+            m_impl->m_activeSlideUid = std::nullopt;
         }
 
         m_impl->m_signalSlideStackChanged();
@@ -980,38 +980,38 @@ bool DataManager::unloadSlideAnnotation( const UID& annotUid )
 }
 
 
-boost::optional<UID> DataManager::activeImageUid() const
+std::optional<UID> DataManager::activeImageUid() const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
     return m_impl->m_activeImageUids;
 }
 
-boost::optional<UID> DataManager::activeParcellationUid() const
+std::optional<UID> DataManager::activeParcellationUid() const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
     return m_impl->m_activeParcelUids;
 }
 
-boost::optional<UID> DataManager::activeSlideUid() const
+std::optional<UID> DataManager::activeSlideUid() const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
     return m_impl->m_activeSlideUid;
 }
 
-boost::optional<size_t> DataManager::activeSlideIndex() const
+std::optional<size_t> DataManager::activeSlideIndex() const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! m_impl->m_activeSlideUid )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     return slideIndex( *m_impl->m_activeSlideUid );
 }
 
 
-boost::optional<size_t> DataManager::slideIndex( const UID& slideUid ) const
+std::optional<size_t> DataManager::slideIndex( const UID& slideUid ) const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1024,23 +1024,23 @@ boost::optional<size_t> DataManager::slideIndex( const UID& slideUid ) const
         auto d = std::distance( std::begin( m_impl->m_orderedSlideUids ), it );
         if ( d < 0 )
         {
-            return boost::none;
+            return std::nullopt;
         }
 
         return static_cast<size_t>( d );
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
-bool DataManager::setActiveImageUid( const boost::optional<UID>& uid )
+bool DataManager::setActiveImageUid( const std::optional<UID>& uid )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! uid )
     {
-        m_impl->m_activeImageUids = boost::none;
+        m_impl->m_activeImageUids = std::nullopt;
         /// m_impl->m_signalImageDataChanged( *uid );
         return true;
     }
@@ -1058,14 +1058,14 @@ bool DataManager::setActiveImageUid( const boost::optional<UID>& uid )
     return false;
 }
 
-bool DataManager::setActiveParcellationUid( const boost::optional<UID>& uid )
+bool DataManager::setActiveParcellationUid( const std::optional<UID>& uid )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     if ( ! uid )
     {
-        // Passed in boost::none, which means that the active label is cleared
-        m_impl->m_activeParcelUids = boost::none;
+        // Passed in std::nullopt, which means that the active label is cleared
+        m_impl->m_activeParcelUids = std::nullopt;
         /// m_impl->m_signalParcellationDataChanged( *uid );
         return true;
     }
@@ -1162,7 +1162,7 @@ bool DataManager::setSlideOrder( const std::list<UID>& orderedSlideUids )
     return false;
 }
 
-boost::optional<UID> DataManager::defaultParcellationUid_of_image( const UID& imageUid ) const
+std::optional<UID> DataManager::defaultParcellationUid_of_image( const UID& imageUid ) const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1172,10 +1172,10 @@ boost::optional<UID> DataManager::defaultParcellationUid_of_image( const UID& im
         return it->second;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
-boost::optional<UID> DataManager::parcellationUid_of_labelMesh( const UID& labelMeshUID ) const
+std::optional<UID> DataManager::parcellationUid_of_labelMesh( const UID& labelMeshUID ) const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1185,10 +1185,10 @@ boost::optional<UID> DataManager::parcellationUid_of_labelMesh( const UID& label
         return it->second;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
-boost::optional<UID> DataManager::imageUid_of_isoMesh( const UID& isoMeshUid ) const
+std::optional<UID> DataManager::imageUid_of_isoMesh( const UID& isoMeshUid ) const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1198,10 +1198,10 @@ boost::optional<UID> DataManager::imageUid_of_isoMesh( const UID& isoMeshUid ) c
         return it->second;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
-boost::optional<UID> DataManager::imageColorMapUid_of_image( const UID& imageUid ) const
+std::optional<UID> DataManager::imageColorMapUid_of_image( const UID& imageUid ) const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1211,10 +1211,10 @@ boost::optional<UID> DataManager::imageColorMapUid_of_image( const UID& imageUid
         return it->second;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
-boost::optional<UID> DataManager::labelTableUid_of_parcellation( const UID& parcelUid ) const
+std::optional<UID> DataManager::labelTableUid_of_parcellation( const UID& parcelUid ) const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1224,17 +1224,17 @@ boost::optional<UID> DataManager::labelTableUid_of_parcellation( const UID& parc
         return it->second;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
-boost::optional<UID> DataManager::defaultImageColorMapUid() const
+std::optional<UID> DataManager::defaultImageColorMapUid() const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
     return m_impl->m_defaultImageColorMapUid;
 }
 
 
-boost::optional<UID> DataManager::imageUid_of_landmarkGroup( const UID& lmGroupUid ) const
+std::optional<UID> DataManager::imageUid_of_landmarkGroup( const UID& lmGroupUid ) const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1244,11 +1244,11 @@ boost::optional<UID> DataManager::imageUid_of_landmarkGroup( const UID& lmGroupU
         return it->second;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
-boost::optional<UID> DataManager::slideUid_of_landmarkGroup( const UID& lmGroupUid ) const
+std::optional<UID> DataManager::slideUid_of_landmarkGroup( const UID& lmGroupUid ) const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1258,11 +1258,11 @@ boost::optional<UID> DataManager::slideUid_of_landmarkGroup( const UID& lmGroupU
         return it->second;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
-boost::optional<UID> DataManager::slideUid_of_annotation( const UID& annotUid ) const
+std::optional<UID> DataManager::slideUid_of_annotation( const UID& annotUid ) const
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1272,11 +1272,11 @@ boost::optional<UID> DataManager::slideUid_of_annotation( const UID& annotUid ) 
         return it->second;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
-boost::optional<UID> DataManager::orderedImageUid( long index )
+std::optional<UID> DataManager::orderedImageUid( long index )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1287,10 +1287,10 @@ boost::optional<UID> DataManager::orderedImageUid( long index )
         return *it;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
-boost::optional<UID> DataManager::orderedParcellationUid( long index )
+std::optional<UID> DataManager::orderedParcellationUid( long index )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1301,10 +1301,10 @@ boost::optional<UID> DataManager::orderedParcellationUid( long index )
         return *it;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
-boost::optional<UID> DataManager::orderedSlideUid( long index )
+std::optional<UID> DataManager::orderedSlideUid( long index )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1315,10 +1315,10 @@ boost::optional<UID> DataManager::orderedSlideUid( long index )
         return *it;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
-boost::optional<UID> DataManager::orderedImageColorMapUid( long index )
+std::optional<UID> DataManager::orderedImageColorMapUid( long index )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1327,12 +1327,12 @@ boost::optional<UID> DataManager::orderedImageColorMapUid( long index )
         return m_impl->m_orderedImageColorMapUids.at( static_cast<size_t>( index ) );
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
 /// @todo Ordering is kept for ALL images. Change this to order PER image.
-boost::optional<UID> DataManager::orderedRefImageLandmarkGroupUid( const UID& /*imageUid*/, long index )
+std::optional<UID> DataManager::orderedRefImageLandmarkGroupUid( const UID& /*imageUid*/, long index )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1343,18 +1343,18 @@ boost::optional<UID> DataManager::orderedRefImageLandmarkGroupUid( const UID& /*
         return *it;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
-boost::optional<UID> DataManager::orderedSlideLandmarkGroupUid( const UID& slideUid, long index )
+std::optional<UID> DataManager::orderedSlideLandmarkGroupUid( const UID& slideUid, long index )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     auto it = m_impl->m_orderedSlideLandmarkGroupUids.find( slideUid );
     if ( std::end( m_impl->m_orderedSlideLandmarkGroupUids ) == it )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto& orderedLmList = it->second;
@@ -1366,18 +1366,18 @@ boost::optional<UID> DataManager::orderedSlideLandmarkGroupUid( const UID& slide
         return *it;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
-boost::optional<UID> DataManager::orderedSlideAnnotationUid( const UID& slideUid, long index )
+std::optional<UID> DataManager::orderedSlideAnnotationUid( const UID& slideUid, long index )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
     auto it = m_impl->m_orderedSlideAnnotationUids.find( slideUid );
     if ( std::end( m_impl->m_orderedSlideAnnotationUids ) == it )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto& orderedAnnotList = it->second;
@@ -1389,11 +1389,11 @@ boost::optional<UID> DataManager::orderedSlideAnnotationUid( const UID& slideUid
         return *it;
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
-boost::optional<long> DataManager::orderedImageIndex( const UID& uid )
+std::optional<long> DataManager::orderedImageIndex( const UID& uid )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1405,10 +1405,10 @@ boost::optional<long> DataManager::orderedImageIndex( const UID& uid )
         return std::distance( std::begin( m_impl->m_orderedImageUids ), it );
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
-boost::optional<long> DataManager::orderedParcellationIndex( const UID& uid )
+std::optional<long> DataManager::orderedParcellationIndex( const UID& uid )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1420,11 +1420,11 @@ boost::optional<long> DataManager::orderedParcellationIndex( const UID& uid )
         return std::distance( std::begin( m_impl->m_orderedParcelUids ), it );
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
-boost::optional<long> DataManager::orderedSlideIndex( const UID& uid )
+std::optional<long> DataManager::orderedSlideIndex( const UID& uid )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1436,11 +1436,11 @@ boost::optional<long> DataManager::orderedSlideIndex( const UID& uid )
         return std::distance( std::begin( m_impl->m_orderedSlideUids ), it );
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
-boost::optional<long> DataManager::orderedImageColorMapIndex( const UID& uid )
+std::optional<long> DataManager::orderedImageColorMapIndex( const UID& uid )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
 
@@ -1452,12 +1452,12 @@ boost::optional<long> DataManager::orderedImageColorMapIndex( const UID& uid )
         return std::distance( std::begin( m_impl->m_orderedImageColorMapUids ), it );
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
 /// @todo Use the imageUid. Lms are not currently ordered per image.
-boost::optional<long> DataManager::orderedRefImageLandmarkGroupIndex(
+std::optional<long> DataManager::orderedRefImageLandmarkGroupIndex(
         const UID& /*imageUid*/, const UID& lmGroupUid )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
@@ -1470,12 +1470,12 @@ boost::optional<long> DataManager::orderedRefImageLandmarkGroupIndex(
         return std::distance( std::begin( m_impl->m_orderedRefImageLandmarkGroupUids ), it );
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
 /// @todo Make common functionality...
-boost::optional<long> DataManager::orderedSlideLandmarkGroupIndex(
+std::optional<long> DataManager::orderedSlideLandmarkGroupIndex(
         const UID& slideUid, const UID& lmGroupUid )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
@@ -1483,7 +1483,7 @@ boost::optional<long> DataManager::orderedSlideLandmarkGroupIndex(
     auto it2 = m_impl->m_orderedSlideLandmarkGroupUids.find( slideUid );
     if ( std::end( m_impl->m_orderedSlideLandmarkGroupUids ) == it2 )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto& orderedLmList = it2->second;
@@ -1495,12 +1495,12 @@ boost::optional<long> DataManager::orderedSlideLandmarkGroupIndex(
         return std::distance( std::begin( orderedLmList ), it );
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 
 /// @todo Make common functionality...
-boost::optional<long> DataManager::orderedSlideAnnotationIndex(
+std::optional<long> DataManager::orderedSlideAnnotationIndex(
         const UID& slideUid, const UID& annotUid )
 {
     if ( ! m_impl ) { throw_debug( "Null impl" ); }
@@ -1508,7 +1508,7 @@ boost::optional<long> DataManager::orderedSlideAnnotationIndex(
     auto it2 = m_impl->m_orderedSlideAnnotationUids.find( slideUid );
     if ( std::end( m_impl->m_orderedSlideAnnotationUids ) == it2 )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     auto& orderedAnnotList = it2->second;
@@ -1520,7 +1520,7 @@ boost::optional<long> DataManager::orderedSlideAnnotationIndex(
         return std::distance( std::begin( orderedAnnotList ), it );
     }
 
-    return boost::none;
+    return std::nullopt;
 }
 
 

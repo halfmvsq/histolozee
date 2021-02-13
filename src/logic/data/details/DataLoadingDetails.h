@@ -10,9 +10,8 @@
 #include "logic/records/ImageColorMapRecord.h"
 #include "logic/records/LabelTableRecord.h"
 
-#include <boost/optional.hpp>
-
 #include <memory>
+#include <optional>
 #include <string>
 
 
@@ -33,7 +32,7 @@ namespace details
 
 std::unique_ptr< imageio::ImageCpuRecord > generateImageCpuRecord(
         const std::string& filename,
-        const boost::optional< std::string >& dicomSeriesUid,
+        const std::optional< std::string >& dicomSeriesUid,
         const imageio::ComponentNormalizationPolicy& normPolicy );
 
 
@@ -71,7 +70,7 @@ std::unique_ptr<MeshCpuRecord> generateLabelMeshCpuRecord(
         const uint32_t labelIndex );
 
 
-boost::optional<UID> generateLabelMeshRecord(
+std::optional<UID> generateLabelMeshRecord(
         DataManager& dataManager,
         const UID& parcelUid,
         const uint32_t labelIndex );
@@ -88,9 +87,9 @@ generateDefaultParcellationCpuRecord( DataManager& dataManager, const UID& image
  * @param[in] dataManager DataManager instance
  * @param[in] imageUid Image UID to match in size
  *
- * @return UID of blank parcellation; boost::none if creation/loading not successful.
+ * @return UID of blank parcellation; std::nullopt if creation/loading not successful.
  */
-boost::optional<UID> createBlankParcellation( DataManager& dataManager, const UID& imageUid );
+std::optional<UID> createBlankParcellation( DataManager& dataManager, const UID& imageUid );
 
 
 std::unique_ptr<slideio::SlideCpuRecord> generateSlideCpuRecord( const std::string& filename );

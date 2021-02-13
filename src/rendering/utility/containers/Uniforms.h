@@ -6,7 +6,6 @@
 #include <glm/mat4x4.hpp>
 #include <glm/vec4.hpp>
 
-#include <boost/optional.hpp>
 #include <boost/variant.hpp>
 
 #include <QOpenGLFunctions_3_3_Core>
@@ -14,6 +13,7 @@
 #include <array>
 #include <functional>
 #include <memory>
+#include <optional>
 #include <unordered_map>
 
 
@@ -109,7 +109,7 @@ public:
     ValueType value( const std::string& name ) const;
 
     void setLocation( const std::string& name, GLint loc );
-    boost::optional<GLint> location( const std::string& name ) const;
+    std::optional<GLint> location( const std::string& name ) const;
 
     GLint queryAndSetLocation(
             const std::string& name,

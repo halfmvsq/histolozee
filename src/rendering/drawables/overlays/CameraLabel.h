@@ -12,10 +12,9 @@
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
 
-#include <boost/optional.hpp>
-
 #include <array>
 #include <memory>
+#include <optional>
 
 
 class GLTexture;
@@ -42,7 +41,7 @@ public:
     CameraLabel( std::string name,
                  ShaderProgramActivatorType shaderProgramActivator,
                  UniformsProviderType uniformsProvider,
-                 GetterType< boost::optional<glm::mat4> > subjectToWorldProvider,
+                 GetterType< std::optional<glm::mat4> > subjectToWorldProvider,
                  std::array< std::weak_ptr<GLTexture>, 6 > letterTextures );
 
     CameraLabel( const CameraLabel& ) = delete;
@@ -55,7 +54,7 @@ public:
 
     DrawableOpacity opacityFlag() const override;
 
-    void setSubjectToWorldProvider( GetterType< boost::optional<glm::mat4> > );
+    void setSubjectToWorldProvider( GetterType< std::optional<glm::mat4> > );
 
 
 private:
@@ -89,7 +88,7 @@ private:
     ShaderProgramActivatorType m_shaderProgramActivator;
     UniformsProviderType m_uniformsProvider;
 
-    GetterType< boost::optional<glm::mat4> > m_subjectToWorldProvider;
+    GetterType< std::optional<glm::mat4> > m_subjectToWorldProvider;
 
     GLVertexArrayObject m_vao;
 

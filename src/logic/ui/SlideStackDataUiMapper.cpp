@@ -259,40 +259,40 @@ SlideStackDataUiMapper::getSlideCommonPropertiesComplete_msgToUi() const
     return m_impl->getSlideCommonProperties();
 }
 
-boost::optional< gui::SlideHeaderComplete_msgToUi >
+std::optional< gui::SlideHeaderComplete_msgToUi >
 SlideStackDataUiMapper::getSlideHeaderComplete_msgToUi( const UID& slideUid ) const
 {
     auto slideRecord = m_impl->m_dataManager.slideRecord( slideUid ).lock();
     if ( ! slideRecord || ! slideRecord->cpuData() )
     {
         std::cerr << "Requested header data for invalid slide " << slideUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     return m_impl->getSlideHeader( slideUid );
 }
 
-boost::optional< gui::SlideViewDataComplete_msgToUi >
+std::optional< gui::SlideViewDataComplete_msgToUi >
 SlideStackDataUiMapper::getSlideViewDataComplete_msgToUi( const UID& slideUid ) const
 {
     auto slideRecord = m_impl->m_dataManager.slideRecord( slideUid ).lock();
     if ( ! slideRecord || ! slideRecord->cpuData() )
     {
         std::cerr << "Requested view data for invalid slide " << slideUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     return m_impl->getSlideViewData( slideUid );
 }
 
-boost::optional< gui::SlideTxDataComplete_msgToUi >
+std::optional< gui::SlideTxDataComplete_msgToUi >
 SlideStackDataUiMapper::getSlideTxDataComplete_msgToUi( const UID& slideUid ) const
 {
     auto slideRecord = m_impl->m_dataManager.slideRecord( slideUid ).lock();
     if ( ! slideRecord || ! slideRecord->cpuData() )
     {
         std::cerr << "Requested transformation data for invalid slide " << slideUid << std::endl;
-        return boost::none;
+        return std::nullopt;
     }
 
     return m_impl->getSlideTxData( slideUid );
@@ -450,7 +450,7 @@ void SlideStackDataUiMapper::Impl::updateAppFromUi( const gui::ActiveSlide_msgFr
     }
 
     // Check that the message's active slide UID and index match:
-    const boost::optional<size_t> slideIndex = m_dataManager.slideIndex( *msg.m_activeSlideUid );
+    const std::optional<size_t> slideIndex = m_dataManager.slideIndex( *msg.m_activeSlideUid );
 
     if ( ! slideIndex || ( *slideIndex != static_cast<size_t>( *msg.m_activeSlideIndex ) ) )
     {
@@ -762,7 +762,7 @@ void SlideStackDataUiMapper::Impl::updateAppFromUi( const gui::MoveToSlide_msgFr
     }
 
     // Check that the message's slide UID and index match:
-    const boost::optional<size_t> slideIndex = m_dataManager.slideIndex( msg.m_slideUid );
+    const std::optional<size_t> slideIndex = m_dataManager.slideIndex( msg.m_slideUid );
     if ( ! slideIndex || ( *slideIndex != static_cast<size_t>( msg.m_slideIndex ) ) )
     {
         std::cerr << "Cannot move to slide index " << msg.m_slideIndex

@@ -3,7 +3,6 @@
 #include "common/HZeeException.hpp"
 
 #include <boost/filesystem.hpp>
-#include <boost/optional.hpp>
 
 #include <QAction>
 #include <QActionGroup>
@@ -335,7 +334,7 @@ void MainWindow::importImage()
 
     /// @todo Need to query the DICOM series UID list, if the user has
     /// chosen a file/folder with multiple series in it
-    const boost::optional< std::string > dicomSeriesUID = boost::none;
+    const std::optional< std::string > dicomSeriesUID = std::nullopt;
 
     /// @todo remove from here. it's in AppController now, but doesn't belong there either.
 //    loadImage( filename, dicomSeriesUID );

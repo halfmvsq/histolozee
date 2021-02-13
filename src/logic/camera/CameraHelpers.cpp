@@ -620,7 +620,7 @@ glm::mat4 get_ndc_O_view( const Viewport& viewport )
 }
 
 
-boost::optional< glm::vec3 > worldCameraPlaneIntersection(
+std::optional< glm::vec3 > worldCameraPlaneIntersection(
         const Camera& camera,
         const glm::vec2& ndcRayPos,
         const glm::vec3& worldPlanePos )
@@ -644,7 +644,7 @@ boost::optional< glm::vec3 > worldCameraPlaneIntersection(
     }
     else
     {
-        return boost::none;
+        return std::nullopt;
     }
 }
 

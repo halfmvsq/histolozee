@@ -44,12 +44,12 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include <boost/optional.hpp>
 #include <boost/signals2.hpp>
 #include <boost/range/adaptor/map.hpp>
 #include <boost/range/algorithm/copy.hpp>
 
 #include <iostream>
+#include <optional>
 #include <unordered_map>
 #include <set>
 
@@ -316,7 +316,7 @@ void ConnectionManager::Impl::createAssemblyConnections()
     // Function returning the transformation from a label mesh's local modeling coordinates
     // to World space
     auto labelMeshToWorldTxQuerier = [this] ( const UID& labelMeshUid )
-            -> boost::optional<glm::mat4>
+            -> std::optional<glm::mat4>
     {
         // 1) If there is an active image, use its world_O_subject transformation.
         if ( auto activeImage = m_dataManager.activeImageRecord().lock() )
@@ -337,14 +337,14 @@ void ConnectionManager::Impl::createAssemblyConnections()
             }
         }
 
-        return boost::none;
+        return std::nullopt;
     };
 
 
     // Function returning the transformation from an isosurface mesh's local modeling coordinates
     // to World space
     auto isoMeshToWorldTxQuerier = [this] ( const UID& isoMeshUid )
-            -> boost::optional<glm::mat4>
+            -> std::optional<glm::mat4>
     {
         // Return world_O_subject of the mesh's associated reference image
         if ( auto imageUid = m_dataManager.imageUid_of_isoMesh( isoMeshUid ) )
@@ -356,13 +356,13 @@ void ConnectionManager::Impl::createAssemblyConnections()
             }
         }
 
-        return boost::none;
+        return std::nullopt;
     };
 
 
     // Function returning the matrix transformation from active Subject to World space.
-    // Returns boost::none if there is no active image.
-    auto activeSubjectToWorldProvider = [this] () -> boost::optional<glm::mat4>
+    // Returns std::nullopt if there is no active image.
+    auto activeSubjectToWorldProvider = [this] () -> std::optional<glm::mat4>
     {
         // Return world_O_subject of the active image
         if ( auto imageRecord = m_dataManager.activeImageRecord().lock() )
@@ -373,7 +373,7 @@ void ConnectionManager::Impl::createAssemblyConnections()
             }
         }
 
-        return boost::none;
+        return std::nullopt;
     };
 
 
@@ -420,21 +420,21 @@ void ConnectionManager::Impl::createAssemblyConnections()
     // Function that returns the world_O_subject transformation for the reference image
     // associated with a given landmark group.
     auto refImageLmGroupToWorldTxQuerier = [getRefImageRecordFromLmGroup] ( const UID& lmGroupUid )
-            -> boost::optional< std::pair<glm::mat4, glm::mat4> >
+            -> std::optional< std::pair<glm::mat4, glm::mat4> >
     {
         if ( const auto* image = getRefImageRecordFromLmGroup( lmGroupUid ) )
         {
             return std::make_pair( image->transformations().world_O_subject(),
                                    image->transformations().world_O_subject() );
         }
-        return boost::none;
+        return std::nullopt;
     };
 
 
     // Function that returns the world_O_slide transformation for the slide
     // associated with a given landmark group.
     auto slideLmGroupToWorldTxQuerier = [this, getSlideRecordFromLmGroup] ( const UID& slideLmGroupUid )
-            -> boost::optional< std::pair<glm::mat4, glm::mat4> >
+            -> std::optional< std::pair<glm::mat4, glm::mat4> >
     {
         if ( auto* slide = getSlideRecordFromLmGroup( slideLmGroupUid ) )
         {
@@ -445,14 +445,14 @@ void ConnectionManager::Impl::createAssemblyConnections()
                                     world_O_frame * slideio::stack_O_slide_rigid( *slide ) );
         }
 
-        return boost::none;
+        return std::nullopt;
     };
 
 
     // Function that returns the world_O_slide transformation for the slide
     // associated with a given annotation.
     auto slideAnnotationToWorldTxQuerier = [this, getSlideRecordFromAnnotation] ( const UID& annotUid )
-            -> boost::optional< std::pair<glm::mat4, glm::mat4> >
+            -> std::optional< std::pair<glm::mat4, glm::mat4> >
     {
         if ( auto* slide = getSlideRecordFromAnnotation( annotUid ) )
         {
@@ -463,7 +463,7 @@ void ConnectionManager::Impl::createAssemblyConnections()
                                     world_O_frame * slideio::stack_O_slide_rigid( *slide ) );
         }
 
-        return boost::none;
+        return std::nullopt;
     };
 
 
@@ -506,19 +506,19 @@ void ConnectionManager::Impl::createAssemblyConnections()
 
 
     // Get thickness of slide associated with an annotation.
-    // Returns boost::none if the slide doesn't exist.
-    auto getSlideThickness = [this] ( const UID& annotUid ) -> boost::optional<float>
+    // Returns std::nullopt if the slide doesn't exist.
+    auto getSlideThickness = [this] ( const UID& annotUid ) -> std::optional<float>
     {
         auto slideUid = m_dataManager.slideUid_of_annotation( annotUid );
         if ( ! slideUid )
         {
-            return boost::none;
+            return std::nullopt;
         }
 
         auto slide = m_dataManager.slideRecord( *slideUid ).lock();
         if ( ! slide || ! slide->cpuData() )
         {
-            return boost::none;
+            return std::nullopt;
         }
 
         return slide->cpuData()->header().thickness();
@@ -1219,7 +1219,7 @@ void ConnectionManager::Impl::createRendererUpdateConnections()
     auto zoomSynchronizer = [ this, zoomSynchMap ] (
             const UID& signalingViewUid,
             float absoluteZoomValue,
-            const boost::optional<glm::vec3>& worldCenterPos )
+            const std::optional<glm::vec3>& worldCenterPos )
     {
         auto it = zoomSynchMap.find( signalingViewUid );
 

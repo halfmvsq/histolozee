@@ -3,9 +3,8 @@
 
 #include "common/UID.h"
 
-#include <boost/optional.hpp>
-
 #include <functional>
+#include <optional>
 
 
 namespace gui
@@ -131,15 +130,15 @@ using SlideCommonPropertiesComplete_msgToUi_ResponderType =
 
 /// Functional for the app to respond to UI request for a slide's header
 using SlideHeaderComplete_msgToUi_ResponderType =
-    std::function< boost::optional< SlideHeaderComplete_msgToUi > ( const UID& slideUid ) >;
+    std::function< std::optional< SlideHeaderComplete_msgToUi > ( const UID& slideUid ) >;
 
 /// Functional for the app to respond to UI request for a slide's view data
 using SlideViewDataComplete_msgToUi_ResponderType =
-    std::function< boost::optional< SlideViewDataComplete_msgToUi > ( const UID& slideUid ) >;
+    std::function< std::optional< SlideViewDataComplete_msgToUi > ( const UID& slideUid ) >;
 
 /// Functional for the app to respond to UI request for a slide's transformation data
 using SlideTxDataComplete_msgToUi_ResponderType =
-    std::function< boost::optional< SlideTxDataComplete_msgToUi > ( const UID& slideUid ) >;
+    std::function< std::optional< SlideTxDataComplete_msgToUi > ( const UID& slideUid ) >;
 
 } // namespace gui
 

@@ -6,10 +6,9 @@
 
 #include "gui/messages/landmark/LandmarkData.h"
 
-#include <boost/optional.hpp>
-
 #include <glm/vec3.hpp>
 
+#include <optional>
 #include <string>
 #include <unordered_set>
 #include <vector>

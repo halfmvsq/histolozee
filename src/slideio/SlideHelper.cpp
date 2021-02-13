@@ -108,7 +108,7 @@ std::array< glm::vec3, 8 > slideCornersInStack( const SlideCpuRecord& record )
 }
 
 
-boost::optional< AABB<float> > slideStackAABBoxInWorld(
+std::optional< AABB<float> > slideStackAABBoxInWorld(
         weak_record_range_t<SlideRecord> slideRecordRange,
         const glm::mat4& world_O_slideStack )
 {
@@ -118,7 +118,7 @@ boost::optional< AABB<float> > slideStackAABBoxInWorld(
 
     if ( slideRecordRange.empty() )
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     for ( const auto& weak_record : slideRecordRange )

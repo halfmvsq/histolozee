@@ -9,9 +9,8 @@
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
 
-#include <boost/optional.hpp>
-
 #include <array>
+#include <optional>
 #include <tuple>
 #include <utility>
 
@@ -43,17 +42,17 @@ AABB<float> refSpaceAABBox( DataManager&, const glm::mat4& world_O_slideStack );
 /**
  * @brief World-space AABB of the active reference image.
  *
- * @return \c boost::none if there is no active reference image.
+ * @return \c std::nullopt if there is no active reference image.
  */
-boost::optional< AABB<float> > activeRefImageAABBox( DataManager& );
+std::optional< AABB<float> > activeRefImageAABBox( DataManager& );
 
 
 /**
  * @brief Get coordinate frame mapping the active image Subject to World space.
  *
- * @return \c boost::none if there is no active reference image.
+ * @return \c std::nullopt if there is no active reference image.
  */
-boost::optional<CoordinateFrame> getActiveImageSubjectToWorldFrame( DataManager& );
+std::optional<CoordinateFrame> getActiveImageSubjectToWorldFrame( DataManager& );
 
 
 /**

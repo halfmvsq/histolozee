@@ -37,20 +37,20 @@ public:
             UniformsProviderType uniformsProvider,
             std::weak_ptr<LandmarkGroupRecord> landmarkGroupRecord,
             std::weak_ptr<MeshGpuRecord> meshGpuRecord,
-            GetterType< boost::optional<DrawableScaling> > scalingProvider,
-            GetterType< boost::optional< std::pair<glm::mat4, glm::mat4> > > landmarkToWorldTxProvider );
+            GetterType< std::optional<DrawableScaling> > scalingProvider,
+            GetterType< std::optional< std::pair<glm::mat4, glm::mat4> > > landmarkToWorldTxProvider );
 
     ~LandmarkGroup3d() override = default;
 
 
     /// Set function that provides scaling information for the landmark
-    void setScalingInfoProvider( GetterType< boost::optional<DrawableScaling> > );
+    void setScalingInfoProvider( GetterType< std::optional<DrawableScaling> > );
 
     /// Set function that provides the transformation of the landmark from its local coordinates
     /// to World space. The value returned is a pair consisting of
     /// 1) Full affine transformation
     /// 2) Rigid-body transformation
-    void setLandmarkToWorldTxProvider( GetterType< boost::optional< std::pair<glm::mat4, glm::mat4> > > );
+    void setLandmarkToWorldTxProvider( GetterType< std::optional< std::pair<glm::mat4, glm::mat4> > > );
 
 
 private:
@@ -82,12 +82,12 @@ private:
     std::weak_ptr<MeshGpuRecord> m_meshGpuRecord;
 
     /// Function providing scaling information
-    GetterType< boost::optional<DrawableScaling> > m_scalingProvider;
+    GetterType< std::optional<DrawableScaling> > m_scalingProvider;
 
     /// Function providing transformation from landmark to World space:
     /// 1) Affine tx
     /// 2) Rigid-body tx
-    GetterType< boost::optional< std::pair<glm::mat4, glm::mat4> > > m_landmarkToWorldTxProvider;
+    GetterType< std::optional< std::pair<glm::mat4, glm::mat4> > > m_landmarkToWorldTxProvider;
 
     /// Child landmarks
     std::unordered_map<UID, Landmark> m_landmarks;

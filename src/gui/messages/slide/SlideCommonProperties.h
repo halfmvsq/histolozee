@@ -3,8 +3,7 @@
 
 #include "common/Identity.h"
 
-#include <boost/optional.hpp>
-
+#include <optional>
 #include <utility>
 
 
@@ -13,7 +12,7 @@ namespace gui
 
 /**
 * @brief Rendering properties common to all slides of the slide stack.
- * Template type V can be either boost::optional (to denote all optional fields) or
+ * Template type V can be either std::optional (to denote all optional fields) or
  * Required (to denote all required fields).
  */
 template< template<typename> class V >
@@ -43,14 +42,14 @@ struct SlideCommonProperties
 
 /**
  * @brief Message of some slide stack rendering properties: sent from app to UI.
- * All property fields are optional. When received by the UI, the defined (non-boost::none)
+ * All property fields are optional. When received by the UI, the defined (non-std::nullopt)
  * properties are overwritten in the UI.
  *
  * @note Identical message structure to \c GlobalSlidePropertiesPartial_msgFromUi
  */
 struct SlideCommonPropertiesPartial_msgToUi
 {
-    SlideCommonProperties<boost::optional> m_properties; //!< Rendering properties (all optional)
+    SlideCommonProperties<std::optional> m_properties; //!< Rendering properties (all optional)
 };
 
 
@@ -62,7 +61,7 @@ struct SlideCommonPropertiesPartial_msgToUi
  */
 struct SlideCommonPropertiesPartial_msgFromUi
 {
-    SlideCommonProperties<boost::optional> m_properties; //!< Rendering properties (all optional)
+    SlideCommonProperties<std::optional> m_properties; //!< Rendering properties (all optional)
 };
 
 

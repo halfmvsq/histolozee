@@ -3,8 +3,7 @@
 
 #include "common/UID.h"
 
-#include <boost/optional.hpp>
-
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -29,7 +28,7 @@ struct ParcellationSelectionItem
 struct ParcellationSelections_msgToUi
 {
     std::vector< ParcellationSelectionItem > m_selectionItems; //!< List of selectable parcellations
-    boost::optional<int> m_selectionIndex; //!< Index of currently selected (active) parcellation
+    std::optional<int> m_selectionIndex; //!< Index of currently selected (active) parcellation
 };
 
 
@@ -38,8 +37,8 @@ struct ParcellationSelections_msgToUi
  */
 struct ParcellationSelections_msgFromUi
 {
-    boost::optional<int> m_selectionIndex; //!< Index of currently selected (active) parcellation in combo box
-    boost::optional<UID> m_parcelUid; //!< UID of currently selected (active) parcellation
+    std::optional<int> m_selectionIndex; //!< Index of currently selected (active) parcellation in combo box
+    std::optional<UID> m_parcelUid; //!< UID of currently selected (active) parcellation
 };
 
 } // namespace gui
