@@ -1,6 +1,3 @@
-[submodule "externals/vcglib"]
-	path = externals/vcglib
-	url = https://github.com/cnr-isti-vclab/vcglib.git
 [submodule "externals/nlohmann"]
 	path = externals/nlohmann
 	url = https://github.com/nlohmann/json.git

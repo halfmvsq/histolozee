@@ -1,14 +1,12 @@
 # HistoloZee #
 
+Welcome to the next version of [HistoloZee](http://picsl.upenn.edu/software/histolozee)! Check out the original version's [tutorials on YouTube](https://www.youtube.com/playlist?list=PL68v8FP_IVlg2tCgJXrsO3UHve1q9wLjI).
+
 Copyright 2021 Penn Image Computing and Science Lab, University of Pennsylvania
-
-Welcome to the next generation [HistoloZee](http://picsl.upenn.edu/software/histolozee)!
-
-Check out the [tutorials on YouTube](https://www.youtube.com/playlist?list=PL68v8FP_IVlg2tCgJXrsO3UHve1q9wLjI) for the original version.
 
 ### How do I get set up? ###
 
-C++14 and CMake are required, as are minimum versions of these libraries:
+C++14, CMake, and these libraries are required:
 
 * Boost 1.66.0
 * ITK 5.1.0
@@ -28,17 +26,13 @@ Flags used for compiling VTK:
 * VTK_RENDERING_BACKEND=OpenGL
 * VTK_QT_VERSION=5
 
-The following libraries are included as Git submodules:
+The following header-only libraries are included as Git submodules:
 
 * Earcut.hpp (https://github.com/mapbox/earcut.hpp.git)
 * GLM (https://github.com/g-truc/glm.git)
-* JSON for C++11 (https://github.com/nlohmann/json.git)
-* vcglib (https://github.com/cnr-isti-vclab/vcglib.git)
+* "JSON for Modern C++" (https://github.com/nlohmann/json.git)
 
-To get the external repositories after cloning:
-
-1. git submodule update --init --recursive
-2. git submodule update --recursive
+To get the external repositories, run`git submodule update --init --recursive` after cloning.
 
 Components of the following libraries and resources are copied into this repository:
 
@@ -48,7 +42,7 @@ Components of the following libraries and resources are copied into this reposit
 
 ### Running HistoloZee
 
-HistoloZee project is currently building and running on macOS (clang-1100.0.33.12). There are known graphics problems when running on Linux that are most likely due to underlying differences between rendering implementations by QOpenGLWidget across platforms. We intend to address these issues.
+HistoloZee project is currently building and running on macOS (clang-1100.0.33.12). There are known graphics problems when running on Linux that are most likely due to underlying differences between rendering implementations by Qt and/or the windowing systems across platforms. In particular, different QOpenGLWidget views seem to share the same OpenGL context on macOS, but not on Linux. We intend to address these issues by creating separate vertex array objects for each view.
 
 A sample project file is shown below. Load the project file path as the first positional argument to HistoloZee.
 

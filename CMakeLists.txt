@@ -146,12 +146,6 @@ set( CTK_DIR ${EXTERNALS_DIR}/ctk )
 # Earcut: A C++ port of earcut.js, a fast, header-only polygon triangulation library
 set( EARCUT_DIR ${EXTERNALS_DIR}/earcut )
 
-# VCG (Visualization and Computer Graphics) Library
-# --> VCG may be used for mesh processing. It is the back-end for the tool MeshLab
-
-#set( VCGLIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/externals/vcglib )
-# Include: ${VCGLIB_DIR}
-
 
 #--------------------------------------------------------------------------------
 # HistoloZee's SOURCES
@@ -240,7 +234,6 @@ set( HZEE_SOURCES
     ${SRC_DIR}/logic/ui/details/PackageHeader.cpp
     ${SRC_DIR}/logic/utility/DirectionMaps.cpp
 
-#    ${SRC_DIR}/mesh/vcgdetails/ProcessMesh.cpp
     ${SRC_DIR}/mesh/MeshCpuRecord.cpp
     ${SRC_DIR}/mesh/MeshInfo.cpp
     ${SRC_DIR}/mesh/MeshLoading.cpp
