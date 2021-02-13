@@ -49,3 +49,62 @@ Components of the following libraries and resources are copied into this reposit
 * "Library of Perceptually Uniform Colour Maps" by Peter Kovesi (https://colorcet.com)
 
 This project is working on macOS. There are known graphics problems when running on Linux that are most likely due to underlying differences between rendering implementations by QOpenGLWidget across platforms. We intend to address these issues.
+
+### Running HistoloZee
+
+A sample project file is shown below. Load the project file path as the first positional argument to HistoloZee.
+
+```JSON
+{
+    "activeImage": 0,
+    "activeParcellation": 0,
+    "referenceImages": [
+        {
+            "fileName": "data/template.nii.gz",
+            "subjectToWorldRotation": {
+                "w": 0.0,
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "worldSubjectOrigin": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+
+        }
+    ],
+    "parcellations": [
+        {
+            "displayName": "",
+            "fileName": "data/template_parcellation.nii.gz",
+            "subjectToWorldRotation": {
+                "w": 0.0,
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "worldSubjectOrigin": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    ],
+    "slides": [
+        {
+            "fileName": "data/slide1.tif"
+        },
+        {
+            "fileName": "data/slide2.tif"
+        },
+        {
+            "fileName": "data/slide3.tif"
+        },
+        {
+            "fileName": "data/slide4.tif"
+        }
+    ]
+}
+```
