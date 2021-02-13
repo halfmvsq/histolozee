@@ -38,6 +38,7 @@ fromITKPixelType( const ::itk::ImageIOBase::IOPixelType& pixelType )
     case IOB::SYMMETRICSECONDRANKTENSOR:
         return ::imageio::PixelType::SymmetricSecondRankTensor;
     case IOB::UNKNOWNPIXELTYPE:
+    default:
         return ::imageio::PixelType::Undefined;
     }
 }
@@ -156,7 +157,9 @@ fromITKComponentType( const ::itk::ImageIOBase::IOComponentType& componentType )
     case IOB::ULONG:  return ::imageio::ComponentType::UInt64;
     case IOB::FLOAT:  return ::imageio::ComponentType::Float32;
     case IOB::DOUBLE: return ::imageio::ComponentType::Double64;
-    case IOB::UNKNOWNCOMPONENTTYPE: return boost::none;
+    case IOB::UNKNOWNCOMPONENTTYPE:
+    default:
+        return boost::none;
     }
 }
 

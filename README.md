@@ -8,11 +8,11 @@ Check out the [tutorials on YouTube](https://www.youtube.com/playlist?list=PL68v
 
 C++14 and CMake are required. Below are the minimum versions of required libraries:
 
-* Boost 1.72.0
-* OpenCV 4.2.0
+* Boost 1.66.0
+* OpenCV 3.4.0
 * OpenGL 3.3
 * OpenSlide 3.4.1
-* ITK 5.0.0
+* ITK 5.1.0
 * Qt 5.12.0
 * VTK 8.0.0
 

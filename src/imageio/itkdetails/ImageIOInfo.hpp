@@ -42,7 +42,7 @@ public:
     std::string m_byteOrderString;
     bool m_useCompression;
 
-    ::itk::ImageIOBase::FileType m_fileType;
+    ::itk::ImageIOBase::IOFileEnum m_fileType;
     std::string m_fileTypeString;
 
     std::vector< std::string > m_supportedReadExtensions;

@@ -198,6 +198,7 @@ readDispatchOnPixelType(
 
     case IOB::OFFSET :
     case IOB::UNKNOWNPIXELTYPE :
+    default:
     {
         std::cerr << "There is no support for pixel type "
                   << IOB::GetPixelTypeAsString( pixelType ) << std::endl;
@@ -229,7 +230,9 @@ readDispatchOnComponentType(
     case IOB::ULONG:  return readDispatchOnPixelType< OutputComponentType, uint64_t >( imageIO, fileNames );
     case IOB::FLOAT:  return readDispatchOnPixelType< OutputComponentType,    float >( imageIO, fileNames );
     case IOB::DOUBLE: return readDispatchOnPixelType< OutputComponentType,   double >( imageIO, fileNames );
+
     case IOB::UNKNOWNCOMPONENTTYPE:
+    default:
     {
         std::cerr << "Unknown and unsupported component type: "
                   << IOB::GetComponentTypeAsString( componentType ) << std::endl;

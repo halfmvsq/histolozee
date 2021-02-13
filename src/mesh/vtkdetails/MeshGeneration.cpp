@@ -46,10 +46,10 @@ vnl_matrix_fixed< double, 4, 4 > constructVoxelToSubjectMatrix(
     const vnl_matrix< double > d( directions.data_block(), 3, 3 );
 
     const vnl_matrix< double > rotateScaleMatrix =
-            d * vnl_diag_matrix<double>( spacing );
+            d * vnl_diag_matrix<double>( spacing.as_vector() );
 
     vnl_vector_fixed< double, 4 > translationColumn( 1.0 );
-    translationColumn.update( origin );
+    translationColumn.update( origin.as_vector() );
 
     vnl_matrix_fixed< double, 4, 4 > subject_O_voxels;
     subject_O_voxels.set_identity();

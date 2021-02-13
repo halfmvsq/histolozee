@@ -2,9 +2,7 @@ cmake_minimum_required( VERSION 3.1 )
 
 set( CMAKE_BUILD_TYPE Release )
 
-# <REPLACE THIS WITH THE PATH TO ITK 5.0.0+ ON YOUR SYSTEM, IF NECESSARY DUE TO MULTIPLE BUILDS>
-set( ITK_DIR "~/Dev/ITK/build-static" CACHE PATH "ITK directory" )
-
+# <REPLACE ITK_DIR WITH THE PATH TO ITK 5.1.0+ ON YOUR SYSTEM, IF NECESSARY DUE TO MULTIPLE BUILDS>
 
 set( IMAGEIO_SOURCES
     HZeeTypes.cpp
@@ -54,7 +52,7 @@ set( IMAGEIO_TEMPLATES
 # ITK Library
 #--------------------------------------------------------------------------------
 
-find_package( ITK 5.0.0 REQUIRED )
+find_package( ITK 5.1.0 REQUIRED )
 
 if( ITK_FOUND )
     include( ${ITK_USE_FILE} )
@@ -67,7 +65,7 @@ endif( ITK_FOUND )
 # Boost Library
 #--------------------------------------------------------------------------------
 
-find_package( Boost 1.72.0 COMPONENTS REQUIRED
+find_package( Boost 1.66.0 COMPONENTS REQUIRED
     system filesystem )
 
 if( NOT Boost_FOUND )

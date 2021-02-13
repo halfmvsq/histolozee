@@ -34,6 +34,7 @@ read< void >( const itk::ImageIOBase::Pointer imageIO,
         case IOB::DOUBLE: return details::readDispatchOnComponentType<   double >( imageIO, fileNames );
 
         case IOB::UNKNOWNCOMPONENTTYPE:
+        default:
         {
             std::cerr << "Unknown and unsupported component type: "
                       << IOB::GetComponentTypeAsString( componentType ) << std::endl;

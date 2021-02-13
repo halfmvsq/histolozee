@@ -221,7 +221,7 @@ QSize ctkPathLineEditPrivate::recomputeSizeHint(QSize& sh)const
             textWidth = this->LineEdit->fontMetrics().boundingRect(this->LineEdit->text()).width() + 8;
             }
           break;
-        case QComboBox::AdjustToMinimumContentsLength:
+//        case QComboBox::AdjustToMinimumContentsLength:
         default:
           ;
         }

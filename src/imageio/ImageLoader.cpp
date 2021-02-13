@@ -198,7 +198,7 @@ std::unique_ptr<ParcellationCpuRecord> ImageLoader::generateClearParcellationRec
 
     // Remove file information, since this image is not loaded from a file.
     ioInfo.m_fileInfo = itkdetails::io::FileInfo();
-    ioInfo.m_fileInfo.m_fileType = ::itk::ImageIOBase::FileType::TypeNotApplicable;
+    ioInfo.m_fileInfo.m_fileType = ::itk::ImageIOBase::IOFileEnum::TYPENOTAPPLICABLE;
     ioInfo.m_metaData.clear();
 
     // Force uint8_t component type

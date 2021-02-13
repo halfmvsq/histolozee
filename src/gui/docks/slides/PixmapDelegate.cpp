@@ -146,4 +146,4 @@ void PixmapDelegate::commitAndCloseEditor()
 } // namespace gui
 
 
-#include "PixmapDelegate.moc"
+//#include "PixmapDelegate.moc"

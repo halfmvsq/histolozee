@@ -4,11 +4,9 @@ cmake_policy( SET CMP0053 NEW )
 
 project( HistoloZee2 )
 
-# <REPLACE THIS WITH THE PATH TO Qt 5.12.0+ ON YOUR SYSTEM, IF NECESSARY DUE TO MULTIPLE BUILDS>
-set( Qt5Root_DIR "~/Qt5.12/5.12.0/clang_64" CACHE PATH "Qt 5 directory" )
+# <REPLACE Qt5Root_DIR WITH THE PATH TO Qt 5.12.0+ ON YOUR SYSTEM, IF NECESSARY DUE TO MULTIPLE BUILDS>
+# <REPLACE VTK_DIR WITH THE PATH TO VTK 8.0.0+ ON YOUR SYSTEM, IF NECESSARY DUE TO MULTIPLE BUILDS>
 
-# <REPLACE THIS WITH THE PATH TO VTK 8.0.0+ ON YOUR SYSTEM, IF NECESSARY DUE TO MULTIPLE BUILDS>
-set( VTK_DIR "~/Dev/VTK-8.0.0/build-static" CACHE PATH "VTK 8 directory" )
 
 # Prevent compilation in-source
 if( ${CMAKE_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
@@ -105,7 +103,7 @@ endif( VTK_FOUND )
 # OpenCV Library
 #--------------------------------------------------------------------------------
 
-find_package( OpenCV 4.2.0 REQUIRED )
+find_package( OpenCV 3.4.0 REQUIRED )
 
 
 #--------------------------------------------------------------------------------
