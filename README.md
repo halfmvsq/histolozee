@@ -1,14 +1,14 @@
 # HistoloZee #
 
-Welcome to the next generation [HistoloZee](http://picsl.upenn.edu/software/histolozee)!
-
 Copyright 2021 Penn Image Computing and Science Lab, University of Pennsylvania
 
-Check out the [tutorials on YouTube](https://www.youtube.com/playlist?list=PL68v8FP_IVlg2tCgJXrsO3UHve1q9wLjI)
+Welcome to the next generation [HistoloZee](http://picsl.upenn.edu/software/histolozee)!
+
+Check out the [tutorials on YouTube](https://www.youtube.com/playlist?list=PL68v8FP_IVlg2tCgJXrsO3UHve1q9wLjI) for the original version.
 
 ### How do I get set up? ###
 
-C++14 and CMake are required. Below are the minimum versions of required libraries:
+C++14 and CMake are required, as are minimum versions of these libraries:
 
 * Boost 1.66.0
 * ITK 5.1.0
@@ -45,9 +45,10 @@ Components of the following libraries and resources are copied into this reposit
 * CTK (https://github.com/commontk/CTK.git)
 * "Library of Perceptually Uniform Colour Maps" by Peter Kovesi (https://colorcet.com)
 
-HistoloZee project is currently working on macOS. There are known graphics problems when running on Linux that are most likely due to underlying differences between rendering implementations by QOpenGLWidget across platforms. We intend to address these issues.
 
 ### Running HistoloZee
+
+HistoloZee project is currently building and running on macOS (clang-1100.0.33.12). There are known graphics problems when running on Linux that are most likely due to underlying differences between rendering implementations by QOpenGLWidget across platforms. We intend to address these issues.
 
 A sample project file is shown below. Load the project file path as the first positional argument to HistoloZee.
 
