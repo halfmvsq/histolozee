@@ -49,8 +49,7 @@ A sample project file is shown below. Load the project file path as the first po
 
 ```JSON
 {
-  "activeImage": 0,
-
+  "activeReferenceImage": 0,
   "referenceImages": [
     {
       "fileName": "average_template.nii.gz",
@@ -81,6 +80,7 @@ A sample project file is shown below. Load the project file path as the first po
     }
   ],
 
+  "activeParcellation": 0,
   "parcellations": [
     {
       "fileName": "template_parcellation.nii.gz",
@@ -144,6 +144,7 @@ A sample project file is shown below. Load the project file path as the first po
         "stackTranslationZ": 0.353
       }
     },
+    
     {
       "fileName": "slide2.tif",
 
@@ -168,6 +169,7 @@ A sample project file is shown below. Load the project file path as the first po
         "stackTranslationZ": 0.529
       }
     },
+    
     {
       "fileName": "slide3.tif",
       
@@ -175,6 +177,7 @@ A sample project file is shown below. Load the project file path as the first po
         "stackTranslationZ": 0.706
       }
     },
+    
     {
       "fileName": "slide4.tif",
       
@@ -200,6 +203,6 @@ A sample project file is shown below. Load the project file path as the first po
 }
 ```
 
-The top-level fields `activeImage`, `parcellations`, `slides`, and `world_T_slideStack` are optional. If the transformation for an image, parcellation, slide, or for the slide stack is not provided, then identity is assumed. Similarly, if any display setting for an image, parcellation, or slide are not defined, then the defaults are assumed.
+The top-level fields `activeReferenceImage`, `activeParcellation`, `parcellations`, `slides`, and `world_T_slideStack` are optional. If the transformation for an image, parcellation, slide, or for the slide stack is not provided, then identity is assumed. Similarly, if any display setting for an image, parcellation, or slide is not defined, then the default is assumed.
 
-All transformations are defined in "World" coordinates (usually millimeters). The transformation from either an image's "Subject" space to World or from the slide stack to World is defined by an origin position in World (i.e. the translation) and a quaternion for the rotation.
+All transformations are defined in "World" coordinates (usually millimeters). An origin position in World space and a quaternion rotation are used to defined the rigid-body transformation to World space for both images and the slide stack.

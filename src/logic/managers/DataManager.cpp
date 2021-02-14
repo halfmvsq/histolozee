@@ -319,16 +319,16 @@ void DataManager::updateProject( const std::optional<std::string>& newFileName )
     {
         if ( const auto index = orderedImageIndex( *uid ) )
         {
-            m_impl->m_project.m_activeImage = static_cast<uint32_t>( *index );
+            m_impl->m_project.m_activeRefImage = static_cast<uint32_t>( *index );
         }
         else
         {
-            m_impl->m_project.m_activeImage = 0; // Shouldn't happen
+            m_impl->m_project.m_activeRefImage = 0; // Shouldn't happen
         }
     }
     else
     {
-        m_impl->m_project.m_activeImage = 0; // Shouldn't happen
+        m_impl->m_project.m_activeRefImage = 0; // Shouldn't happen
     }
 
     // Update active parcellation index

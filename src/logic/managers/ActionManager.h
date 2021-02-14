@@ -81,15 +81,17 @@ public:
     void setupCamerasAndCrosshairsForImage();
 
     /// Load a 3D image from disk and set it as the active image
-    void loadImage( const std::string& filename,
-                    const std::optional< std::string >& dicomSeriesUid );
+    std::optional<UID> loadImage(
+            const std::string& filename,
+            const std::optional< std::string >& dicomSeriesUid );
 
     /// Load a 3D parcellation from disk and set it as the active parcellation
-    void loadParcellation( const std::string& filename,
-                           const std::optional< std::string >& dicomSeriesUid );
+    std::optional<UID> loadParcellation(
+            const std::string& filename,
+            const std::optional< std::string >& dicomSeriesUid );
 
     /// Load a slide image from disk and set it as the active slide
-    void loadSlide( const std::string& filename );
+    std::optional<UID> loadSlide( const std::string& filename );
 
     /// Save project back to disk
     /// @param[in] newFileName Optional new file name. If not provided, then the project is saved
@@ -109,6 +111,8 @@ public:
     void updateSlideStackAssembly();
     void updateLandmarkAssemblies();
     void updateAnnotationAssemblies();
+
+    void updateAllAssemblies();
 
 
     void transformFeedback();

@@ -83,7 +83,7 @@ struct HZeeProject
     CoordinateFrame m_world_T_slideStack;
 
     /// Index of the active reference image, if there is at least one (OPTIONAL in JSON)
-    uint32_t m_activeImage;
+    uint32_t m_activeRefImage;
 
     /// Index of the active parcellation, if there is at least one (OPTIONAL in JSON)
     std::optional<uint32_t> m_activeParcellation;

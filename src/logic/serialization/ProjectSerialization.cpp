@@ -275,8 +275,7 @@ void to_json( json& j, const HZeeProject& project )
     { "referenceImages", project.m_refImages },
     { "parcellations", project.m_parcellations },
     { "slides", project.m_slides },
-    { "activeImage", project.m_activeImage },
-//    { "activeParcellation", project.m_activeParcellation },
+    { "activeReferenceImage", project.m_activeRefImage },
     { "world_T_slideStack", project.m_world_T_slideStack }
     };
 }
@@ -297,9 +296,9 @@ void from_json( const json& j, HZeeProject& project )
             ? j.at( "slides" ).get< std::vector<Slide> >()
             : std::vector<Slide>{};
 
-    // activeImage is an optional field
-    project.m_activeImage = ( j.contains( "activeImage" ) )
-            ? j.at( "activeImage" ).get<uint32_t>() : 0;
+    // activeRefImage is an optional field
+    project.m_activeRefImage = ( j.contains( "activeReferenceImage" ) )
+            ? j.at( "activeReferenceImage" ).get<uint32_t>() : 0;
 
     // activeParcellation is an optional field
     project.m_activeParcellation = ( j.contains( "activeParcellation" ) )

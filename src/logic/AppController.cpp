@@ -83,8 +83,8 @@ std::unique_ptr<Polygon> makeTestPolygon( const glm::vec2& center )
 
     for ( int i = 0; i < 32; ++i )
     {
-        float x = 0.5f * cos( 2.0f * i * M_PI / 32.0f ) + center.x;
-        float y = 0.5f * sin( 2.0f * i * M_PI / 32.0f ) + center.y;
+        float x = 0.5f * std::cos( 2.0f * i * M_PI / 32.0f ) + center.x;
+        float y = 0.5f * std::sin( 2.0f * i * M_PI / 32.0f ) + center.y;
         outerBoundary.push_back( glm::vec2{ x, y } );
     }
 
@@ -93,8 +93,8 @@ std::unique_ptr<Polygon> makeTestPolygon( const glm::vec2& center )
 
     for ( int i = 0; i < 8; ++i )
     {
-        float x = 0.15f * cos( 2.0 * i * M_PI / 8.0 ) + center.x;
-        float y = 0.15f * sin( 2.0 * i * M_PI / 8.0 ) + center.y;
+        float x = 0.15f * std::cos( 2.0f * i * M_PI / 8.0f ) + center.x;
+        float y = 0.15f * std::sin( 2.0f * i * M_PI / 8.0f ) + center.y;
 
         hole1.push_back( glm::vec2{ x - 0.25f, y } );
         hole2.push_back( glm::vec2{ x + 0.25f, y } );
@@ -165,7 +165,7 @@ AppController::AppController(
     {
         std::ostringstream ss;
         ss << "The global, shared OpenGL context is invalid." << std::ends;
-        throw_debug( ss.str() );
+        throw_debug( ss.str() )
     }
 
     // Set the offscreen render surface format to match that of the global context.
@@ -219,7 +219,7 @@ void AppController::initialize()
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 
     m_connectionManager->createConnections();
@@ -319,7 +319,7 @@ void AppController::showMainWindow()
 {
     if ( ! m_guiManager )
     {
-        throw_debug( "Unable ot show main window: null GuiManager" );
+        throw_debug( "Unable ot show main window: null GuiManager" )
     }
 
     // Show main window and update its widgets with current property values and rendering
@@ -329,7 +329,7 @@ void AppController::showMainWindow()
 }
 
 
-void AppController::loadImage(
+std::optional<UID> AppController::loadImage(
         const std::string& filename,
         const std::optional< std::string >& dicomSeriesUID )
 {
@@ -338,11 +338,11 @@ void AppController::loadImage(
         throw_debug( "Unable to load image: null ActionManager" )
     }
 
-    m_actionManager->loadImage( filename, dicomSeriesUID );
+    return m_actionManager->loadImage( filename, dicomSeriesUID );
 }
 
 
-void AppController::loadParcellation(
+std::optional<UID> AppController::loadParcellation(
         const std::string& filename,
         const std::optional< std::string >& dicomSeriesUID )
 {
@@ -351,28 +351,145 @@ void AppController::loadParcellation(
         throw_debug( "Unable to load parcellation: null ActionManager" )
     }
 
-    m_actionManager->loadParcellation( filename, dicomSeriesUID );
+    return m_actionManager->loadParcellation( filename, dicomSeriesUID );
 }
 
 
-void AppController::loadSlide( const std::string& filename )
+std::optional<UID> AppController::loadSlide( const std::string& filename )
 {
     if ( ! m_actionManager )
     {
         throw_debug( "Unable to load slide: null ActionManager" )
     }
 
-    m_actionManager->loadSlide( filename );
+    return m_actionManager->loadSlide( filename );
 }
 
 
-void AppController::setProject( serialize::HZeeProject project )
+void AppController::loadProject( serialize::HZeeProject project )
 {
-    if ( ! m_dataManager )
+    if ( ! m_dataManager || ! m_transformationManager || ! m_actionManager )
     {
-        throw_debug( "Unable to set project: null DataManager" )
+        throw_debug( "Unable to set project: null manager" )
     }
 
+    // Load images and set their display settings and transformations
+    size_t imageCounter = 0;
+
+    for ( const auto& image : project.m_refImages )
+    {
+        if ( const auto imageUid = loadImage( image.m_fileName, std::nullopt ) )
+        {
+            auto imageRec = m_dataManager->imageRecord( *imageUid ).lock();
+
+            if ( imageRec && imageRec->cpuData() )
+            {
+                auto I = imageRec->cpuData();
+                I->setWorldSubjectOrigin( image.m_world_T_subject.worldOrigin() );
+                I->setSubjectToWorldRotation( image.m_world_T_subject.world_O_frame_rotation() );
+
+                const auto& S = image.m_displaySettings;
+
+                /// @todo Set for all image components
+                if ( S.m_displayName ) I->setDisplayName( *S.m_displayName );
+                if ( S.m_opacity ) I->setOpacity( 0, *S.m_opacity );
+                if ( S.m_window ) I->setWindowWidth( 0, *S.m_window );
+                if ( S.m_level ) I->setLevel( 0, *S.m_level );
+                if ( S.m_thresholdLow ) I->setThresholdLow( 0, *S.m_thresholdLow );
+                if ( S.m_thresholdHigh ) I->setThresholdHigh( 0, *S.m_thresholdHigh );
+                if ( S.m_interpolationMode ) I->setInterpolationMode( 0, *S.m_interpolationMode );
+            }
+
+            // Set active image
+            if ( imageCounter == project.m_activeRefImage )
+            {
+                m_dataManager->setActiveImageUid( *imageUid );
+            }
+        }
+
+        ++imageCounter;
+    }
+
+
+    // Load parcellations and set their display settings and transformations
+    size_t parcelCounter = 0;
+
+    for ( const auto& parcel : project.m_parcellations )
+    {
+        if ( const auto parcelUid = loadParcellation( parcel.m_fileName, std::nullopt ) )
+        {
+            auto parcelRec = m_dataManager->parcellationRecord( *parcelUid ).lock();
+
+            if ( parcelRec && parcelRec->cpuData() )
+            {
+                auto P = parcelRec->cpuData();
+                P->setWorldSubjectOrigin( parcel.m_world_T_subject.worldOrigin() );
+                P->setSubjectToWorldRotation( parcel.m_world_T_subject.world_O_frame_rotation() );
+
+                const auto& S = parcel.m_displaySettings;
+
+                if ( S.m_displayName ) P->setDisplayName( *S.m_displayName );
+                if ( S.m_opacity ) P->setOpacity( 0, *S.m_opacity );
+                if ( S.m_window ) P->setWindowWidth( 0, *S.m_window );
+                if ( S.m_level ) P->setLevel( 0, *S.m_level );
+                if ( S.m_thresholdLow ) P->setThresholdLow( 0, *S.m_thresholdLow );
+                if ( S.m_thresholdHigh ) P->setThresholdHigh( 0, *S.m_thresholdHigh );
+                if ( S.m_interpolationMode ) P->setInterpolationMode( 0, *S.m_interpolationMode );
+            }
+
+            // Set active parcellation
+            if ( project.m_activeParcellation &&
+                 ( parcelCounter == *project.m_activeParcellation ) )
+            {
+                m_dataManager->setActiveParcellationUid( *parcelUid );
+            }
+        }
+
+        ++parcelCounter;
+    }
+
+
+    // Load images and set their properties and transformations
+    for ( const auto& slide : project.m_slides )
+    {
+        if ( const auto slideUid = loadSlide( slide.m_fileName ) )
+        {
+            auto slideRec = m_dataManager->slideRecord( *slideUid ).lock();
+
+            if ( slideRec && slideRec->cpuData() )
+            {
+                auto* S = slideRec->cpuData();
+
+                // Prior to over-writing the slide Z translation (which gets set on slide loading),
+                // let's save it off. After loading transformation, put back the saved Z translation
+                // if the new one is zero.
+                const float savedTransZ = S->transformation().stackTranslationZ();
+                S->setTransformation( slide.m_slideStack_T_slide );
+
+                if ( glm::epsilonEqual( 0.0f, S->transformation().stackTranslationZ(), glm::epsilon<float>() ) )
+                {
+                     S->transformation().setStackTranslationZ( savedTransZ );
+                }
+
+                // Prior to over-writing the displayName (which gets set on slide loading),
+                // let's save it off. After loading properties, put back the saved display name
+                // if the new one is empty.
+                const auto savedDisplayName = S->properties().displayName();
+                S->setProperties( slide.m_properties );
+                if ( S->properties().displayName().empty() ) S->properties().setDisplayName( savedDisplayName );
+            }
+        }
+    }
+
+
+    // Set slide stack transformation:
+    m_transformationManager->stageSlideStackFrame( project.m_world_T_slideStack );
+    m_transformationManager->commitSlideStackFrame();
+
+    // Update all visual assemblies, since data has changed:
+    m_actionManager->updateAllAssemblies();
+
+    // Hold on to the project, so that it can be modified and saved again:
     m_dataManager->setProject( std::move( project ) );
 }
 

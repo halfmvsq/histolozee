@@ -50,15 +50,7 @@ public:
 
     void showMainWindow();
 
-    void loadImage( const std::string& filename,
-                    const std::optional< std::string >& dicomSeriesUID );
-
-    void loadParcellation( const std::string& filename,
-                           const std::optional< std::string >& dicomSeriesUID );
-
-    void loadSlide( const std::string& filename );
-
-    void setProject( serialize::HZeeProject );
+    void loadProject( serialize::HZeeProject );
 
     void generateIsoSurfaceMesh( double isoValue );
 
@@ -81,6 +73,16 @@ private:
 
     void initialize();
     void createUiConnections();
+
+    std::optional<UID> loadImage(
+            const std::string& filename,
+            const std::optional< std::string >& dicomSeriesUID );
+
+    std::optional<UID> loadParcellation(
+            const std::string& filename,
+            const std::optional< std::string >& dicomSeriesUID );
+
+    std::optional<UID> loadSlide( const std::string& filename );
 
     std::unique_ptr<ActionManager> m_actionManager;
     std::unique_ptr<AssemblyManager> m_assemblyManager;

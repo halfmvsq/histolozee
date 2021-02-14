@@ -478,14 +478,16 @@ void ActionManager::setupCamerasAndCrosshairsForImage()
 }
 
 
-void ActionManager::loadImage(
+std::optional<UID> ActionManager::loadImage(
         const std::string& filename,
         const std::optional< std::string >& dicomSeriesUid )
 {
+    std::optional<UID> imageUid;
+
     if ( m_globalContext->makeCurrent( &m_surface ) )
     {
         // Loads the image and makes it active
-        const auto imageUid = data::loadImage( m_dataManager, filename, dicomSeriesUid );
+        imageUid = data::loadImage( m_dataManager, filename, dicomSeriesUid );
 
         if ( imageUid )
         {
@@ -504,16 +506,20 @@ void ActionManager::loadImage(
     {
         throw_debug( sk_glContextErrorMsg )
     }
+
+    return imageUid;
 }
 
 
-void ActionManager::loadParcellation(
+std::optional<UID> ActionManager::loadParcellation(
         const std::string& filename,
         const std::optional< std::string >& dicomSeriesUid )
 {
+    std::optional<UID> parcelUid;
+
     if ( m_globalContext->makeCurrent( &m_surface ) )
     {
-        const auto parcelUid = data::loadParcellation( m_dataManager, filename, dicomSeriesUid );
+        parcelUid = data::loadParcellation( m_dataManager, filename, dicomSeriesUid );
 
         if ( parcelUid )
         {
@@ -532,14 +538,18 @@ void ActionManager::loadParcellation(
     {
         throw_debug( sk_glContextErrorMsg )
     }
+
+    return parcelUid;
 }
 
 
-void ActionManager::loadSlide( const std::string& filename )
+std::optional<UID> ActionManager::loadSlide( const std::string& filename )
 {
+    std::optional<UID> slideUid;
+
     if ( m_globalContext->makeCurrent( &m_surface ) )
     {
-        const auto slideUid = data::loadSlide( m_dataManager, filename );
+        slideUid = data::loadSlide( m_dataManager, filename );
 
         if ( slideUid )
         {
@@ -559,6 +569,8 @@ void ActionManager::loadSlide( const std::string& filename )
     {
         throw_debug( sk_glContextErrorMsg )
     }
+
+    return slideUid;
 }
 
 
@@ -879,6 +891,17 @@ void ActionManager::updateAnnotationAssemblies()
     {
         throw_debug( sk_glContextErrorMsg )
     }
+}
+
+
+void ActionManager::updateAllAssemblies()
+{
+    updateImageSliceAssembly();
+    updateIsoMeshAssembly();
+    updateLabelMeshAssembly();
+    updateSlideStackAssembly();
+    updateLandmarkAssemblies();
+    updateAnnotationAssemblies();
 }
 
 
