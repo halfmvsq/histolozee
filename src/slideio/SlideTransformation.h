@@ -61,6 +61,9 @@ public:
 
     void setStackTranslationZ( float translation );
 
+    void setAutoTranslateToTopOfStack( bool set );
+    bool autoTranslateToTopOfStack() const;
+
     void setRotationAngleZ( float angleInDegrees );
 
     void setShearAnglesXY( glm::vec2 anglesInDegrees );
@@ -109,6 +112,10 @@ private:
 
     /// Translation along z (in physical stack space)
     float m_stackTranslationAlongZ;
+
+    /// Should the slide be automatically translated to the top of the slide stack upon loading?
+    /// This is the default setting when no stackTranslationZ is provided in the JSON for the slide.
+    bool m_autoTranslateToTopOfStack;
 
     /// Rotation angle of slide relative to stack Z axis in degrees. Constrained to [-180.0, 180.0].
     float m_rotationAngleZ_inDegrees;

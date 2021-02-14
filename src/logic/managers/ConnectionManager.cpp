@@ -50,6 +50,7 @@
 
 #include <iostream>
 #include <optional>
+#include <string>
 #include <unordered_map>
 #include <set>
 
@@ -574,11 +575,12 @@ void ConnectionManager::Impl::createInteractionConnections()
     m_guiManager.setCrosshairsToSlideStackFrameAligner( std::bind( &ActionManager::alignCrosshairsToSlideStackFrame, &m_actionManager ) );
     m_guiManager.setCrosshairsToAnatomicalPlanesAligner( std::bind( &ActionManager::alignCrosshairsToSubjectXyzPlanes, &m_actionManager ) );
     m_guiManager.setAllViewsResetter( std::bind( &ActionManager::resetViews, &m_actionManager ) );
-    m_guiManager.setProjectSaver( [this] () { m_actionManager.saveProject( std::nullopt ); } );
+
+    m_guiManager.setProjectSaver( [this] ( const std::optional< std::string >& fileName ) { m_actionManager.saveProject( fileName ); } );
 
     m_guiManager.setImageLoader( std::bind( &ActionManager::loadImage, &m_actionManager, _1, _2 ) );
     m_guiManager.setParcellationLoader( std::bind( &ActionManager::loadParcellation, &m_actionManager, _1, _2 ) );
-    m_guiManager.setSlideLoader( std::bind( &ActionManager::loadSlide, &m_actionManager, _1 ) );
+    m_guiManager.setSlideLoader( std::bind( &ActionManager::loadSlide, &m_actionManager, _1, _2 ) );
 
     /// @todo Tool button for this? It's already in the dock
     m_guiManager.setSlideStackView3dModeSetter( nullptr );

@@ -57,11 +57,16 @@ std::optional<UID> loadParcellation(
  *
  * @param dataManager DataManager reference
  * @param filename Slide file name
+ * @param translateToTopOfStack If true, the slide will be translated along the stack's Z axis
+ * such that it is on top of the stack
  *
  * @return If generation successful, return the slide UID.
  * Otherwise, return std::nullopt.
  */
-std::optional<UID> loadSlide( DataManager& dataManager, const std::string& filename );
+std::optional<UID> loadSlide(
+        DataManager& dataManager,
+        const std::string& filename,
+        bool translateToTopOfStack );
 
 
 /**

@@ -91,7 +91,9 @@ public:
             const std::optional< std::string >& dicomSeriesUid );
 
     /// Load a slide image from disk and set it as the active slide
-    std::optional<UID> loadSlide( const std::string& filename );
+    std::optional<UID> loadSlide(
+            const std::string& filename,
+            bool translateToTopOfStack );
 
     /// Save project back to disk
     /// @param[in] newFileName Optional new file name. If not provided, then the project is saved

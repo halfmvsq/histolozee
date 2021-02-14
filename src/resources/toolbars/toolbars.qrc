@@ -1,13 +1,24 @@
 <RCC>
   <qresource prefix="/toolbars">
-    <file>icons8-center-of-gravity-100.png</file>
     <file>icons8-3d-rotate-96.png</file>
-    <file>icons8-focal-length-100.png</file>
-    <file>icons8-hand-100.png</file>
-    <file>icons8-automatic-contrast-100.png</file>
-    <file>icons8-cursor-80.png</file>
+    <file>icons8-automatic-contrast-96.png</file>
+    <file>icons8-cursor-96.png</file>
+    <file>icons8-fit-to-page-96.png</file>
+    <file>icons8-hand-96.png</file>
+    <file>icons8-head-profile-96.png</file>
+    <file>icons8-manual-page-rotation-96.png</file>
     <file>icons8-move-96.png</file>
+    <file>icons8-move-selection-to-previous-96.png</file>
+    <file>icons8-opened-folder-96.png</file>
+    <file>icons8-portraits-96.png</file>
+    <file>icons8-resize-96.png</file>
     <file>icons8-rotate-96.png</file>
-    <file>icons8-zoom-in-100.png</file>
+    <file>icons8-rotate-camera-96.png</file>
+    <file>icons8-ruler-combined-96.png</file>
+    <file>icons8-save-96.png</file>
+    <file>icons8-save-as-96.png</file>
+    <file>icons8-stack-of-paper-96.png</file>
+    <file>icons8-target-96.png</file>
+    <file>icons8-zoom-in-96.png</file>
   </qresource>
 </RCC>

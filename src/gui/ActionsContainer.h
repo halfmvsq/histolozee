@@ -8,6 +8,11 @@
 #include <QActionGroup>
 #include <QObject>
 
+#include <string>
+
+
+class QMainWindow;
+
 
 namespace gui
 {
@@ -28,9 +33,11 @@ public:
             CrosshairsAlignerType crosshairsToAnatomicalPlanesAligner,
             SetterType<bool> slideStackViews3dModeSetter,
             AllViewsResetterType allViewsResetter,
-            std::function< void(void) > projectSaver,
+            ProjectSaverType projectSaver,
+
             QAction* refImageDockTogglerAction,
             QAction* slideStackDockTogglerAction,
+            QMainWindow* mainWindow,
             QObject* parent = nullptr );
 
     ~ActionsContainer() = default;
@@ -54,7 +61,9 @@ public:
     QAction* slideStretchAction();
     QAction* slideTranslateAction();
 
-    QAction* saveProject();
+    QAction* saveProjectAction();
+    QAction* saveProjectAsAction();
+
     QAction* alignCrosshairsToSlideAction();
     QAction* alignCrosshairsToAnatomicalPlanes();
     QAction* resetViewsAction();
@@ -69,6 +78,12 @@ private:
     /// Run me first!
     void createConnections();
 
+    /// Show a Save dialog and save the project
+    void saveProjectAs();
+
+    /// The main UI window
+    QMainWindow* m_mainWindow;
+
     /// Function that sets the interaction mode
     SetterType<InteractionModeType> m_interactionModeSetter;
 
@@ -81,8 +96,8 @@ private:
 
     AllViewsResetterType m_allViewsResetter;
 
-    /// Function that saves the current project to its existing location
-    std::function< void(void) > m_projectSaver;
+    /// Function that saves the current project to an optional new file
+    ProjectSaverType m_projectSaver;
 
 
     /// Pointer selection actions group
@@ -104,9 +119,8 @@ private:
     QAction* m_slideStretchAction;
     QAction* m_slideTranslateAction;
 
-
-    /// Save project
     QAction* m_saveProjectAction;
+    QAction* m_saveProjectAsAction;
 
     /// Align crosshairs to the active slide
     QAction* m_alignCrosshairsToActiveSlideAction;
@@ -115,7 +129,6 @@ private:
     QAction* m_alignCrosshairsToAnatomicalPlanesAction;
 
     /// Reset views to default state
-    /// @todo Call this "recenter"?
     QAction* m_resetViewsAction;
 
     /// Make Slide Stack views display slides in 3D

@@ -90,7 +90,10 @@ private:
             const std::optional< std::string >& dicomSeriesUid ) >;
 
     /// Function for loading a slide image.
-    using SlideLoaderType = std::function< void ( const std::string& filename ) >;
+    using SlideLoaderType =
+        std::function< void (
+            const std::string& filename,
+            bool autoTranslateSlideToTopOfStack ) >;
 
     /// Function returning the parameters for a given view's horizontal/vertical scroll bars
     /// and slice slider. The parameters are as a triple in order 1) horizontal scrollbar params,
@@ -170,8 +173,8 @@ public:
     /// full extent of the reference space.
     void setAllViewsResetter( AllViewsResetterType );
 
-    /// Set the function that saves the current project to its existing path
-    void setProjectSaver( std::function< void(void) > );
+    /// Set the function that saves the current project to an optional new file name
+    void setProjectSaver( ProjectSaverType );
 
     /// Set the function that loads images.
     void setImageLoader( ImageLoaderType );
@@ -414,7 +417,7 @@ private:
     CrosshairsAlignerType m_crosshairsToSlideStackAligner;
     CrosshairsAlignerType m_crosshairsToAnatomicalPlanesAligner;
     AllViewsResetterType m_allViewsResetter;
-    std::function< void(void) > m_projectSaver;
+    ProjectSaverType m_projectSaver;
     SetterType<bool> m_slideStackViews3dModeSetter;
 
     QuerierType<camera::Camera*, UID > m_cameraQuerier;

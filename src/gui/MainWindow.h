@@ -35,7 +35,8 @@ private:
             const std::optional< std::string >& dicomSeriesUID ) >;
 
     /// Functional for loading images and parcellations
-    using SlideLoaderType = std::function< void ( const std::string& filename ) >;
+    using SlideLoaderType = std::function<
+        void ( const std::string& filename, bool autoTranslateSlideToTopOfStack ) >;
 
     /// Functional called when the current index of the QTabWidget for layouts changes.
     using ViewLayoutTabChangedPublisher = std::function< void ( int index ) >;

@@ -159,11 +159,15 @@ void MainWindow::createMenuBar()
         return;
     }
 
+    /// @todo Implement the menu
+
+    /*
     m_fileMenu = menu->addMenu( tr("&File") );
     m_fileMenu->addAction( m_importRefImageAction );
     m_fileMenu->addAction( m_importParcellationAction );
     m_fileMenu->addSeparator();
     m_fileMenu->addAction( m_insertSlidesAction );
+    */
 }
 
 void MainWindow::clearViewLayoutTabs()

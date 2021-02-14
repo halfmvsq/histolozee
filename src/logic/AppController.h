@@ -74,16 +74,6 @@ private:
     void initialize();
     void createUiConnections();
 
-    std::optional<UID> loadImage(
-            const std::string& filename,
-            const std::optional< std::string >& dicomSeriesUID );
-
-    std::optional<UID> loadParcellation(
-            const std::string& filename,
-            const std::optional< std::string >& dicomSeriesUID );
-
-    std::optional<UID> loadSlide( const std::string& filename );
-
     std::unique_ptr<ActionManager> m_actionManager;
     std::unique_ptr<AssemblyManager> m_assemblyManager;
     std::unique_ptr<ConnectionManager> m_connectionManager;

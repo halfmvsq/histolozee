@@ -329,43 +329,6 @@ void AppController::showMainWindow()
 }
 
 
-std::optional<UID> AppController::loadImage(
-        const std::string& filename,
-        const std::optional< std::string >& dicomSeriesUID )
-{
-    if ( ! m_actionManager )
-    {
-        throw_debug( "Unable to load image: null ActionManager" )
-    }
-
-    return m_actionManager->loadImage( filename, dicomSeriesUID );
-}
-
-
-std::optional<UID> AppController::loadParcellation(
-        const std::string& filename,
-        const std::optional< std::string >& dicomSeriesUID )
-{
-    if ( ! m_actionManager )
-    {
-        throw_debug( "Unable to load parcellation: null ActionManager" )
-    }
-
-    return m_actionManager->loadParcellation( filename, dicomSeriesUID );
-}
-
-
-std::optional<UID> AppController::loadSlide( const std::string& filename )
-{
-    if ( ! m_actionManager )
-    {
-        throw_debug( "Unable to load slide: null ActionManager" )
-    }
-
-    return m_actionManager->loadSlide( filename );
-}
-
-
 void AppController::loadProject( serialize::HZeeProject project )
 {
     if ( ! m_dataManager || ! m_transformationManager || ! m_actionManager )
@@ -378,7 +341,8 @@ void AppController::loadProject( serialize::HZeeProject project )
 
     for ( const auto& image : project.m_refImages )
     {
-        if ( const auto imageUid = loadImage( image.m_fileName, std::nullopt ) )
+        if ( const auto imageUid = m_actionManager->loadImage(
+                 image.m_fileName, std::nullopt ) )
         {
             auto imageRec = m_dataManager->imageRecord( *imageUid ).lock();
 
@@ -416,7 +380,8 @@ void AppController::loadProject( serialize::HZeeProject project )
 
     for ( const auto& parcel : project.m_parcellations )
     {
-        if ( const auto parcelUid = loadParcellation( parcel.m_fileName, std::nullopt ) )
+        if ( const auto parcelUid = m_actionManager->loadParcellation(
+                 parcel.m_fileName, std::nullopt ) )
         {
             auto parcelRec = m_dataManager->parcellationRecord( *parcelUid ).lock();
 
@@ -452,24 +417,14 @@ void AppController::loadProject( serialize::HZeeProject project )
     // Load images and set their properties and transformations
     for ( const auto& slide : project.m_slides )
     {
-        if ( const auto slideUid = loadSlide( slide.m_fileName ) )
+        if ( const auto slideUid = m_actionManager->loadSlide(
+                 slide.m_fileName, slide.m_slideStack_T_slide.autoTranslateToTopOfStack() ) )
         {
             auto slideRec = m_dataManager->slideRecord( *slideUid ).lock();
 
             if ( slideRec && slideRec->cpuData() )
             {
                 auto* S = slideRec->cpuData();
-
-                // Prior to over-writing the slide Z translation (which gets set on slide loading),
-                // let's save it off. After loading transformation, put back the saved Z translation
-                // if the new one is zero.
-                const float savedTransZ = S->transformation().stackTranslationZ();
-                S->setTransformation( slide.m_slideStack_T_slide );
-
-                if ( glm::epsilonEqual( 0.0f, S->transformation().stackTranslationZ(), glm::epsilon<float>() ) )
-                {
-                     S->transformation().setStackTranslationZ( savedTransZ );
-                }
 
                 // Prior to over-writing the displayName (which gets set on slide loading),
                 // let's save it off. After loading properties, put back the saved display name

@@ -186,7 +186,8 @@ void GuiManager::setupMainWindow()
                 m_allViewsResetter,
                 m_projectSaver,
                 m_refImageEditorDock->toggleViewAction(),
-                m_slideStackEditorDock->toggleViewAction() );
+                m_slideStackEditorDock->toggleViewAction(),
+                m_mainWindow.get() );
 
     if ( ! m_actionsContainer )
     {
@@ -194,6 +195,7 @@ void GuiManager::setupMainWindow()
     }
 
     QToolBar* pointerToolBar = gui::createPointerToolBar( *m_actionsContainer );
+
     if ( ! pointerToolBar )
     {
         throw_debug( "Pointer toolbar is null" )
@@ -332,7 +334,7 @@ void GuiManager::setAllViewsResetter( AllViewsResetterType resetter )
     m_allViewsResetter = resetter;
 }
 
-void GuiManager::setProjectSaver( std::function< void(void) > saver )
+void GuiManager::setProjectSaver( ProjectSaverType saver )
 {
     m_projectSaver = saver;
 }

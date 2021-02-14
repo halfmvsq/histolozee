@@ -258,7 +258,10 @@ std::optional<UID> loadParcellation(
 }
 
 
-std::optional<UID> loadSlide( DataManager& dataManager, const std::string& filename )
+std::optional<UID> loadSlide(
+        DataManager& dataManager,
+        const std::string& filename,
+        bool translateToTopOfStack )
 {
     auto cpuRecord = details::generateSlideCpuRecord( filename );
     if ( ! cpuRecord )
@@ -269,10 +272,16 @@ std::optional<UID> loadSlide( DataManager& dataManager, const std::string& filen
         return std::nullopt;
     }
 
-    const float translation = slideio::slideStackHeight( dataManager.slideRecords() ) +
-            2.0f * cpuRecord->header().thickness();
+    float stackTranslation = 0.0f;
 
-    cpuRecord->transformation().setStackTranslationZ( translation );
+    if ( translateToTopOfStack )
+    {
+        // Adjust translation along stack's Z axis such that this slide is on top of the stack
+        stackTranslation = slideio::slideStackHeight( dataManager.slideRecords() ) +
+                2.0f * cpuRecord->header().thickness();
+    }
+
+    cpuRecord->transformation().setStackTranslationZ( stackTranslation );
 
     auto gpuRecord = gpuhelper::createSlideGpuRecord( cpuRecord.get() );
     if ( ! gpuRecord )

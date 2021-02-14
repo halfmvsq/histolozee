@@ -24,6 +24,7 @@ SlideTransformation::SlideTransformation()
 
       m_normalizedTranslationAlongXY( 0.0f, 0.0f ),
       m_stackTranslationAlongZ( 0.0f ),
+      m_autoTranslateToTopOfStack( true ),
       m_rotationAngleZ_inDegrees( 0.0f ),
       m_shearAnglesAboutXY_inDegrees( 0.0f, 0.0f ),
       m_scaleAngle_inDegrees( 0.0f ),
@@ -51,7 +52,6 @@ const glm::mat4& SlideTransformation::stack_O_slide( const glm::vec3& physicalSl
     return m_stack_O_slide;
 }
 
-
 const glm::mat4& SlideTransformation::stack_O_slide_rigid( const glm::vec3& physicalSlideDims ) const
 {
     if ( physicalSlideDims != m_cachedPhysicalSlideDims )
@@ -64,12 +64,10 @@ const glm::mat4& SlideTransformation::stack_O_slide_rigid( const glm::vec3& phys
     return m_stack_O_slide_rigid;
 }
 
-
 void SlideTransformation::flagRecompute()
 {
     m_recomputeSlideToStackTx = true;
 }
-
 
 void SlideTransformation::recompute( const glm::vec3& physicalSlideDims ) const
 {
@@ -126,54 +124,45 @@ void SlideTransformation::recompute( const glm::vec3& physicalSlideDims ) const
     m_recomputeSlideToStackTx = false;
 }
 
-
 glm::vec2 SlideTransformation::normalizedTranslationXY() const
 {
     return m_normalizedTranslationAlongXY;
 }
-
 
 float SlideTransformation::stackTranslationZ() const
 {
     return m_stackTranslationAlongZ;
 }
 
-
 float SlideTransformation::rotationAngleZ() const
 {
     return m_rotationAngleZ_inDegrees;
 }
-
 
 glm::vec2 SlideTransformation::shearAnglesXY() const
 {
     return m_shearAnglesAboutXY_inDegrees;
 }
 
-
 float SlideTransformation::scaleRotationAngle() const
 {
     return m_scaleAngle_inDegrees;
 }
-
 
 glm::vec2 SlideTransformation::scaleFactorsXY() const
 {
     return m_scaleFactorsAlongXY;
 }
 
-
 glm::vec2 SlideTransformation::normalizedRotationCenterXY() const
 {
     return m_normalizedRotationCenterAlongXY;
 }
 
-
 SlideTransformation::ShearParamMode SlideTransformation::shearParamMode() const
 {
     return m_shearParamMode;
 }
-
 
 void SlideTransformation::setNormalizedTranslationXY( glm::vec2 vec )
 {
@@ -181,13 +170,11 @@ void SlideTransformation::setNormalizedTranslationXY( glm::vec2 vec )
     flagRecompute();
 }
 
-
 void SlideTransformation::setNormalizedTranslationX( float tx )
 {
     m_normalizedTranslationAlongXY.x = tx;
     flagRecompute();
 }
-
 
 void SlideTransformation::setNormalizedTranslationY( float ty )
 {
@@ -195,13 +182,21 @@ void SlideTransformation::setNormalizedTranslationY( float ty )
     flagRecompute();
 }
 
-
 void SlideTransformation::setStackTranslationZ( float t )
 {
     m_stackTranslationAlongZ = t;
     flagRecompute();
 }
 
+void SlideTransformation::setAutoTranslateToTopOfStack( bool set )
+{
+    m_autoTranslateToTopOfStack = set;
+}
+
+bool SlideTransformation::autoTranslateToTopOfStack() const
+{
+    return m_autoTranslateToTopOfStack;
+}
 
 void SlideTransformation::setRotationAngleZ( float degrees )
 {
@@ -209,7 +204,6 @@ void SlideTransformation::setRotationAngleZ( float degrees )
     m_rotationAngleZ_inDegrees = std::remainder( degrees, 360.0f );
     flagRecompute();
 }
-
 
 void SlideTransformation::setShearAnglesXY( glm::vec2 degrees )
 {
@@ -221,14 +215,12 @@ void SlideTransformation::setShearAnglesXY( glm::vec2 degrees )
     flagRecompute();
 }
 
-
 void SlideTransformation::setShearAnglesX( float degrees )
 {
     // Constrain to [-90, 90]
     m_shearAnglesAboutXY_inDegrees.x = std::remainder( degrees, 180.0f );
     flagRecompute();
 }
-
 
 void SlideTransformation::setShearAnglesY( float degrees )
 {
@@ -237,14 +229,12 @@ void SlideTransformation::setShearAnglesY( float degrees )
     flagRecompute();
 }
 
-
 void SlideTransformation::setScaleRotationAngle( float degrees )
 {
     // Constrain to [-180, 180]
     m_scaleAngle_inDegrees = std::remainder( degrees, 360.0f );
     flagRecompute();
 }
-
 
 void SlideTransformation::setScaleFactorsXY( glm::vec2 scale )
 {
@@ -260,7 +250,6 @@ void SlideTransformation::setScaleFactorsXY( glm::vec2 scale )
     flagRecompute();
 }
 
-
 void SlideTransformation::setScaleFactorsX( float sx )
 {
     if ( glm::epsilonEqual( sx, 0.0f, glm::epsilon<float>() ) )
@@ -273,7 +262,6 @@ void SlideTransformation::setScaleFactorsX( float sx )
     m_scaleFactorsAlongXY.x = sx;
     flagRecompute();
 }
-
 
 void SlideTransformation::setScaleFactorsY( float sy )
 {
@@ -288,13 +276,11 @@ void SlideTransformation::setScaleFactorsY( float sy )
     flagRecompute();
 }
 
-
 void SlideTransformation::setNormalizedRotationCenterXY( glm::vec2 origin )
 {
     m_normalizedRotationCenterAlongXY = std::move( origin );
     flagRecompute();
 }
-
 
 void SlideTransformation::setNormalizedRotationCenterX( float cx )
 {
@@ -302,20 +288,17 @@ void SlideTransformation::setNormalizedRotationCenterX( float cx )
     flagRecompute();
 }
 
-
 void SlideTransformation::setNormalizedRotationCenterY( float cy )
 {
     m_normalizedRotationCenterAlongXY.y = cy;
     flagRecompute();
 }
 
-
 void SlideTransformation::setShearParamMode( const ShearParamMode& mode )
 {
     m_shearParamMode = mode;
     flagRecompute();
 }
-
 
 void SlideTransformation::setIdentity()
 {
@@ -329,7 +312,6 @@ void SlideTransformation::setIdentity()
 
     flagRecompute();
 }
-
 
 glm::mat4 SlideTransformation::computeScaleAndShearTx() const
 {

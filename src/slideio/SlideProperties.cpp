@@ -9,7 +9,7 @@ namespace slideio
 SlideProperties::SlideProperties()
     :
       m_displayName(),
-      m_borderColor( 0.0f, 0.0f, 0.0f ),
+      m_borderColor( 0.0f, 0.5f, 1.0f ),
       m_visible( true ),
       m_opacity( 1.0f ),
       m_intensityThresholds( 0, 255 ),

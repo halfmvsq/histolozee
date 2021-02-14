@@ -153,7 +153,20 @@ void from_json( const json& j, SlideTransformation& tx )
     // All fields are optional
 
     if ( j.contains( "normalizedTranslationXY" ) ) tx.setNormalizedTranslationXY( j["normalizedTranslationXY"] );
-    if ( j.contains( "stackTranslationZ" ) ) tx.setStackTranslationZ( j["stackTranslationZ"] );
+
+    if ( j.contains( "stackTranslationZ" ) )
+    {
+        tx.setStackTranslationZ( j["stackTranslationZ"] );
+
+        // Z translation provided, so do not compute it automatically
+        tx.setAutoTranslateToTopOfStack( false );
+    }
+    else
+    {
+        // No Z translation provided, so compute it automatically
+        tx.setAutoTranslateToTopOfStack( true );
+    }
+
     if ( j.contains( "rotationAngleZ" ) ) tx.setRotationAngleZ( j["rotationAngleZ"] );
     if ( j.contains( "scaleFactorsXY" ) ) tx.setScaleFactorsXY( j["scaleFactorsXY"] );
     if ( j.contains( "normalizedRotationCenterXY" ) ) tx.setNormalizedRotationCenterXY( j["normalizedRotationCenterXY"] );

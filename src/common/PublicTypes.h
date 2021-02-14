@@ -2,6 +2,8 @@
 #define COMMON_PUBLIC_TYPES_H
 
 #include <functional>
+#include <optional>
+#include <string>
 
 
 /// Function that enqueues re-render (update) calls for all views.
@@ -14,6 +16,9 @@ using CrosshairsAlignerType = std::function< void () >;
 
 /// Function that resets cameras of all views to their default states
 using AllViewsResetterType = std::function< void () >;
+
+/// Function that saves the project to an optional new file name
+using ProjectSaverType = std::function< void ( const std::optional< std::string >& fileName ) >;
 
 
 /// Shorthand for a function that returns an object

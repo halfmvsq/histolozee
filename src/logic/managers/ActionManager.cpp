@@ -87,7 +87,7 @@ ActionManager::ActionManager(
     {
         std::ostringstream ss;
         ss << "The global, shared OpenGL context is invalid." << std::ends;
-        throw_debug( ss.str() );
+        throw_debug( ss.str() )
     }
 
     // Set the offscreen render surface format to match that of the global context.
@@ -543,13 +543,15 @@ std::optional<UID> ActionManager::loadParcellation(
 }
 
 
-std::optional<UID> ActionManager::loadSlide( const std::string& filename )
+std::optional<UID> ActionManager::loadSlide(
+        const std::string& filename,
+        bool translateToTopOfStack )
 {
     std::optional<UID> slideUid;
 
     if ( m_globalContext->makeCurrent( &m_surface ) )
     {
-        slideUid = data::loadSlide( m_dataManager, filename );
+        slideUid = data::loadSlide( m_dataManager, filename, translateToTopOfStack );
 
         if ( slideUid )
         {
