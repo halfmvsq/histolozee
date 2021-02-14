@@ -206,3 +206,32 @@ A sample project file is shown below. Load the project file path as the first po
 The top-level fields `activeReferenceImage`, `activeParcellation`, `parcellations`, `slides`, and `world_T_slideStack` are optional. If the transformation for an image, parcellation, slide, or for the slide stack is not provided, then identity is assumed. Similarly, if any display setting for an image, parcellation, or slide is not defined, then the default is assumed.
 
 All transformations are defined in "World" coordinates (usually millimeters). An origin position in World space and a quaternion rotation are used to defined the rigid-body transformation to World space for both images and the slide stack.
+
+
+### Acknowledgements
+
+The following toolbar icons are used from [Icons8](https://icons8.com/license):
+
+* [3D Rotate icon](https://icons8.com/icons/set/3d-rotate)
+* [Automatic Contrast icon](https://icons8.com/icons/set/automatic-contrast)
+* [Customer icon](https://icons8.com/icons/set/gender-neutral-user)
+* [Expand icon](https://icons8.com/icons/set/expand)
+* [Fit to Page icon](https://icons8.com/icons/set/fit-to-page)
+* [Hand icon](https://icons8.com/icons/set/hand)
+* [Head Profile icon](https://icons8.com/icons/set/head-profile)
+* [Manual Page Rotation icon](https://icons8.com/icons/set/manual-page-rotation)
+* [Move icon](https://icons8.com/icons/set/move)
+* [Move Selection To Previous icon](https://icons8.com/icons/set/move-selection-to-previous)
+* [Portraits icon](https://icons8.com/icons/set/portraits)
+* [Resize icon](https://icons8.com/icons/set/resize)
+* [Rotate icon](https://icons8.com/icons/set/rotate)
+* [Rotate Camera icon](https://icons8.com/icons/set/rotate-camera)
+* [Rotate Left icon](https://icons8.com/icons/set/rotate-left)
+* [Ruler Combined icon](https://icons8.com/icons/set/ruler-combined)
+* [Save icon](https://icons8.com/icons/set/save--v1)
+* [Save As icon](https://icons8.com/icons/set/save-as)
+* [Stack Of Paper icon](https://icons8.com/icons/set/stack-of-paper)
+* [Stretch Uniform to Fill icon](https://icons8.com/icons/set/stretch-uniform-to-fill)
+* [Target icon](https://icons8.com/icons/set/define-location)
+* [Zoom In icon](https://icons8.com/icons/set/zoom-in--v1)
+

@@ -76,12 +76,6 @@ void MainWindow::setSlideLoader( SlideLoaderType loader )
 
 void MainWindow::keyPressEvent( QKeyEvent* event )
 {
-    if ( Qt::Key_Escape == event->key() )
-    {
-        close();
-        return;
-    }
-
     QMainWindow::keyPressEvent( event );
 }
 
