@@ -49,53 +49,157 @@ A sample project file is shown below. Load the project file path as the first po
 
 ```JSON
 {
-    "referenceImages": [
-        {
-            "fileName": "data/template.nii.gz",
-            "subjectToWorldRotation": {
-                "w": 0.0,
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "worldSubjectOrigin": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
+  "activeImage": 0,
 
-        }
-    ],
-    "parcellations": [
-        {
-            "displayName": "",
-            "fileName": "data/template_parcellation.nii.gz",
-            "subjectToWorldRotation": {
-                "w": 0.0,
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "worldSubjectOrigin": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        }
-    ],
-    "slides": [
-        {
-            "fileName": "data/slide1.tif"
+  "referenceImages": [
+    {
+      "fileName": "average_template.nii.gz",
+
+      "displaySettings": {
+        "displayName": "average_template",
+        "interpolation": "NearestNeighbor",
+        "level": 125.0,
+        "opacity": 1.0,
+        "thresholdHigh": 516.0,
+        "thresholdLow": 0.0,
+        "window": 251.0
+      },
+
+      "world_T_subject": {
+        "subjectToWorldQuaternion": {
+          "w": 1.0,
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
         },
-        {
-            "fileName": "data/slide2.tif"
-        },
-        {
-            "fileName": "data/slide3.tif"
-        },
-        {
-            "fileName": "data/slide4.tif"
+        "worldOrigin": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
         }
-    ]
+      }
+    }
+  ],
+
+  "parcellations": [
+    {
+      "fileName": "template_parcellation.nii.gz",
+
+      "displaySettings": {
+        "displayName": "template_parcellation",
+        "opacity": 0.5
+      },
+
+      "world_T_subject": {
+        "subjectToWorldQuaternion": {
+          "w": 1.0,
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "worldOrigin": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        }
+      }
+    }
+  ],
+
+  "slides": [
+    {
+      "fileName": "slide1.tif",
+
+      "displaySettings": {
+        "borderColor": {
+          "x": 0.0,
+          "y": 0.5,
+          "z": 1.0
+        },
+        "displayName": "slide1",
+        "opacity": 1.0,
+        "thresholdHigh": 255,
+        "thresholdLow": 0,
+        "visible": true
+      },
+
+      "slideStack_T_slide": {
+        "normalizedRotationCenterXY": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "normalizedTranslationXY": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "rotationAngleZ": 0.0,
+        "scaleFactorsXY": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "shearAnglesXY": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "stackTranslationZ": 0.353
+      }
+    },
+    {
+      "fileName": "slide2.tif",
+
+      "slideStack_T_slide": {
+        "normalizedRotationCenterXY": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "normalizedTranslationXY": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "rotationAngleZ": 0.0,
+        "scaleFactorsXY": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "shearAnglesXY": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "stackTranslationZ": 0.529
+      }
+    },
+    {
+      "fileName": "slide3.tif",
+      
+      "slideStack_T_slide": {
+        "stackTranslationZ": 0.706
+      }
+    },
+    {
+      "fileName": "slide4.tif",
+      
+      "slideStack_T_slide": {
+        "stackTranslationZ": 0.882
+      }
+    }
+  ],
+
+  "world_T_slideStack": {
+    "subjectToWorldQuaternion": {
+      "w": 1.0,
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "worldOrigin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    }
+  }
 }
 ```
+
+The top-level fields `activeImage`, `parcellations`, `slides`, and `world_T_slideStack` are optional. If the transformation for an image, parcellation, slide, or for the slide stack is not provided, then identity is assumed. Similarly, if any display setting for an image, parcellation, or slide are not defined, then the defaults are assumed.
+
+All transformations are defined in "World" coordinates (usually millimeters). The transformation from either an image's "Subject" space to World or from the slide stack to World is defined by an origin position in World (i.e. the translation) and a quaternion for the rotation.
