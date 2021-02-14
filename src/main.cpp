@@ -171,13 +171,13 @@ int main( int argc, char *argv[] )
     }
 
 
-    /* START FEATURE EXPERIMENTATION */
+    /*** START FEATURE EXPERIMENTATION ***/
 //    appController->testAlignSlideStackToActiveImage();
 //    appController->testCreateRefImageLandmark();
 //    appController->testCreateSlideLandmark();
 //    appController->testCreateSlideAnnotation();
 //    appController->testSerialization( options.m_projectFileName );
-    /* END FEATURE EXPERIMENTATION */
+    /*** END FEATURE EXPERIMENTATION ***/
 
 
     // Finalize the setup and show window!

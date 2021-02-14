@@ -803,13 +803,16 @@ QLayout* RefFrameEditorDock::createImageLandmarksLayout()
 
     const QStringList headers( { tr("Landmarks"), "x", "y", "z" } );
 
+//    QString s = R"(
+//                Red		2	3	4
+//                    One		2.234234	3	4
+//                    Two		2	3	4
+//                Green	a	b	c
+//                    One		5	6	7
+//                    Two		2	3	4
+//                )";
+
     QString s = R"(
-                Red		2	3	4
-                    One		2.234234	3	4
-                    Two		2	3	4
-                Green	a	b	c
-                    One		5	6	7
-                    Two		2	3	4
                 )";
 
     // Note: QTreeView does NOT take ownership of the model,

@@ -19,7 +19,7 @@ struct adl_serializer< std::optional<T> >
 {
     static void to_json( json& j, const std::optional<T>& opt )
     {
-        if ( opt == std::nullopt )
+        if ( ! opt )
         {
             j = nullptr;
         }
@@ -42,6 +42,25 @@ struct adl_serializer< std::optional<T> >
             // Same as above, but with adl_serializer<T>::from_json
             opt = j.get<T>();
         }
+    }
+};
+
+
+template <typename T>
+struct adl_serializer< glm::vec<2, T> >
+{
+    static void to_json( json& j, const glm::vec<2, T>& p )
+    {
+        j = json{
+            { "x", p.x },
+            { "y", p.y }
+        };
+    }
+
+    static void from_json( const json& j, glm::vec<2, T>& p )
+    {
+        p.x = j.at( "x" ).get<T>();
+        p.y = j.at( "y" ).get<T>();
     }
 };
 

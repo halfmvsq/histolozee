@@ -3,7 +3,7 @@
 
 #include "ImageHeader.h"
 #include "ImageSettings.h"
-#include "ImageTransformations.hpp"
+#include "ImageTransformations.h"
 
 #include "itkdetails/ImageBaseData.hpp"
 

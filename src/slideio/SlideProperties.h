@@ -31,6 +31,8 @@ public:
     void setBorderColor( const glm::vec3& color );
     void setVisible( bool visible );
     void setOpacity( float opacity );
+    void setIntensityThresholdLow( uint8_t low );
+    void setIntensityThresholdHigh( uint8_t high );
     void setIntensityThresholds( const std::pair<uint8_t, uint8_t>& intensityThresholds );
     void setEdgesVisible( bool visible );
     void setEdgesMagnitude( float mag );

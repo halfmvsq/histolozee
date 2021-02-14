@@ -27,7 +27,7 @@ set( IMAGEIO_HEADERS
     ImageHeader.h
     ImageLoader.h
     ImageSettings.h
-    ImageTransformations.hpp
+    ImageTransformations.h
     ParcellationCpuRecord.h
     itkbridge/ITKBridge.hpp
     itkbridge/ImageDataFactory.hpp

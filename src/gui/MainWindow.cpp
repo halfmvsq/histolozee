@@ -255,14 +255,16 @@ void MainWindow::createStatusBar()
 
         m_memoryUseStatus = new QLabel;
         m_memoryUseStatus->setAlignment( Qt::AlignLeft | Qt::AlignVCenter );
-        m_memoryUseStatus->setText( "Memory use:" );
+//        m_memoryUseStatus->setText( "Memory use:" );
 
         m_memoryUseProgressbar = new QProgressBar;
-        m_memoryUseProgressbar->setRange( 0, 8196 );
-        m_memoryUseProgressbar->setValue( 2048 );
         m_memoryUseProgressbar->setAlignment( Qt::AlignLeft | Qt::AlignVCenter );
         m_memoryUseProgressbar->setOrientation( Qt::Orientation::Horizontal );
         m_memoryUseProgressbar->setTextVisible( true );
+
+        /// @todo Implement memory use:
+//        m_memoryUseProgressbar->setRange( 0, 8196 );
+//        m_memoryUseProgressbar->setValue( 2048 );
 
         m_worldPosStatus = new QLabel;
         m_worldPosStatus->setAlignment( Qt::AlignRight | Qt::AlignVCenter );

@@ -44,6 +44,9 @@ public:
             ComponentType componentType,
             InterpolationMode interpMode );
 
+    /// Construct with default settings
+    ImageSettings() = default;
+
     ImageSettings( const ImageSettings& ) = default;
     ImageSettings& operator=( const ImageSettings& ) = default;
 

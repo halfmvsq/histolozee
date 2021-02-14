@@ -32,12 +32,14 @@ public:
     void stageCrosshairsOrigin( const glm::vec3& worldOrigin );
 
     const CoordinateFrame& getCrosshairsFrame( const TransformationState& ) const;
+
     void stageCrosshairsFrame( CoordinateFrame );
     void commitCrosshairsFrame();
 
     const CoordinateFrame& getSlideStackCrosshairsFrame( const TransformationState& ) const;
 
     const CoordinateFrame& getSlideStackFrame( const TransformationState& ) const;
+
     void stageSlideStackFrame( CoordinateFrame );
     void commitSlideStackFrame();
 

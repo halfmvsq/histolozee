@@ -110,6 +110,22 @@ void SlideProperties::setAnnotOpacity( float opacity )
     m_annotOpacity = opacity;
 }
 
+void SlideProperties::setIntensityThresholdLow( uint8_t low )
+{
+    if ( low <= m_intensityThresholds.second )
+    {
+        m_intensityThresholds.first = low;
+    }
+}
+
+void SlideProperties::setIntensityThresholdHigh( uint8_t high )
+{
+    if ( m_intensityThresholds.first <= high )
+    {
+        m_intensityThresholds.second = high;
+    }
+}
+
 void SlideProperties::setIntensityThresholds( const std::pair<uint8_t, uint8_t>& thresholds )
 {
     if ( thresholds.first <= thresholds.second )

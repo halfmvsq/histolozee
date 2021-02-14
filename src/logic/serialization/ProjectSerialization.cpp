@@ -27,20 +27,63 @@ void makeFileNamesCanonical( json& project, const boost::filesystem::path& baseP
                     fs::path( image.at( "fileName" ).get<std::string>() ), basePath ).string();
     }
 
-    for ( auto& parcel : project.at( "parcellations" ) )
+    if ( project.contains( "parcellations" ) )
     {
-        parcel.at( "fileName" ) = fs::canonical(
-                    fs::path( parcel.at( "fileName" ).get<std::string>() ), basePath ).string();
+        for ( auto& parcel : project.at( "parcellations" ) )
+        {
+            parcel.at( "fileName" ) = fs::canonical(
+                        fs::path( parcel.at( "fileName" ).get<std::string>() ), basePath ).string();
+        }
     }
 
-    for ( auto& slide : project.at( "slides" ) )
+    if ( project.contains( "slides" ) )
     {
-        slide.at( "fileName" ) = fs::canonical(
-                    fs::path( slide.at( "fileName" ).get<std::string>() ), basePath ).string();
+        for ( auto& slide : project.at( "slides" ) )
+        {
+            slide.at( "fileName" ) = fs::canonical(
+                        fs::path( slide.at( "fileName" ).get<std::string>() ), basePath ).string();
+        }
     }
 }
 
 } // anonymous
+
+
+// Write coordinate frame
+void to_json( json& j, const CoordinateFrame& frame )
+{
+    j = json {
+    { "worldOrigin", frame.worldOrigin() },
+    { "subjectToWorldQuaternion", frame.world_O_frame_rotation() }
+    };
+}
+
+// Write coordinate frame
+void from_json( const json& j, CoordinateFrame& frame )
+{
+    static const glm::vec3 sk_origin{ 0.0f, 0.0f, 0.0f };
+    static const glm::quat sk_ident{ 1.0f, 0.0f, 0.0f, 0.0f };
+
+    // Initialize origin (translation) and quaternion rotation with identity,
+    // in case they are no defined in the JSON:
+    glm::vec3 worldOrigin{ sk_origin };
+    glm::quat frameToWorldRotation{ sk_ident };
+
+    // worldOrigin is an optional field
+    if ( j.contains( "worldOrigin" ) )
+    {
+        j.at( "worldOrigin" ).get_to( worldOrigin );
+    }
+
+    // subjectToWorldQuaternion is an optional field
+    if ( j.contains( "subjectToWorldQuaternion" ) )
+    {
+        j.at( "subjectToWorldQuaternion" ).get_to( frameToWorldRotation );
+    }
+
+    frame.setWorldOrigin( worldOrigin );
+    frame.setFrameToWorldRotation( frameToWorldRotation );
+}
 
 
 namespace imageio
@@ -56,97 +99,196 @@ NLOHMANN_JSON_SERIALIZE_ENUM(
 } // namespace imageio
 
 
+namespace slideio
+{
+
+// Write slide properties
+void to_json( json& j, const SlideProperties& properties )
+{
+    j = json{
+    { "displayName", properties.displayName() },
+    { "borderColor", properties.borderColor() },
+    { "visible", properties.visible() },
+    { "opacity", properties.opacity() },
+    { "thresholdLow", properties.intensityThresholds().first },
+    { "thresholdHigh", properties.intensityThresholds().second }
+    };
+}
+
+// Read slide properties
+void from_json( const json& j, SlideProperties& properties )
+{
+    // All fields are optional
+
+    if ( j.contains( "displayName" ) )
+        properties.setDisplayName( j["displayName"] );
+
+    if ( j.contains( "borderColor" ) )
+        properties.setBorderColor( j["borderColor"] );
+
+    if ( j.contains( "visible" ) )
+        properties.setVisible( j["visible"] );
+
+    if ( j.contains( "opacity" ) )
+        properties.setOpacity( j["opacity"] );
+
+    if ( j.contains( "thresholdLow" ) )
+        properties.setIntensityThresholdLow( j["thresholdLow"] );
+
+    if ( j.contains( "thresholdHigh" ) )
+        properties.setIntensityThresholdHigh( j["thresholdHigh"] );
+}
+
+
+// Write slide-to-stack transformation
+void to_json( json& j, const SlideTransformation& tx )
+{
+    j = json{
+    { "normalizedTranslationXY", tx.normalizedTranslationXY() },
+    { "stackTranslationZ", tx.stackTranslationZ() },
+    { "rotationZAngle", tx.rotationZAngle() },
+    { "scaleFactorsXY", tx.scaleFactorsXY() },
+    { "normalizedRotationCenterXY", tx.normalizedRotationCenterXY() },
+    };
+
+    switch ( tx.shearParamMode() )
+    {
+    case SlideTransformation::ShearParamMode::ShearAngles:
+    {
+        j["shearAnglesXY"] = tx.shearAnglesXY();
+        break;
+    }
+    case SlideTransformation::ShearParamMode::ScaleRotation:
+    {
+        j["scaleRotationAngle"] = tx.scaleRotationAngle();
+        break;
+    }
+    }
+}
+
+// Read slide-to-stack transformation
+void from_json( const json& j, SlideTransformation& tx )
+{
+    // All fields are optional
+
+    if ( j.contains( "normalizedTranslationXY" ) )
+        tx.setNormalizedTranslationXY( j["normalizedTranslationXY"] );
+
+    if ( j.contains( "stackTranslationZ" ) )
+        tx.setStackTranslationZ( j["stackTranslationZ"] );
+
+    if ( j.contains( "rotationZAngle" ) )
+        tx.setRotationZAngle( j["rotationZAngle"] );
+
+    if ( j.contains( "scaleFactorsXY" ) )
+        tx.setScaleFactorsXY( j["scaleFactorsXY"] );
+
+    if ( j.contains( "normalizedRotationCenterXY" ) )
+        tx.setNormalizedRotationCenterXY( j["normalizedRotationCenterXY"] );
+
+    if ( j.contains( "shearAnglesXY" ) )
+    {
+        tx.setShearParamMode( SlideTransformation::ShearParamMode::ShearAngles );
+        tx.setShearAnglesXY( j["shearAnglesXY"] );
+    }
+    else if ( j.contains( "scaleRotationAngle" ) )
+    {
+        tx.setShearParamMode( SlideTransformation::ShearParamMode::ScaleRotation );
+        tx.setScaleRotationAngle( j["scaleRotationAngle"] );
+    }
+}
+
+} // namespace slideio
+
+
+
 namespace serialize
 {
 
-void to_json( json& j, const ImageSettings& settings )
+// Write image settings
+void to_json( json& j, const ImageDisplaySettings& settings )
 {
     j = json{
-    { "level", settings.m_level },
+    { "displayName", settings.m_displayName },
     { "window", settings.m_window },
-    { "slope", settings.m_slope },
-    { "intercept", settings.m_intercept },
+    { "level", settings.m_level },
     { "thresholdLow", settings.m_thresholdLow },
     { "thresholdHigh", settings.m_thresholdHigh },
     { "opacity", settings.m_opacity },
-    { "interpolationMode", settings.m_interpolationMode },
-    { "colorMapName", settings.m_colorMapName } };
+    { "interpolation", settings.m_interpolationMode }
+    };
 }
 
-void from_json( const json& j, ImageSettings& settings )
+// Read image settings
+void from_json( const json& j, ImageDisplaySettings& settings )
 {
-//    if ( j.contains( "level") ) settings.m_level = j["level"];
-    j.at( "level" ).get_to( settings.m_level );
+    j.at( "displayName" ).get_to( settings.m_displayName );
     j.at( "window" ).get_to( settings.m_window );
-    j.at( "slope" ).get_to( settings.m_slope );
-    j.at( "intercept" ).get_to( settings.m_intercept );
+    j.at( "level" ).get_to( settings.m_level );
     j.at( "thresholdLow" ).get_to( settings.m_thresholdLow );
     j.at( "thresholdHigh" ).get_to( settings.m_thresholdHigh );
     j.at( "opacity" ).get_to( settings.m_opacity );
     j.at( "interpolationMode" ).get_to( settings.m_interpolationMode );
-    j.at( "colorMapName" ).get_to( settings.m_colorMapName );
 }
 
 
+// Write image
 void to_json( json& j, const Image& image )
 {
     j = json{
     { "fileName", image.m_fileName },
-    { "displayName", image.m_displayName },
-    { "worldSubjectOrigin", image.m_worldSubjectOrigin },
-    { "subjectToWorldRotation", image.m_subjectToWorldRotation },
-    { "settings", image.m_settings }
+    { "world_T_subject", image.m_world_T_subject },
+    { "displaySettings", image.m_displaySettings }
     };
 }
 
+// Read image
 void from_json( const json& j, Image& image )
 {
-    static const glm::vec3 sk_origin{ 0.0f, 0.0f, 0.0f };
-    static const glm::quat sk_ident{ 1.0f, 0.0f, 0.0f, 0.0f };
-
+    // fileName is a required field
     j.at( "fileName" ).get_to( image.m_fileName );
 
-    if ( j.contains( "displayName" ) )
-    {
-        image.m_displayName = j["displayName"];
-    }
-    else
-    {
-        image.m_displayName = image.m_fileName;
-    }
+    // world_T_subject is an optional field
+    image.m_world_T_subject = ( j.contains( "world_T_subject" ) )
+            ? j.at( "world_T_subject" ).get<CoordinateFrame>()
+            : CoordinateFrame();
 
-    if ( j.contains( "worldSubjectOrigin" ) )
-    {
-        image.m_worldSubjectOrigin = j["worldSubjectOrigin"];
-    }
-    else
-    {
-        image.m_worldSubjectOrigin = sk_origin;
-    }
-
-    if ( j.contains( "subjectToWorldRotation" ) )
-    {
-        image.m_subjectToWorldRotation = j["subjectToWorldRotation"];
-    }
-    else
-    {
-        image.m_subjectToWorldRotation = sk_ident;
-    }
+    // displaySettings is an optional field
+    image.m_displaySettings = ( j.contains( "displaySettings" ) )
+            ? j.at( "displaySettings" ).get<ImageDisplaySettings>()
+            : ImageDisplaySettings();
 }
 
 
+// Write slide
 void to_json( json& j, const Slide& slide )
 {
     j = json{
-    { "fileName", slide.m_fileName } };
+    { "fileName", slide.m_fileName },
+    { "slideStack_T_slide", slide.m_slideStack_T_slide },
+    { "displaySettings", slide.m_properties }
+    };
 }
 
+// Read slide
 void from_json( const json& j, Slide& slide )
 {
+    // fileName is a required field
     j.at( "fileName" ).get_to( slide.m_fileName );
+
+    // slideStack_T_slide is an optional field
+    slide.m_slideStack_T_slide = ( j.contains( "slideStack_T_slide" ) )
+            ? j.at( "slideStack_T_slide" ).get< slideio::SlideTransformation >()
+            : slideio::SlideTransformation();
+
+    // displaySettings is an optional field
+    slide.m_properties = ( j.contains( "displaySettings" ) )
+            ? j.at( "displaySettings" ).get< slideio::SlideProperties >()
+            : slideio::SlideProperties();
 }
 
 
+// Write project
 void to_json( json& j, const HZeeProject& project )
 {
     j = json{
@@ -154,16 +296,39 @@ void to_json( json& j, const HZeeProject& project )
     { "parcellations", project.m_parcellations },
     { "slides", project.m_slides },
     { "activeImage", project.m_activeImage },
-    { "activeParcellation", project.m_activeParcellation } };
+    { "activeParcellation", project.m_activeParcellation },
+    { "world_T_slideStack", project.m_world_T_slideStack }
+    };
 }
 
+// Read project
 void from_json( const json& j, HZeeProject& project )
 {
+    // referenceImages is a required field
     j.at( "referenceImages" ).get_to( project.m_refImages );
-    j.at( "parcellations" ).get_to( project.m_parcellations );
-    j.at( "slides" ).get_to( project.m_slides );
-    j.at( "activeImage" ).get_to( project.m_activeImage );
-    j.at( "activeParcellation" ).get_to( project.m_activeParcellation );
+
+    // parcellations is an optional field
+    project.m_parcellations = ( j.contains( "parcellations" ) )
+            ? j.at( "parcellations" ).get< std::vector<Image> >()
+            : std::vector<Image>{};
+
+    // slides is an optional field
+    project.m_slides = ( j.contains( "slides" ) )
+            ? j.at( "slides" ).get< std::vector<Slide> >()
+            : std::vector<Slide>{};
+
+    // activeImage is an optional field
+    project.m_activeImage = ( j.contains( "activeImage" ) )
+            ? j.at( "activeImage" ).get<uint32_t>() : 0;
+
+    // activeParcellation is an optional field
+    project.m_activeParcellation = ( j.contains( "activeParcellation" ) )
+            ? j.at( "activeParcellation" ).get<uint32_t>() : 0;
+
+    // world_T_slideStack is an optional field
+    project.m_world_T_slideStack = ( j.contains( "world_T_slideStack" ) )
+            ? j.at( "world_T_slideStack" ).get<CoordinateFrame>()
+            : CoordinateFrame();
 }
 
 
@@ -183,7 +348,7 @@ void open( HZeeProject& project, const std::string& fileName )
         makeFileNamesCanonical( j, basePath );
 
         std::cout << "\nLoaded project from " << fileName << ":" << std::endl << std::endl;
-        std::cout << std::setw( 4 ) << j << std::endl << std::endl;
+        std::cout << std::setw( 2 ) << j << std::endl << std::endl;
 
         project = j.get<HZeeProject>();
     }
@@ -203,10 +368,10 @@ void save( const HZeeProject& project, const std::string& fileName )
         std::ofstream outFile( fileName );
 
         const json j = project;
-        outFile << std::setw( 4 ) << j;
+        outFile << std::setw( 2 ) << j;
 
         std::cout << "Saved project to " << fileName << ":" << std::endl << std::endl;
-        std::cout << std::setw( 4 ) << j << std::endl << std::endl;
+        std::cout << std::setw( 2 ) << j << std::endl << std::endl;
     }
     catch ( const std::exception& e )
     {

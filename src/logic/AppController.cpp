@@ -626,12 +626,13 @@ void AppController::testCreateSlideAnnotation()
 
 void AppController::testSerialization( const std::string& fileName )
 {
+    /*
     serialize::Image refImage1;
     refImage1.m_fileName = "testFile1";
     refImage1.m_displayName = "displayName1";
     refImage1.m_worldSubjectOrigin = glm::vec3{ 1, 2, 3 };
     refImage1.m_subjectToWorldRotation = glm::quat{ 1, 2, 3, 4 };
-    refImage1.m_settings = serialize::ImageSettings();
+    refImage1.m_settings = serialize::ImageDisplaySettings();
     refImage1.m_settings.m_interpolationMode = imageio::ImageSettings::InterpolationMode::Linear;
     refImage1.m_settings.m_colorMapName = "colormap1";
 
@@ -640,7 +641,7 @@ void AppController::testSerialization( const std::string& fileName )
     refImage2.m_displayName = "displayName2";
     refImage2.m_worldSubjectOrigin = glm::vec3{ 1, 2, 3 };
     refImage2.m_subjectToWorldRotation = glm::quat{ 1, 2, 3, 4 };
-    refImage2.m_settings = serialize::ImageSettings();
+    refImage2.m_settings = serialize::ImageDisplaySettings();
     refImage2.m_settings.m_interpolationMode = imageio::ImageSettings::InterpolationMode::NearestNeighbor;
     refImage2.m_settings.m_colorMapName = "colormap2";
 
@@ -649,7 +650,7 @@ void AppController::testSerialization( const std::string& fileName )
     parcellation.m_displayName = "my parcellation";
     parcellation.m_worldSubjectOrigin = glm::vec3{ 1, 2, 3 };
     parcellation.m_subjectToWorldRotation = glm::quat{ 1, 2, 3, 4 };
-    parcellation.m_settings = serialize::ImageSettings();
+    parcellation.m_settings = serialize::ImageDisplaySettings();
     parcellation.m_settings.m_interpolationMode = imageio::ImageSettings::InterpolationMode::NearestNeighbor;
     parcellation.m_settings.m_colorMapName = std::nullopt;
 
@@ -664,4 +665,5 @@ void AppController::testSerialization( const std::string& fileName )
 
     serialize::HZeeProject restored;
     serialize::open( restored, fileName );
+    */
 }

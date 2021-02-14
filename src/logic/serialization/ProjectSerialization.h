@@ -1,7 +1,12 @@
 #ifndef PARSE_ARGUMENTS_H
 #define PARSE_ARGUMENTS_H
 
+#include "common/CoordinateFrame.h"
+
 #include "imageio/ImageSettings.h"
+
+#include "slideio/SlideProperties.h"
+#include "slideio/SlideTransformation.h"
 
 #include <nlohmann/json.hpp>
 
@@ -16,92 +21,79 @@
 namespace serialize
 {
 
-/// @todo This section is of course not done; needs expansion for serialization of all app data
-/// @todo Create enum for all image color maps
+/// @todo Serialization of all application data
 
 
-/// Serialized data for reference image settings
-struct ImageSettings
+/// Image display settings. All settings are OPTIONAL and need not be
+/// provided in the JSON. If a settings is not in the JSON, then it will assume
+/// default values AFTER the image is loaded.
+///
+/// @note Currently, only values for image component 0 are serialized
+/// @todo Serialize the other components, too
+struct ImageDisplaySettings
 {
-    std::string m_displayName;
+    std::optional<std::string> m_displayName = std::nullopt;
+    std::optional<double> m_opacity = std::nullopt;
+    std::optional<double> m_window = std::nullopt;
+    std::optional<double> m_level = std::nullopt;
+    std::optional<double> m_thresholdLow = std::nullopt;
+    std::optional<double> m_thresholdHigh = std::nullopt;
+    std::optional< imageio::ImageSettings::InterpolationMode > m_interpolationMode = std::nullopt;
 
-    double m_level;         //! Window center value in image units
-    double m_window;        //! Window width in image units
-
-    double m_slope;         //!< Slope computed from window
-    double m_intercept;     //!< Intercept computed from window and level
-
-    double m_thresholdLow;  //!< Values below threshold not displayed
-    double m_thresholdHigh; //!< Values above threshold not displayed
-
-    double m_opacity;       //!< Opacity [0, 1]
-
-    /// Interpolation mode for voxels
-    imageio::ImageSettings::InterpolationMode m_interpolationMode;
-
-    /// Short name of color map
-    std::optional< std::string > m_colorMapName;
 };
 
 
-/// Serialized data for a reference image or parcellation
+/// Serialized data for a reference image or a parcellation
+/// The only field that is required when reading the JSON is the file name.
 struct Image
 {
-    /// Image file name on disk
-    std::string m_fileName;
+    std::string m_fileName; //!< Image file name on disk (REQUIRED in JSON)
+    ImageDisplaySettings m_displaySettings; //!< Display settings (OPTIONAL in JSON)
 
-    /// Display name in application
-    std::string m_displayName;
-
-    /// Image subject origin defined in World space.
-    /// Assumed to be (0, 0, 0) if not defined.
-    glm::vec3 m_worldSubjectOrigin;
-
-    /// Rotation from Image Subject to World space.
-    /// Assumed to be identity if not defined.
-    glm::quat m_subjectToWorldRotation;
-
-    /// Image settings
-    ImageSettings m_settings;
+    /// Rigid-body transformation from the image Subject space to World space (OPTIONAL in JSON)
+    CoordinateFrame m_world_T_subject;
 };
 
 
 /// Serialized data for a slide
+/// The only field that is required when reading the JSON is the file name.
 struct Slide
 {
-    /// Slide file name on disk
-    std::string m_fileName;
+    std::string m_fileName; //!< Slide image file name on disk (REQUIRED in JSON)
+    slideio::SlideProperties m_properties; //!< Slide display properties (OPTIONAL in JSON)
+
+    /// Rigid-body transformation from local slide space to the slide stack space
+    /// (OPTIONAL in JSON)
+    slideio::SlideTransformation m_slideStack_T_slide;
 };
 
 
-/// Serialized data for a HistoloZee project
+/// Serialized data for a HistoloZee project.
+/// The only field that is required when reading the JSON is the reference image.
 struct HZeeProject
 {
-    /// Reference images
-    std::vector<Image> m_refImages;
+    std::vector<Image> m_refImages; //!< Reference images (REQUIRED in JSON)
+    std::vector<Image> m_parcellations; //!< Parcellation images (OPTIONAL in JSON)
+    std::vector<Slide> m_slides; //!< Slide images (OPTIONAL in JSON)
 
-    /// Parcellation images
-    std::vector<Image> m_parcellations;
+    /// Rigid-body transformation from the space of the slide stack to World space
+    /// (OPTIONAL in JSON)
+    CoordinateFrame m_world_T_slideStack;
 
-    /// Slide images
-    std::vector<Slide> m_slides;
+    /// Index of the active reference image, if there is at least one (OPTIONAL in JSON)
+    uint32_t m_activeImage;
 
-    /// Index to the active reference image, if there is at least one
-    std::optional<uint32_t> m_activeImage;
-
-    /// Index to the active parcellation, if there is at least one
-    std::optional<uint32_t> m_activeParcellation;
+    /// Index of the active parcellation, if there is at least one (OPTIONAL in JSON)
+    uint32_t m_activeParcellation;
 };
 
 
-/// Open a project from a file
+/// Open project file
 void open( HZeeProject& project, const std::string& fileName );
 
-/// Save a project to a file
+/// Save project file
 void save( const HZeeProject& project, const std::string& fileName );
 
-
-// make one that takes in imageio::ImageSettings
 } // namespace serialize
 
 #endif // PARSE_ARGUMENTS_H

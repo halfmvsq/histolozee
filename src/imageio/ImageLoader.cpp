@@ -1,7 +1,7 @@
 #include "ImageLoader.h"
 #include "ImageHeader.h"
 #include "ImageSettings.h"
-#include "ImageTransformations.hpp"
+#include "ImageTransformations.h"
 #include "ImageCpuRecord.h"
 #include "ParcellationCpuRecord.h"
 
