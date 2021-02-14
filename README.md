@@ -1,8 +1,9 @@
 # HistoloZee #
 
-Welcome to the next version of [HistoloZee](http://picsl.upenn.edu/software/histolozee)! Check out the original version's [tutorials on YouTube](https://www.youtube.com/playlist?list=PL68v8FP_IVlg2tCgJXrsO3UHve1q9wLjI).
+Welcome to the *next version* of [HistoloZee](http://picsl.upenn.edu/software/histolozee)! Check out the original version's [tutorials on YouTube](https://www.youtube.com/playlist?list=PL68v8FP_IVlg2tCgJXrsO3UHve1q9wLjI).
 
 Copyright 2021 Penn Image Computing and Science Lab, University of Pennsylvania
+
 
 ### How do I get set up? ###
 
@@ -48,8 +49,6 @@ A sample project file is shown below. Load the project file path as the first po
 
 ```JSON
 {
-    "activeImage": 0,
-    "activeParcellation": 0,
     "referenceImages": [
         {
             "fileName": "data/template.nii.gz",

@@ -48,7 +48,7 @@ public:
 
     glm::vec2 normalizedTranslationXY() const;
     float stackTranslationZ() const;
-    float rotationZAngle() const;
+    float rotationAngleZ() const;
     glm::vec2 shearAnglesXY() const;
     float scaleRotationAngle() const;
     glm::vec2 scaleFactorsXY() const;
@@ -61,7 +61,7 @@ public:
 
     void setStackTranslationZ( float translation );
 
-    void setRotationZAngle( float angleInDegrees );
+    void setRotationAngleZ( float angleInDegrees );
 
     void setShearAnglesXY( glm::vec2 anglesInDegrees );
     void setShearAnglesX( float ax );
@@ -111,7 +111,7 @@ private:
     float m_stackTranslationAlongZ;
 
     /// Rotation angle of slide relative to stack Z axis in degrees. Constrained to [-180.0, 180.0].
-    float m_rotationZAngle_inDegrees;
+    float m_rotationAngleZ_inDegrees;
 
     /// x,y shear angles in degrees. Constrained to [-90.0, 90.0].
     glm::vec2 m_shearAnglesAboutXY_inDegrees;

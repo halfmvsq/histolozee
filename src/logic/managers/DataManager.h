@@ -3,6 +3,7 @@
 
 #include "common/UIDRange.h"
 
+#include "logic/serialization/ProjectSerialization.h"
 #include "logic/records/ImageColorMapRecord.h"
 #include "logic/records/ImageRecord.h"
 #include "logic/records/LabelTableRecord.h"
@@ -50,6 +51,16 @@ public:
     DataManager& operator= ( DataManager&& ) = default;
 
     ~DataManager();
+
+
+    void setProject( serialize::HZeeProject );
+
+    const serialize::HZeeProject& project() const;
+    serialize::HZeeProject& project();
+
+    /// Update the project with current images, slides, settings, and transformations
+    /// @param[in] newFileName Optional new project file name
+    void updateProject( const std::optional< std::string >& newFileName );
 
 
     /// Insert an image record and return its assigned UID.

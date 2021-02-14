@@ -6,7 +6,7 @@ namespace gui
 
 QToolBar* createPointerToolBar( ActionsContainer& actions )
 {
-    QToolBar* toolbar = new QToolBar( "Pointer Toolbar" );
+    QToolBar* toolbar = new QToolBar( "Toolbar" );
 
     toolbar->setMovable( false );
     toolbar->setFloatable( false );
@@ -36,13 +36,14 @@ QToolBar* createPointerToolBar( ActionsContainer& actions )
     toolbar->addAction( actions.alignCrosshairsToSlideAction() );
     toolbar->addAction( actions.alignCrosshairsToAnatomicalPlanes() );
     toolbar->addAction( actions.resetViewsAction() );
+    toolbar->addSeparator();
 
+    toolbar->addAction( actions.saveProject() );
 
-    QWidget* spacerWidget = new QWidget();
-    spacerWidget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred );
-    spacerWidget->setVisible( true );
-
-    toolbar->addWidget( spacerWidget );
+    QWidget* spacerWidget1 = new QWidget();
+    spacerWidget1->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred );
+    spacerWidget1->setVisible( true );
+    toolbar->addWidget( spacerWidget1 );
 
     toolbar->addAction( actions.refImageDockTogglerAction() );
     toolbar->addAction( actions.slideStackDockTogglerAction() );

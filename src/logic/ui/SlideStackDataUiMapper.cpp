@@ -375,7 +375,7 @@ void SlideStackDataUiMapper::Impl::updateAppFromUi( const gui::SlideStackPartial
         {
             std::ostringstream ss;
             ss << "Cannot update propeties of slide with invalid UID " << slide.m_uid << std::ends;
-            throw_debug( ss.str() );
+            throw_debug( ss.str() )
         }
 
         if ( ! updatedActiveSlide && activeSlideUid && ( slide.m_uid == *activeSlideUid ) )
@@ -685,7 +685,7 @@ void SlideStackDataUiMapper::Impl::updateAppFromUi( const gui::SlideTxDataPartia
 
     if ( D.m_zRotationValueInDeg )
     {
-        T.setRotationZAngle( static_cast<float>( *D.m_zRotationValueInDeg ) );
+        T.setRotationAngleZ( static_cast<float>( *D.m_zRotationValueInDeg ) );
         doUpdate = true;
     }
 
@@ -817,7 +817,7 @@ gui::SlideStackComplete_msgToUi SlideStackDataUiMapper::Impl::getSlideStack() co
     }
     else
     {
-        throw_debug( "Null stack frame provider" );
+        throw_debug( "Null stack frame provider" )
     }
 
     return msg;
@@ -834,7 +834,7 @@ gui::SlideStackPartial_msgToUi SlideStackDataUiMapper::Impl::getSlideStackTransf
     }
     else
     {
-        throw_debug( "Null stack frame provider" );
+        throw_debug( "Null stack frame provider" )
     }
 
     return msg;
@@ -846,13 +846,13 @@ gui::SlidePreview SlideStackDataUiMapper::Impl::getSlide( const UID& slideUid ) 
     auto record = m_dataManager.slideRecord( slideUid ).lock();
     if ( ! record || ! record->cpuData() )
     {
-        throw_debug( "Null slide record" );
+        throw_debug( "Null slide record" )
     }
 
     auto slideIndex = m_dataManager.slideIndex( slideUid );
     if ( ! slideIndex )
     {
-        throw_debug( "Invalid slide UID" );
+        throw_debug( "Invalid slide UID" )
     }
 
     const auto& header = record->cpuData()->header();
@@ -1063,7 +1063,7 @@ gui::SlideTxDataComplete_msgToUi SlideStackDataUiMapper::Impl::getSlideTxData( c
     msg.m_txData.m_yTranslationValueInMm = static_cast<double>( T.normalizedTranslationXY().y * physicalDims.y );
     msg.m_txData.m_zTranslationValueInMm = static_cast<double>( T.stackTranslationZ() );
 
-    msg.m_txData.m_zRotationValueInDeg = static_cast<double>( T.rotationZAngle() );
+    msg.m_txData.m_zRotationValueInDeg = static_cast<double>( T.rotationAngleZ() );
 
     msg.m_txData.m_xScaleValue = static_cast<double>( T.scaleFactorsXY().x );
     msg.m_txData.m_yScaleValue = static_cast<double>( T.scaleFactorsXY().y );

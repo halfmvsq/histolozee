@@ -574,6 +574,7 @@ void ConnectionManager::Impl::createInteractionConnections()
     m_guiManager.setCrosshairsToSlideStackFrameAligner( std::bind( &ActionManager::alignCrosshairsToSlideStackFrame, &m_actionManager ) );
     m_guiManager.setCrosshairsToAnatomicalPlanesAligner( std::bind( &ActionManager::alignCrosshairsToSubjectXyzPlanes, &m_actionManager ) );
     m_guiManager.setAllViewsResetter( std::bind( &ActionManager::resetViews, &m_actionManager ) );
+    m_guiManager.setProjectSaver( [this] () { m_actionManager.saveProject( std::nullopt ); } );
 
     m_guiManager.setImageLoader( std::bind( &ActionManager::loadImage, &m_actionManager, _1, _2 ) );
     m_guiManager.setParcellationLoader( std::bind( &ActionManager::loadParcellation, &m_actionManager, _1, _2 ) );

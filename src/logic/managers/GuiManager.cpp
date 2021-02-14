@@ -113,6 +113,7 @@ GuiManager::GuiManager(
       m_crosshairsToSlideStackAligner( nullptr ),
       m_crosshairsToAnatomicalPlanesAligner( nullptr ),
       m_allViewsResetter( nullptr ),
+      m_projectSaver( nullptr ),
       m_slideStackViews3dModeSetter( nullptr ),
 
       m_cameraQuerier( nullptr ),
@@ -130,12 +131,12 @@ GuiManager::GuiManager(
          ! m_interactionPackProvider ||
          ! m_viewWidgetSetter )
     {
-        throw_debug( "Null providers" );
+        throw_debug( "Null providers" )
     }
 
     if ( ! m_mainWindow )
     {
-        throw_debug( "MainWindow could not be created" );
+        throw_debug( "MainWindow could not be created" )
     }
 }
 
@@ -167,7 +168,7 @@ void GuiManager::initializeGL()
     }
     else
     {
-        throw_debug( "MainWindow is null" );
+        throw_debug( "MainWindow is null" )
     }
 }
 
@@ -183,18 +184,19 @@ void GuiManager::setupMainWindow()
                 m_crosshairsToAnatomicalPlanesAligner,
                 m_slideStackViews3dModeSetter,
                 m_allViewsResetter,
+                m_projectSaver,
                 m_refImageEditorDock->toggleViewAction(),
                 m_slideStackEditorDock->toggleViewAction() );
 
     if ( ! m_actionsContainer )
     {
-        throw_debug( "Actions container is null" );
+        throw_debug( "Actions container is null" )
     }
 
     QToolBar* pointerToolBar = gui::createPointerToolBar( *m_actionsContainer );
     if ( ! pointerToolBar )
     {
-        throw_debug( "Pointer toolbar is null" );
+        throw_debug( "Pointer toolbar is null" )
     }
 
     // Add docks and toolbars to main window:
@@ -210,7 +212,7 @@ void GuiManager::setupMainWindow()
     }
     else
     {
-        throw_debug( "Main window is null" );
+        throw_debug( "Main window is null" )
     }
 }
 
@@ -224,7 +226,7 @@ void GuiManager::showMainWindow()
     }
     else
     {
-        throw_debug( "MainWindow is null" );
+        throw_debug( "MainWindow is null" )
     }
 }
 
@@ -330,6 +332,11 @@ void GuiManager::setAllViewsResetter( AllViewsResetterType resetter )
     m_allViewsResetter = resetter;
 }
 
+void GuiManager::setProjectSaver( std::function< void(void) > saver )
+{
+    m_projectSaver = saver;
+}
+
 void GuiManager::setImageLoader( ImageLoaderType loader )
 {
     if ( m_mainWindow )
@@ -338,7 +345,7 @@ void GuiManager::setImageLoader( ImageLoaderType loader )
     }
     else
     {
-        throw_debug( "MainWindow is null" );
+        throw_debug( "MainWindow is null" )
     }
 }
 
@@ -350,7 +357,7 @@ void GuiManager::setParcellationLoader( ImageLoaderType loader )
     }
     else
     {
-        throw_debug( "MainWindow is null" );
+        throw_debug( "MainWindow is null" )
     }
 }
 
@@ -362,7 +369,7 @@ void GuiManager::setSlideLoader( SlideLoaderType loader )
     }
     else
     {
-        throw_debug( "MainWindow is null" );
+        throw_debug( "MainWindow is null" )
     }
 }
 
@@ -775,7 +782,7 @@ void GuiManager::setWorldPositionStatusText( const std::string& status )
     }
     else
     {
-        throw_debug( "MainWindow is null" );
+        throw_debug( "MainWindow is null" )
     }
 }
 
@@ -787,7 +794,7 @@ void GuiManager::setImageValueStatusText( const std::string& status )
     }
     else
     {
-        throw_debug( "MainWindow is null" );
+        throw_debug( "MainWindow is null" )
     }
 }
 
@@ -799,7 +806,7 @@ void GuiManager::setLabelValueStatusText( const std::string& status )
     }
     else
     {
-        throw_debug( "MainWindow is null" );
+        throw_debug( "MainWindow is null" )
     }
 }
 
@@ -811,7 +818,7 @@ void GuiManager::clearTabWidget()
     }
     else
     {
-        throw_debug( "MainWindow is null" );
+        throw_debug( "MainWindow is null" )
     }
 }
 
@@ -823,7 +830,7 @@ void GuiManager::insertViewLayoutTab( int index, QWidget* tabWidget, const std::
     }
     else
     {
-        throw_debug( "MainWindow is null" );
+        throw_debug( "MainWindow is null" )
     }
 }
 

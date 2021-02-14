@@ -91,6 +91,11 @@ public:
     /// Load a slide image from disk and set it as the active slide
     void loadSlide( const std::string& filename );
 
+    /// Save project back to disk
+    /// @param[in] newFileName Optional new file name. If not provided, then the project is saved
+    /// to the same file that it was loaded from.
+    void saveProject( const std::optional< std::string >& newFileName );
+
     /// Generate an iso-surface mesh for the active image
     void generateIsoSurfaceMesh( double isoValue );
 

@@ -170,6 +170,9 @@ public:
     /// full extent of the reference space.
     void setAllViewsResetter( AllViewsResetterType );
 
+    /// Set the function that saves the current project to its existing path
+    void setProjectSaver( std::function< void(void) > );
+
     /// Set the function that loads images.
     void setImageLoader( ImageLoaderType );
 
@@ -411,6 +414,7 @@ private:
     CrosshairsAlignerType m_crosshairsToSlideStackAligner;
     CrosshairsAlignerType m_crosshairsToAnatomicalPlanesAligner;
     AllViewsResetterType m_allViewsResetter;
+    std::function< void(void) > m_projectSaver;
     SetterType<bool> m_slideStackViews3dModeSetter;
 
     QuerierType<camera::Camera*, UID > m_cameraQuerier;

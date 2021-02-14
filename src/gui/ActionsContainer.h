@@ -28,6 +28,7 @@ public:
             CrosshairsAlignerType crosshairsToAnatomicalPlanesAligner,
             SetterType<bool> slideStackViews3dModeSetter,
             AllViewsResetterType allViewsResetter,
+            std::function< void(void) > projectSaver,
             QAction* refImageDockTogglerAction,
             QAction* slideStackDockTogglerAction,
             QObject* parent = nullptr );
@@ -53,6 +54,7 @@ public:
     QAction* slideStretchAction();
     QAction* slideTranslateAction();
 
+    QAction* saveProject();
     QAction* alignCrosshairsToSlideAction();
     QAction* alignCrosshairsToAnatomicalPlanes();
     QAction* resetViewsAction();
@@ -79,6 +81,9 @@ private:
 
     AllViewsResetterType m_allViewsResetter;
 
+    /// Function that saves the current project to its existing location
+    std::function< void(void) > m_projectSaver;
+
 
     /// Pointer selection actions group
     QActionGroup* m_pointerModeSelectionGroup;
@@ -99,6 +104,9 @@ private:
     QAction* m_slideStretchAction;
     QAction* m_slideTranslateAction;
 
+
+    /// Save project
+    QAction* m_saveProjectAction;
 
     /// Align crosshairs to the active slide
     QAction* m_alignCrosshairsToActiveSlideAction;

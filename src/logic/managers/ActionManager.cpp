@@ -10,6 +10,7 @@
 #include "logic/records/ImageRecord.h"
 #include "logic/records/LabelTableRecord.h"
 #include "logic/records/SlideRecord.h"
+#include "logic/serialization/ProjectSerialization.h"
 
 #include "logic/interaction/InteractionPack.h"
 #include "logic/interaction/InteractionModes.h"
@@ -501,7 +502,7 @@ void ActionManager::loadImage(
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 }
 
@@ -529,7 +530,7 @@ void ActionManager::loadParcellation(
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 }
 
@@ -556,8 +557,23 @@ void ActionManager::loadSlide( const std::string& filename )
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
+}
+
+
+void ActionManager::saveProject( const std::optional< std::string >& newFileName )
+{
+    // Update image and slide data in project:
+    m_dataManager.updateProject( newFileName );
+
+    // Update stack transformation:
+    if ( m_slideStackFrameProvider )
+    {
+        m_dataManager.project().m_world_T_slideStack = m_slideStackFrameProvider();
+    }
+
+    serialize::save( m_dataManager.project(), newFileName );
 }
 
 
@@ -591,7 +607,7 @@ void ActionManager::generateIsoSurfaceMesh( double isoValue )
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 }
 
@@ -623,7 +639,7 @@ void ActionManager::generateLabelMeshes()
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 }
 
@@ -637,7 +653,7 @@ void ActionManager::transformFeedback()
 
     if ( ! computerWidget.isValid() )
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 
     computerWidget.makeCurrent();
@@ -729,7 +745,7 @@ void ActionManager::updateImageSliceAssembly()
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 }
 
@@ -754,7 +770,7 @@ void ActionManager::updateIsoMeshAssembly()
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 }
 
@@ -806,7 +822,7 @@ void ActionManager::updateLabelMeshAssembly()
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 }
 
@@ -824,7 +840,7 @@ void ActionManager::updateSlideStackAssembly()
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 }
 
@@ -846,7 +862,7 @@ void ActionManager::updateLandmarkAssemblies()
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 }
 
@@ -861,7 +877,7 @@ void ActionManager::updateAnnotationAssemblies()
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 }
 

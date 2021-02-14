@@ -11,6 +11,7 @@ ActionsContainer::ActionsContainer(
         CrosshairsAlignerType crosshairsToAnatomicalPlanesAligner,
         SetterType<bool> slideStackViews3dModeSetter,
         AllViewsResetterType viewResetter,
+        std::function< void(void) > projectSaver,
         QAction* refImageDockTogglerAction,
         QAction* slideStackDockTogglerAction,
         QObject* parent )
@@ -23,6 +24,7 @@ ActionsContainer::ActionsContainer(
       m_crosshairsToAnatomicalPlanesAligner( crosshairsToAnatomicalPlanesAligner ),
       m_slideStackViews3dModeSetter( slideStackViews3dModeSetter ),
       m_allViewsResetter( viewResetter ),
+      m_projectSaver( projectSaver ),
 
       m_pointerModeSelectionGroup( new QActionGroup( this ) ),
 
@@ -42,6 +44,7 @@ ActionsContainer::ActionsContainer(
       m_slideStretchAction( new QAction( "Slide Stretch" ) ),
       m_slideTranslateAction( new QAction( "Slide Translate" ) ),
 
+      m_saveProjectAction( new QAction( "Save Project..." ) ),
       m_alignCrosshairsToActiveSlideAction( new QAction( "Align to Slide" ) ),
       m_alignCrosshairsToAnatomicalPlanesAction( new QAction( "Align to Anatomy" ) ),
       m_resetViewsAction( new QAction( "Reset Views" ) ),
@@ -113,6 +116,7 @@ ActionsContainer::ActionsContainer(
     m_slideTranslateAction->setCheckable( true );
 
 
+    m_saveProjectAction->setStatusTip( "Save Project" );
 
     m_alignCrosshairsToActiveSlideAction->setStatusTip( "Align Crosshairs to Slide" );
     m_alignCrosshairsToAnatomicalPlanesAction->setStatusTip( "Align Crosshairs to Anatomical Planes" );
@@ -191,6 +195,11 @@ QAction* ActionsContainer::slideTranslateAction()
     return m_slideTranslateAction;
 }
 
+QAction* ActionsContainer::saveProject()
+{
+    return m_saveProjectAction;
+}
+
 QAction* ActionsContainer::alignCrosshairsToSlideAction()
 {
     return m_alignCrosshairsToActiveSlideAction;
@@ -241,6 +250,9 @@ void ActionsContainer::createConnections()
     connect( m_slideRotateAction, &QAction::triggered, [&S]() { if ( S ) S( InteractionModeType::SlideRotate ); } );
     connect( m_slideStretchAction, &QAction::triggered, [&S]() { if ( S ) S( InteractionModeType::SlideStretch ); } );
     connect( m_slideTranslateAction, &QAction::triggered, [&S]() { if ( S ) S( InteractionModeType::SlideTranslate ); } );
+
+    connect( m_saveProjectAction, &QAction::triggered,
+             [this]() { if ( m_projectSaver ) { m_projectSaver(); } } );
 
     connect( m_alignCrosshairsToActiveSlideAction, &QAction::triggered,
              [this]() { if ( m_crosshairsToSlideStackAligner ) {

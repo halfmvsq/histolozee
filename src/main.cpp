@@ -170,13 +170,14 @@ int main( int argc, char *argv[] )
         appController->loadSlide( slide.m_fileName );
     }
 
+    appController->setProject( std::move( project ) );
+
 
     /*** START FEATURE EXPERIMENTATION ***/
 //    appController->testAlignSlideStackToActiveImage();
 //    appController->testCreateRefImageLandmark();
 //    appController->testCreateSlideLandmark();
 //    appController->testCreateSlideAnnotation();
-//    appController->testSerialization( options.m_projectFileName );
     /*** END FEATURE EXPERIMENTATION ***/
 
 

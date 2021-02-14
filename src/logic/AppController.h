@@ -2,6 +2,7 @@
 #define APP_CONTROLLER_H
 
 #include "common/UID.h"
+#include "logic/serialization/ProjectSerialization.h"
 
 #include <QOffscreenSurface>
 
@@ -57,6 +58,8 @@ public:
 
     void loadSlide( const std::string& filename );
 
+    void setProject( serialize::HZeeProject );
+
     void generateIsoSurfaceMesh( double isoValue );
 
     void generateLabelMeshes();
@@ -72,7 +75,6 @@ public:
     void testCreateRefImageLandmark();
     void testCreateSlideLandmark();
     void testCreateSlideAnnotation();
-    void testSerialization( const std::string& fileName );
 
 
 private:

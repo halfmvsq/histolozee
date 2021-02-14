@@ -69,17 +69,9 @@ void from_json( const json& j, CoordinateFrame& frame )
     glm::vec3 worldOrigin{ sk_origin };
     glm::quat frameToWorldRotation{ sk_ident };
 
-    // worldOrigin is an optional field
-    if ( j.contains( "worldOrigin" ) )
-    {
-        j.at( "worldOrigin" ).get_to( worldOrigin );
-    }
-
-    // subjectToWorldQuaternion is an optional field
-    if ( j.contains( "subjectToWorldQuaternion" ) )
-    {
-        j.at( "subjectToWorldQuaternion" ).get_to( frameToWorldRotation );
-    }
+    // worldOrigin and subjectToWorldQuaternion are optional fields
+    if ( j.contains( "worldOrigin" ) ) j.at( "worldOrigin" ).get_to( worldOrigin );
+    if ( j.contains( "subjectToWorldQuaternion" ) ) j.at( "subjectToWorldQuaternion" ).get_to( frameToWorldRotation );
 
     frame.setWorldOrigin( worldOrigin );
     frame.setFrameToWorldRotation( frameToWorldRotation );
@@ -120,23 +112,12 @@ void from_json( const json& j, SlideProperties& properties )
 {
     // All fields are optional
 
-    if ( j.contains( "displayName" ) )
-        properties.setDisplayName( j["displayName"] );
-
-    if ( j.contains( "borderColor" ) )
-        properties.setBorderColor( j["borderColor"] );
-
-    if ( j.contains( "visible" ) )
-        properties.setVisible( j["visible"] );
-
-    if ( j.contains( "opacity" ) )
-        properties.setOpacity( j["opacity"] );
-
-    if ( j.contains( "thresholdLow" ) )
-        properties.setIntensityThresholdLow( j["thresholdLow"] );
-
-    if ( j.contains( "thresholdHigh" ) )
-        properties.setIntensityThresholdHigh( j["thresholdHigh"] );
+    if ( j.contains( "displayName" ) ) properties.setDisplayName( j["displayName"] );
+    if ( j.contains( "borderColor" ) ) properties.setBorderColor( j["borderColor"] );
+    if ( j.contains( "visible" ) ) properties.setVisible( j["visible"] );
+    if ( j.contains( "opacity" ) ) properties.setOpacity( j["opacity"] );
+    if ( j.contains( "thresholdLow" ) ) properties.setIntensityThresholdLow( j["thresholdLow"] );
+    if ( j.contains( "thresholdHigh" ) ) properties.setIntensityThresholdHigh( j["thresholdHigh"] );
 }
 
 
@@ -146,7 +127,7 @@ void to_json( json& j, const SlideTransformation& tx )
     j = json{
     { "normalizedTranslationXY", tx.normalizedTranslationXY() },
     { "stackTranslationZ", tx.stackTranslationZ() },
-    { "rotationZAngle", tx.rotationZAngle() },
+    { "rotationAngleZ", tx.rotationAngleZ() },
     { "scaleFactorsXY", tx.scaleFactorsXY() },
     { "normalizedRotationCenterXY", tx.normalizedRotationCenterXY() },
     };
@@ -171,20 +152,11 @@ void from_json( const json& j, SlideTransformation& tx )
 {
     // All fields are optional
 
-    if ( j.contains( "normalizedTranslationXY" ) )
-        tx.setNormalizedTranslationXY( j["normalizedTranslationXY"] );
-
-    if ( j.contains( "stackTranslationZ" ) )
-        tx.setStackTranslationZ( j["stackTranslationZ"] );
-
-    if ( j.contains( "rotationZAngle" ) )
-        tx.setRotationZAngle( j["rotationZAngle"] );
-
-    if ( j.contains( "scaleFactorsXY" ) )
-        tx.setScaleFactorsXY( j["scaleFactorsXY"] );
-
-    if ( j.contains( "normalizedRotationCenterXY" ) )
-        tx.setNormalizedRotationCenterXY( j["normalizedRotationCenterXY"] );
+    if ( j.contains( "normalizedTranslationXY" ) ) tx.setNormalizedTranslationXY( j["normalizedTranslationXY"] );
+    if ( j.contains( "stackTranslationZ" ) ) tx.setStackTranslationZ( j["stackTranslationZ"] );
+    if ( j.contains( "rotationAngleZ" ) ) tx.setRotationAngleZ( j["rotationAngleZ"] );
+    if ( j.contains( "scaleFactorsXY" ) ) tx.setScaleFactorsXY( j["scaleFactorsXY"] );
+    if ( j.contains( "normalizedRotationCenterXY" ) ) tx.setNormalizedRotationCenterXY( j["normalizedRotationCenterXY"] );
 
     if ( j.contains( "shearAnglesXY" ) )
     {
@@ -208,27 +180,31 @@ namespace serialize
 // Write image settings
 void to_json( json& j, const ImageDisplaySettings& settings )
 {
-    j = json{
-    { "displayName", settings.m_displayName },
-    { "window", settings.m_window },
-    { "level", settings.m_level },
-    { "thresholdLow", settings.m_thresholdLow },
-    { "thresholdHigh", settings.m_thresholdHigh },
-    { "opacity", settings.m_opacity },
-    { "interpolation", settings.m_interpolationMode }
-    };
+    /// @note Don't do it this way, because it results in "null" being placed in the JSON
+//    j = json{
+//    { "displayName", settings.m_displayName },
+//    ...
+//    };
+
+    if ( settings.m_displayName ) j[ "displayName" ] = *settings.m_displayName;
+    if ( settings.m_window ) j[ "window" ] = *settings.m_window;
+    if ( settings.m_level ) j[ "level" ] = *settings.m_level;
+    if ( settings.m_thresholdLow ) j[ "thresholdLow" ] = *settings.m_thresholdLow;
+    if ( settings.m_thresholdHigh ) j[ "thresholdHigh" ] = *settings.m_thresholdHigh;
+    if ( settings.m_opacity ) j[ "opacity" ] = *settings.m_opacity;
+    if ( settings.m_interpolationMode ) j[ "interpolation" ] = *settings.m_interpolationMode;
 }
 
 // Read image settings
 void from_json( const json& j, ImageDisplaySettings& settings )
 {
-    j.at( "displayName" ).get_to( settings.m_displayName );
-    j.at( "window" ).get_to( settings.m_window );
-    j.at( "level" ).get_to( settings.m_level );
-    j.at( "thresholdLow" ).get_to( settings.m_thresholdLow );
-    j.at( "thresholdHigh" ).get_to( settings.m_thresholdHigh );
-    j.at( "opacity" ).get_to( settings.m_opacity );
-    j.at( "interpolationMode" ).get_to( settings.m_interpolationMode );
+    if ( j.contains( "displayName" ) ) settings.m_displayName = j["displayName"];
+    if ( j.contains( "window" ) ) settings.m_window = j["window"];
+    if ( j.contains( "level" ) ) settings.m_level = j["level"];
+    if ( j.contains( "thresholdLow" ) ) settings.m_thresholdLow = j["thresholdLow"];
+    if ( j.contains( "thresholdHigh" ) ) settings.m_thresholdHigh = j["thresholdHigh"];
+    if ( j.contains( "opacity" ) ) settings.m_opacity = j["opacity"];
+    if ( j.contains( "interpolation" ) ) settings.m_interpolationMode = j["interpolation"];
 }
 
 
@@ -291,12 +267,16 @@ void from_json( const json& j, Slide& slide )
 // Write project
 void to_json( json& j, const HZeeProject& project )
 {
+    /// @note Don't bother writing the active parcellation index.
+    /// There might be a blank parcellation that will mess up the indexing,
+    /// since blank parcellations are not written to the project file.
+
     j = json{
     { "referenceImages", project.m_refImages },
     { "parcellations", project.m_parcellations },
     { "slides", project.m_slides },
     { "activeImage", project.m_activeImage },
-    { "activeParcellation", project.m_activeParcellation },
+//    { "activeParcellation", project.m_activeParcellation },
     { "world_T_slideStack", project.m_world_T_slideStack }
     };
 }
@@ -323,7 +303,8 @@ void from_json( const json& j, HZeeProject& project )
 
     // activeParcellation is an optional field
     project.m_activeParcellation = ( j.contains( "activeParcellation" ) )
-            ? j.at( "activeParcellation" ).get<uint32_t>() : 0;
+            ? std::optional<uint32_t>( j.at( "activeParcellation" ).get<uint32_t>() )
+            : std::nullopt;
 
     // world_T_slideStack is an optional field
     project.m_world_T_slideStack = ( j.contains( "world_T_slideStack" ) )
@@ -351,6 +332,7 @@ void open( HZeeProject& project, const std::string& fileName )
         std::cout << std::setw( 2 ) << j << std::endl << std::endl;
 
         project = j.get<HZeeProject>();
+        project.m_fileName = fileName;
     }
     catch ( const std::exception& e )
     {
@@ -361,16 +343,16 @@ void open( HZeeProject& project, const std::string& fileName )
 }
 
 
-void save( const HZeeProject& project, const std::string& fileName )
+void save( const HZeeProject& project, const std::optional< std::string >& newFileName )
 {
     try
     {
-        std::ofstream outFile( fileName );
+        std::ofstream outFile( newFileName ? *newFileName : project.m_fileName );
 
         const json j = project;
         outFile << std::setw( 2 ) << j;
 
-        std::cout << "Saved project to " << fileName << ":" << std::endl << std::endl;
+        std::cout << "Saved project to " << project.m_fileName << ":" << std::endl << std::endl;
         std::cout << std::setw( 2 ) << j << std::endl << std::endl;
     }
     catch ( const std::exception& e )

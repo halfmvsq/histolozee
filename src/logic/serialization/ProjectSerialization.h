@@ -72,6 +72,8 @@ struct Slide
 /// The only field that is required when reading the JSON is the reference image.
 struct HZeeProject
 {
+    std::string m_fileName; //!< Project file name
+
     std::vector<Image> m_refImages; //!< Reference images (REQUIRED in JSON)
     std::vector<Image> m_parcellations; //!< Parcellation images (OPTIONAL in JSON)
     std::vector<Slide> m_slides; //!< Slide images (OPTIONAL in JSON)
@@ -84,7 +86,7 @@ struct HZeeProject
     uint32_t m_activeImage;
 
     /// Index of the active parcellation, if there is at least one (OPTIONAL in JSON)
-    uint32_t m_activeParcellation;
+    std::optional<uint32_t> m_activeParcellation;
 };
 
 
@@ -92,7 +94,9 @@ struct HZeeProject
 void open( HZeeProject& project, const std::string& fileName );
 
 /// Save project file
-void save( const HZeeProject& project, const std::string& fileName );
+/// @param[in] project Project to save
+/// @param[in] newFileName Optional new file name to override the existing file name in project
+void save( const HZeeProject& project, const std::optional< std::string >& newFileName );
 
 } // namespace serialize
 

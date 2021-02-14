@@ -335,7 +335,7 @@ void AppController::loadImage(
 {
     if ( ! m_actionManager )
     {
-        throw_debug( "Unable to load image: null ActionManager" );
+        throw_debug( "Unable to load image: null ActionManager" )
     }
 
     m_actionManager->loadImage( filename, dicomSeriesUID );
@@ -348,7 +348,7 @@ void AppController::loadParcellation(
 {
     if ( ! m_actionManager )
     {
-        throw_debug( "Unable to load parcellation: null ActionManager" );
+        throw_debug( "Unable to load parcellation: null ActionManager" )
     }
 
     m_actionManager->loadParcellation( filename, dicomSeriesUID );
@@ -359,10 +359,21 @@ void AppController::loadSlide( const std::string& filename )
 {
     if ( ! m_actionManager )
     {
-        throw_debug( "Unable to load slide: null ActionManager" );
+        throw_debug( "Unable to load slide: null ActionManager" )
     }
 
     m_actionManager->loadSlide( filename );
+}
+
+
+void AppController::setProject( serialize::HZeeProject project )
+{
+    if ( ! m_dataManager )
+    {
+        throw_debug( "Unable to set project: null DataManager" )
+    }
+
+    m_dataManager->setProject( std::move( project ) );
 }
 
 
@@ -370,7 +381,7 @@ void AppController::generateIsoSurfaceMesh( double isoValue )
 {
     if ( ! m_actionManager )
     {
-        throw_debug( "Unable to generate isosurface mesh: null ActionManager" );
+        throw_debug( "Unable to generate isosurface mesh: null ActionManager" )
     }
 
     m_actionManager->generateIsoSurfaceMesh( isoValue );
@@ -381,7 +392,7 @@ void AppController::generateLabelMeshes()
 {
     if ( ! m_actionManager )
     {
-        throw_debug( "Unable to generate label meshes: null ActionManager" );
+        throw_debug( "Unable to generate label meshes: null ActionManager" )
     }
 
     m_actionManager->generateLabelMeshes();
@@ -392,7 +403,7 @@ void AppController::setupCamerasAndCrosshairsForImage()
 {
     if ( ! m_actionManager )
     {
-        throw_debug( "Unable to set up cameras: null ActionManager" );
+        throw_debug( "Unable to set up cameras: null ActionManager" )
     }
 
     m_actionManager->setupCamerasAndCrosshairsForImage();
@@ -424,7 +435,7 @@ void AppController::loadBuiltInImageColorMaps(
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 }
 
@@ -517,8 +528,8 @@ void AppController::testCreateSlideLandmark()
 
     for ( int i = 0; i < 6; ++i )
     {
-        float x = 0.25f * cos( 2.0 * i * M_PI / 6.0 ) + 0.5f;
-        float y = 0.25f * sin( 2.0 * i * M_PI / 6.0 ) + 0.5f;
+        float x = 0.25f * std::cos( 2.0f * i * M_PI / 6.0f ) + 0.5f;
+        float y = 0.25f * std::sin( 2.0f * i * M_PI / 6.0f ) + 0.5f;
         pointList.appendPoint( PointType{ glm::vec3{ x, y, 0.5f } } );
     }
 
@@ -571,7 +582,7 @@ void AppController::testCreateSlideAnnotation()
     }
     else
     {
-        throw_debug( sk_glContextErrorMsg );
+        throw_debug( sk_glContextErrorMsg )
     }
 
     std::unique_ptr<SlideAnnotationCpuRecord> annot1CpuRecord =
@@ -621,49 +632,4 @@ void AppController::testCreateSlideAnnotation()
     }
 
     m_actionManager->updateAnnotationAssemblies();
-}
-
-
-void AppController::testSerialization( const std::string& fileName )
-{
-    /*
-    serialize::Image refImage1;
-    refImage1.m_fileName = "testFile1";
-    refImage1.m_displayName = "displayName1";
-    refImage1.m_worldSubjectOrigin = glm::vec3{ 1, 2, 3 };
-    refImage1.m_subjectToWorldRotation = glm::quat{ 1, 2, 3, 4 };
-    refImage1.m_settings = serialize::ImageDisplaySettings();
-    refImage1.m_settings.m_interpolationMode = imageio::ImageSettings::InterpolationMode::Linear;
-    refImage1.m_settings.m_colorMapName = "colormap1";
-
-    serialize::Image refImage2;
-    refImage2.m_fileName = "testFile2";
-    refImage2.m_displayName = "displayName2";
-    refImage2.m_worldSubjectOrigin = glm::vec3{ 1, 2, 3 };
-    refImage2.m_subjectToWorldRotation = glm::quat{ 1, 2, 3, 4 };
-    refImage2.m_settings = serialize::ImageDisplaySettings();
-    refImage2.m_settings.m_interpolationMode = imageio::ImageSettings::InterpolationMode::NearestNeighbor;
-    refImage2.m_settings.m_colorMapName = "colormap2";
-
-    serialize::Image parcellation;
-    parcellation.m_fileName = "parcellation";
-    parcellation.m_displayName = "my parcellation";
-    parcellation.m_worldSubjectOrigin = glm::vec3{ 1, 2, 3 };
-    parcellation.m_subjectToWorldRotation = glm::quat{ 1, 2, 3, 4 };
-    parcellation.m_settings = serialize::ImageDisplaySettings();
-    parcellation.m_settings.m_interpolationMode = imageio::ImageSettings::InterpolationMode::NearestNeighbor;
-    parcellation.m_settings.m_colorMapName = std::nullopt;
-
-    serialize::HZeeProject project;
-    project.m_refImages.emplace_back( refImage1 );
-    project.m_refImages.emplace_back( refImage2 );
-    project.m_parcellations.emplace_back( parcellation );
-    project.m_activeImage = 1;
-    project.m_activeParcellation = 0;
-
-    serialize::save( project, fileName );
-
-    serialize::HZeeProject restored;
-    serialize::open( restored, fileName );
-    */
 }

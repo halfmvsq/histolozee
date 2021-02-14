@@ -117,7 +117,7 @@ bool SlideInteractionHandler::doHandleMouseMoveEvent(
                         camera, m_ndcLeftButtonLastPos, ndcPos, ndcZ,
                         worldStackAxis, worldRotationCenter );
 
-            slideTx.setRotationZAngle( slideTx.rotationZAngle() + angleDegrees );
+            slideTx.setRotationAngleZ( slideTx.rotationAngleZ() + angleDegrees );
             handled = true;
             break;
         }

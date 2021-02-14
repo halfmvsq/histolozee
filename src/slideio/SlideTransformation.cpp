@@ -24,7 +24,7 @@ SlideTransformation::SlideTransformation()
 
       m_normalizedTranslationAlongXY( 0.0f, 0.0f ),
       m_stackTranslationAlongZ( 0.0f ),
-      m_rotationZAngle_inDegrees( 0.0f ),
+      m_rotationAngleZ_inDegrees( 0.0f ),
       m_shearAnglesAboutXY_inDegrees( 0.0f, 0.0f ),
       m_scaleAngle_inDegrees( 0.0f ),
       m_scaleFactorsAlongXY( 1.0f, 1.0f ),
@@ -98,7 +98,7 @@ void SlideTransformation::recompute( const glm::vec3& physicalSlideDims ) const
                                        m_normalizedRotationCenterAlongXY.y * physicalSlideDims.y, 0.0f } ) *
 
             // Rotation about stack Z axis:
-            glm::rotate( glm::radians( m_rotationZAngle_inDegrees ), sk_zAxis );
+            glm::rotate( glm::radians( m_rotationAngleZ_inDegrees ), sk_zAxis );
 
 
     m_stack_O_slide =
@@ -139,9 +139,9 @@ float SlideTransformation::stackTranslationZ() const
 }
 
 
-float SlideTransformation::rotationZAngle() const
+float SlideTransformation::rotationAngleZ() const
 {
-    return m_rotationZAngle_inDegrees;
+    return m_rotationAngleZ_inDegrees;
 }
 
 
@@ -203,10 +203,10 @@ void SlideTransformation::setStackTranslationZ( float t )
 }
 
 
-void SlideTransformation::setRotationZAngle( float degrees )
+void SlideTransformation::setRotationAngleZ( float degrees )
 {
     // Constrain to [-180, 180]
-    m_rotationZAngle_inDegrees = std::remainder( degrees, 360.0f );
+    m_rotationAngleZ_inDegrees = std::remainder( degrees, 360.0f );
     flagRecompute();
 }
 
@@ -321,7 +321,7 @@ void SlideTransformation::setIdentity()
 {
     m_normalizedTranslationAlongXY = { 0.0f, 0.0f };
     m_stackTranslationAlongZ = 0.0f;
-    m_rotationZAngle_inDegrees = 0.0f;
+    m_rotationAngleZ_inDegrees = 0.0f;
     m_shearAnglesAboutXY_inDegrees = { 0.0f, 0.0f };
     m_scaleAngle_inDegrees = 0.0f;
     m_scaleFactorsAlongXY = { 1.0f, 1.0f };
